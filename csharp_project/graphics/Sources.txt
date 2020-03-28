@@ -1,0 +1,2 @@
+﻿Icons from https://icons8.com/
+https://github.com/CSharpDesignPro/Navigation-Drawer-Sidebar-Menu-in-WPF für Design anregung
