@@ -61,5 +61,30 @@ namespace csharp_project
         {
             Close();
         }
+
+        private void SetActiveUserControl(UserControl control)
+        {
+            app_name.Visibility = Visibility.Collapsed;
+            home.Visibility = Visibility.Collapsed;
+            items.Visibility = Visibility.Collapsed;
+            settings.Visibility = Visibility.Collapsed;
+
+            control.Visibility = Visibility.Visible;
+        }
+
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SetActiveUserControl(home);
+        }
+
+        private void ListViewItem_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            SetActiveUserControl(items);
+        }
+
+        private void ListViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
+        {
+            SetActiveUserControl(settings);
+        }
     }
 }
