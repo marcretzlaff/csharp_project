@@ -230,9 +230,26 @@
                             VerticalAlignment="Top"
                             FontStyle="Oblique">
                 </TextBlock>
-
+                
+                <!--Moving Form-->
+                <Border Grid.RowSpan="2" 
+                    Name="headerBorder" 
+                    Width="Auto" 
+                    Height="25" 
+                    VerticalAlignment="Top"
+                    CornerRadius="5,5,0,0" 
+                    DockPanel.Dock="Top" 
+                    BorderThickness="1,1,1,1">
+                    <Grid Margin="0,0,0,0">
+                        <Thumb 
+                             x:Name="headerThumb" 
+                             Opacity="0" 
+                             Background="{x:Null}" 
+                             Foreground="{x:Null}" 
+                            DragDelta="headerThumb_DragDelta"/>
+                    </Grid>
+                </Border>
             </Grid>
-
 
             <!--// Navigation Panel //-->
 
