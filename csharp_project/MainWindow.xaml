@@ -18,7 +18,7 @@
         <!--// Toggle Button Style Template //-->
 
         <ImageBrush x:Key="tb_mouse_over"
-                    ImageSource="graphics/icons8-circled-menu-50.png"/>
+                    ImageSource="Assets/icons8-circled-menu-50.png"/>
 
         <!--// Text font style //-->
 
@@ -64,7 +64,7 @@
 
         <!--// App Close Button Style Template //-->
 
-        <ImageBrush x:Key="CloseBtn_MouseOver" ImageSource="graphics/icons8-close-window-50-fill.png"/>
+        <ImageBrush x:Key="CloseBtn_MouseOver" ImageSource="Assets/icons8-close-window-50-fill.png"/>
 
         <Style x:Key="Close_btn" TargetType="{x:Type Button}">
 
@@ -171,7 +171,7 @@
                 <Grid.Background>
 
                     <ImageBrush x:Name="img_bg"
-                                ImageSource="graphics/background.jpg"
+                                ImageSource="Assets/background.jpg"
                                 Stretch="None"/>
                 </Grid.Background>
                 <Grid.ColumnDefinitions>
@@ -211,7 +211,7 @@
 
                     <Button.Background>
 
-                        <ImageBrush ImageSource="graphics/icons8-close-window-50.png"/>
+                        <ImageBrush ImageSource="Assets/icons8-close-window-50.png"/>
 
                     </Button.Background>
 
@@ -295,7 +295,7 @@
 
                             <ToggleButton.Background>
 
-                                <ImageBrush ImageSource="graphics/icons8-circled-menu-50-fill.png"
+                                <ImageBrush ImageSource="Assets/icons8-circled-menu-50-fill.png"
                                             Stretch="Fill"/>
 
                             </ToggleButton.Background>
@@ -371,7 +371,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="graphics/icons8-home-32.png"
+                                <Image Source="Assets/icons8-home-32.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
@@ -402,7 +402,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="graphics/icons8-warehouse-32.png"
+                                <Image Source="Assets/icons8-warehouse-32.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
@@ -433,7 +433,7 @@
                             <StackPanel Orientation="Horizontal"
                                         Width="230">
 
-                                <Image Source="graphics/icons8-settings-32.png"
+                                <Image Source="Assets/icons8-settings-32.png"
                                        Stretch="None"
                                        Margin="12,0,0,0"/>
 
