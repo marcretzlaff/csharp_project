@@ -24,6 +24,11 @@ namespace csharp_project
         public MainWindow()
         {
             InitializeComponent();
+
+            //DB setup
+            var dbhelper = DataAccess.DataAccessHelper.getInstance();
+            dbhelper.InitializeDatabase();
+            dbhelper.CheckAndLoadDefaults();
         }
 
         private void ListViewItem_MouseEnter(object sender, MouseEventArgs e)
