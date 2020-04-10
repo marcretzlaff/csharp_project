@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csharp_project.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,13 @@ namespace csharp_project
         public Items()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var dbhelper = DataAccess.DataManager.getInstance();
+            d_food.ItemsSource = dbhelper.GetTable<Food>();
+            d_drinks.ItemsSource = dbhelper.GetTable<Drinks>();
         }
     }
 }

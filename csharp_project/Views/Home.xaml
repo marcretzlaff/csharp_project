@@ -4,10 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:csharp_project"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="730">
     <Grid Background="White">
         <Label Content="HOME" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-            
+        <Button x:Name="add_item_bt" Content="Add Item" HorizontalAlignment="Left" Margin="609,446,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" IsEnabled="False"/>
+        <DatePicker x:Name="date_until" SelectedDate="{x:Static sys:DateTime.Now}" HorizontalAlignment="Left" Margin="452,444,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="date_added" SelectedDate="{x:Static sys:DateTime.Now}" HorizontalAlignment="Left" Margin="296,444,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="expire_checkb" Content="Expires" HorizontalAlignment="Left" Margin="425,418,0,0" VerticalAlignment="Top" IsChecked="True" Unchecked="expire_checkb_Unchecked" Checked="expire_checkb_Checked"/>
+        <TextBox x:Name="item_tb" HorizontalAlignment="Left" Height="23" Margin="166,446,0,0" TextWrapping="Wrap" Text="Item Name" VerticalAlignment="Top" Width="120" TextChanged="item_tb_TextChanged"/>
+        <ComboBox x:Name="dropdown_itemtyp" HorizontalAlignment="Left" Margin="26,447,0,0" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem IsSelected="True" Content="Food"></ComboBoxItem>
+            <ComboBoxItem Content="Drinks"></ComboBoxItem>
+        </ComboBox>
+        <TextBox x:Name="tb_size" Text="Size"  VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="452,486,0,90" TextWrapping="Wrap"  Width="120" PreviewTextInput="tb_size_PreviewTextInput"  DataObject.Pasting="tb_size_Pasting"/>
+        <Label x:Name="l_success" Content="Item added successfully to Database!" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
+        <Label x:Name="l_failed" Content="Adding to Database failed!" VerticalAlignment="Bottom" Height="27" Width="700"  HorizontalContentAlignment="Right" Visibility="Hidden"/>
     </Grid>
 </UserControl>

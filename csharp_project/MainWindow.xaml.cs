@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MyLog;
 
 namespace csharp_project
 {
@@ -24,6 +25,11 @@ namespace csharp_project
         public MainWindow()
         {
             InitializeComponent();
+
+            //DB setup
+            var dbhelper = DataAccess.DataManager.getInstance();
+            dbhelper.CheckAndLoadDefaults();
+            Log.CreateLogFile();
         }
 
         private void ListViewItem_MouseEnter(object sender, MouseEventArgs e)
