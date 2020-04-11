@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace csharp_project.Data
 {
-    abstract class Supplies : ISupplies
+    abstract public class Supplies : ISupplies
     {
         public string Name;
 
-        private DateTime insertTime = DateTime.Now;
+        protected DateTime insertTime = DateTime.Now;
 
-        private DateTime expiryTime;
+        protected DateTime expiryTime;
 
-        private TimeSpan lasting;
+        protected TimeSpan lasting;
 
 
         public string Getinformation()
