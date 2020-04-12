@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace csharp_project.Data
 {
+    [Table("Drinks")]
     public class Drinks : Supplies
     {
-        public bool expires = true;
-
         private int volumen;
 
-        public bool DoesExpire()
+        public override string ToString()
         {
-            return expires;
+            return $"{Name} was inserted at {insertTime} and lasts till {expiryTime}. Volumen: {volumen}mL Expires: {expires}";
         }
     }
 }

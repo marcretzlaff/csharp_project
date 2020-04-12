@@ -3,33 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SQLite;
 
 namespace csharp_project.Data
 {
     abstract public class Supplies : ISupplies
     {
-        public string Name;
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
 
-        protected DateTime insertTime = DateTime.Now;
+        public string Name { get; set; }
 
-        protected DateTime expiryTime;
+        public DateTime insertTime { get { return insertTime; } set { insertTime = DateTime.Now; } }
 
-        protected TimeSpan lasting;
+        public DateTime expiryTime { get; set; }
 
+        public TimeSpan lasting { get; set; }
+
+        public bool expires { get; set; } = true;
 
         public string Getinformation()
         {
             return $"{Name} was inserted at {insertTime} and lasts till {expiryTime}.";
-        }
-
-        public DateTime GetInsertDate()
-        {
-            return insertTime;
-        }
-
-        public DateTime GetExpiryDate()
-        {
-            return expiryTime;
         }
     }
 }
