@@ -28,7 +28,6 @@ namespace csharp_project
 
             //DB setup
             var dbhelper = DataAccess.DataManager.getInstance();
-            dbhelper.InitializeDatabase();
             dbhelper.CheckAndLoadDefaults();
             Log.CreateLogFile();
         }

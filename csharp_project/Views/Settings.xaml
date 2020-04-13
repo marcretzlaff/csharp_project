@@ -8,5 +8,7 @@
              d:DesignHeight="600" d:DesignWidth="730">
     <Grid Background="White">
         <Label Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Button Content="Delete all Items" HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="125" Click="Delete_DB_Click"/>
+        <Button Content="Delete Log" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="125" Click="Delete_Log_Click"/>
     </Grid>
 </UserControl>

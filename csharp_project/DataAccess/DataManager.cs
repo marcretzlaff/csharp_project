@@ -27,32 +27,38 @@ namespace csharp_project.DataAccess
             return _instance;
         }
 
-        public SQLiteConnection LoadConnection()
+        public SQLiteConnection GetConnection()
         {
-            return conn;
+            return new SQLiteConnection(path);
         }
 
-        public void InitializeDatabase()
+        public void DeleteDatabase()
         {
-                conn = new SQLiteConnection(path);
+            using (var dbconn = GetConnection())
+            {
+                dbconn.DropTable<Food>();
+                dbconn.DropTable<Drinks>();
+            }
+
+            CheckAndLoadDefaults();
         }
         public void CheckAndLoadDefaults()
         {
-            using (var dbconn = LoadConnection())
+            using (var dbconn = GetConnection())
             {
                 dbconn.CreateTable<Food>();
                 dbconn.CreateTable<Drinks>();
             }
         }
 
-        public bool Insert<T>(ref T data)
+        public bool Insert<T>(T data) where T: new()
         {
-            using( var dbconn = LoadConnection())
+            using( var dbconn = GetConnection())
             {
                 dbconn.CreateTable<T>(); //creates table if not exists
                 if (dbconn.Insert(data) != 0)
                 {
-                    Log.WriteLog($"{DateTime.Now} Insert: {data.ToString()}");
+                    Log.WriteLog($"Insert: {data.ToString()}");
                     return true;
                 }
             }
@@ -61,19 +67,36 @@ namespace csharp_project.DataAccess
 
         public T Get<T>(int primarykey) where T : new()
         {
-            using (var dbconn = LoadConnection())
+            using (SQLiteConnection dbconn = GetConnection())
             {
                 var re = dbconn.Get<T>(primarykey);
                 return re;
             }
         }
 
+        public bool Delete<T>(int primarykey) where T : new()
+        {
+            using (var dbconn = GetConnection())
+            {
+                var temp = Get<T>(primarykey);
+                if (0 != dbconn.Delete<T>(primarykey))
+                {
+                    Log.WriteLog($"Deleted: {temp.ToString()}");
+                    return true;
+                }
+                else
+                {
+                    Log.WriteLog($"Delete of Item failed: {temp.ToString()}");
+                }
+                return false;
+            }
+        }
         public List<T> GetTable<T>() where T : new()
         {
-            using (var dbconn = LoadConnection())
+            using (SQLiteConnection dbconn = GetConnection())
             {
-                var re = dbconn.Table<T>().ToList();
-                return re;
+                var re = dbconn.Table<T>();
+                return re.ToList();
             }
         }
     }

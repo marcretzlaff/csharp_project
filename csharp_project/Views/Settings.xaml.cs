@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MyLog;
 
 namespace csharp_project
 {
@@ -23,6 +24,20 @@ namespace csharp_project
         public Settings()
         {
             InitializeComponent();
+        }
+
+        private void Delete_DB_Click(object sender, RoutedEventArgs e)
+        {
+            Log.WriteLog($"Database deleted.");
+            var dbhelper = DataAccess.DataManager.getInstance();
+            dbhelper.DeleteDatabase();
+            dbhelper.CheckAndLoadDefaults();
+        }
+
+        private void Delete_Log_Click(object sender, RoutedEventArgs e)
+        {
+            Log.Delete();
+            Log.CreateLogFile();
         }
     }
 }

@@ -7,6 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="730">
     <Grid Background="White">
-        <Label Content="Items" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ListBox x:Name="lb_food" Grid.Column="0" Grid.Row="2"/>
+        <ListBox x:Name="lb_drinks" Grid.Column="1" Grid.Row="2"/>
     </Grid>
 </UserControl>

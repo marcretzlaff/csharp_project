@@ -7,18 +7,18 @@ using SQLite;
 
 namespace csharp_project.Data
 {
-    abstract public class Supplies : ISupplies
+    public abstract class Supplies : ISupplies
     {
-        [PrimaryKey, AutoIncrement]
+        [PrimaryKey, AutoIncrement, Unique]
         public int Id { get; set; }
 
         public string Name { get; set; }
 
-        public DateTime insertTime { get { return insertTime; } set { insertTime = DateTime.Now; } }
+        public DateTime insertTime { get;  set; }
 
         public DateTime expiryTime { get; set; }
 
-        public TimeSpan lasting { get; set; }
+        public int lasting { get; set; }
 
         public bool expires { get; set; } = true;
 
