@@ -55,5 +55,10 @@ namespace MyLog
                 fs.Write(message.ToString());
             }
         }
+
+        public static void OpenLog()
+        {
+            System.Diagnostics.Process.Start("notepad.exe", path);
+        }
     }
 }

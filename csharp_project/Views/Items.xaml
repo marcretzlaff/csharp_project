@@ -30,9 +30,9 @@
                 <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
                 <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}"/>
-                <DataGridTextColumn Header="Expires?" Binding="{Binding Path=expires}"/>
                 <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}"/>
                 <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
+                <DataGridTextColumn Header="Weigth" Binding="{Binding Path=weigth}"/>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -51,9 +51,9 @@
                 <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
                 <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}"/>
-                <DataGridTextColumn Header="Expires?" Binding="{Binding Path=expires}"/>
                 <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}"/>
                 <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
+                <DataGridTextColumn Header="Volume" Binding="{Binding Path=volumen}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="Refresh" HorizontalAlignment="Left" Margin="326,105,0,0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" Click="Button_Click"/>

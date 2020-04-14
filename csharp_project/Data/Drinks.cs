@@ -10,8 +10,8 @@ namespace csharp_project.Data
     [Table("Drinks")]
     public class Drinks : Supplies
     {
-        [Column("Size")]
-        private int volumen { get; set; } = 0;
+        [Column("size")]
+        public int volumen { get; set; } = 0;
 
         public Drinks() { }
         public Drinks(string name)

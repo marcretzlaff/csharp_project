@@ -63,5 +63,10 @@ namespace csharp_project
             storyboard.Completed += delegate { label.Visibility = System.Windows.Visibility.Hidden; };
             storyboard.Begin();
         }
+
+        private void Open_Log_Click(object sender, RoutedEventArgs e)
+        {
+            Log.OpenLog();
+        }
     }
 }

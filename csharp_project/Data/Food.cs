@@ -10,8 +10,8 @@ namespace csharp_project.Data
     [Table("Food")]
     public class Food : Supplies
     {
-        [Column("Size")]
-        private int weigth { get; set; } = 0;
+        [Column("size")]
+        public int weigth { get; set; } = 0;
         public Food() { }
         public Food(string name)
         {

@@ -29,8 +29,19 @@ namespace csharp_project
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var dbhelper = DataAccess.DataManager.getInstance();
-            d_food.ItemsSource = dbhelper.GetTable<Food>();
-            d_drinks.ItemsSource = dbhelper.GetTable<Drinks>();
+            var food_l= dbhelper.GetTable<Food>();
+            foreach (var x in food_l)
+            {
+                x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+            }
+            d_food.ItemsSource = food_l;
+
+            var drinks_l = dbhelper.GetTable<Drinks>();
+            foreach (var x in drinks_l)
+            {
+                x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+            }
+            d_drinks.ItemsSource = drinks_l;
         }
     }
 }
