@@ -16,9 +16,9 @@ namespace csharp_project.Data
 
         public DateTime insertTime { get;  set; }
 
-        public DateTime expiryTime { get; set; }
+        public DateTime? expiryTime { get; set; }
 
-        public int lasting { get; set; }
+        public int? lasting { get; set; }
 
         public bool expires { get; set; } = true;
 

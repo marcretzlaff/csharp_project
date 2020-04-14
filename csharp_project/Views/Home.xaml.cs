@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -31,14 +32,15 @@ namespace csharp_project
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var dbhelper = DataManager.getInstance();
-
-            if ( dropdown_itemtyp.SelectedItem.ToString() == "Food")
+            int number = 0;
+            Int32.TryParse(tb_size.Text, out number);
+            if ( dropdown_itemtyp.Text == "Food")
             {
                 Food data = null;
                 if (expire_checkb.IsChecked.Value)
                 {
                     //complicated item
-                    data = new Food(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, Int32.Parse(tb_seize.Text));
+                    data = new Food(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, number);
                 }
                 else //simple item
                 {
@@ -47,11 +49,11 @@ namespace csharp_project
 
                 if(dbhelper.Insert<Food>(data))
                 {
-                    //do
+                    ShowLabelFaded(l_success);
                 }
                 else
                 {
-                    //do
+                    ShowLabelFaded(l_failed);
                 }
             }
             else
@@ -59,7 +61,7 @@ namespace csharp_project
                 Drinks data = null;
                 if (expire_checkb.IsChecked.Value)
                 {
-                    data = new Drinks(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, Int32.Parse(tb_seize.Text));
+                    data = new Drinks(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, number);
                 }
                 else
                 {
@@ -68,12 +70,12 @@ namespace csharp_project
 
                 if (dbhelper.Insert<Drinks>(data))
                 {
-                    //do
+                    ShowLabelFaded(l_success);
                 }
                 else
                 {
-                    //do
-                }
+                    ShowLabelFaded(l_failed);
+                }  
             }
         }
 
@@ -87,13 +89,13 @@ namespace csharp_project
             date_until.Visibility = Visibility.Visible;
         }
 
-        private void tb_seize_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void tb_size_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void tb_seize_Pasting(object sender, DataObjectPastingEventArgs e)
+        private void tb_size_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
             {
@@ -114,8 +116,34 @@ namespace csharp_project
         {
             if (item_tb.Text != "Item Name")
             {
-                add_item_bt.IsEnabled = true;
+                 add_item_bt.IsEnabled = true;
             }
+            else
+            {
+                add_item_bt.IsEnabled = false;
+            }
+        }
+
+
+        private void ShowLabelFaded(Label label)
+        {
+            label.Visibility = System.Windows.Visibility.Visible;
+
+            var a = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                FillBehavior = FillBehavior.Stop,
+                BeginTime = TimeSpan.FromSeconds(2),
+                Duration = new Duration(TimeSpan.FromSeconds(0.5))
+            };
+            var storyboard = new Storyboard();
+
+            storyboard.Children.Add(a);
+            Storyboard.SetTarget(a, label);
+            Storyboard.SetTargetProperty(a, new PropertyPath(OpacityProperty));
+            storyboard.Completed += delegate { label.Visibility = System.Windows.Visibility.Hidden; };
+            storyboard.Begin();
         }
     }
 }

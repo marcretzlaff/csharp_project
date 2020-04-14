@@ -16,7 +16,6 @@ namespace csharp_project.DataAccess
 
         private readonly string path = "./database.db";
         private static DataManager _instance;
-        private SQLiteConnection conn;
 
         public static DataManager getInstance()
         {

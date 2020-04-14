@@ -10,6 +10,7 @@ namespace csharp_project.Data
     [Table("Drinks")]
     public class Drinks : Supplies
     {
+        [Column("Size")]
         private int volumen { get; set; } = 0;
 
         public Drinks() { }
@@ -18,28 +19,28 @@ namespace csharp_project.Data
             Name = name;
             insertTime = DateTime.Now;
             expires = false;
-            expiryTime = DateTime.Now;
-            lasting = 0;
+            expiryTime = null;
+            lasting = null;
             volumen = 0;
         }
-        public Drinks(string name, int seize)
+        public Drinks(string name, int size)
         {
             Name = name;
             insertTime = DateTime.Now;
             expires = false;
-            expiryTime = DateTime.Now;
-            lasting = 0;
-            volumen = seize;
+            expiryTime = null;
+            lasting = null;
+            volumen = size;
         }
 
-        public Drinks(string name, DateTime inserttime, DateTime expiretime, int seize)
+        public Drinks(string name, DateTime inserttime, DateTime expiretime, int size)
         {
             Name = name;
             insertTime = inserttime;
             expires = true;
             expiryTime = expiretime;
             lasting = (expiretime - inserttime).Days;
-            volumen = seize;
+            volumen = size;
         }
 
         public override string ToString()

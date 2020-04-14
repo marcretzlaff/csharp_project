@@ -18,7 +18,8 @@
             <ComboBoxItem IsSelected="True" Content="Food"></ComboBoxItem>
             <ComboBoxItem Content="Drinks"></ComboBoxItem>
         </ComboBox>
-        <TextBox x:Name="tb_seize" Text="Size"  VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="452,489,0,0" TextWrapping="Wrap"  Width="120" PreviewTextInput="tb_seize_PreviewTextInput"  DataObject.Pasting="tb_seize_Pasting"/>
-
+        <TextBox x:Name="tb_size" Text="Size"  VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="452,486,0,90" TextWrapping="Wrap"  Width="120" PreviewTextInput="tb_size_PreviewTextInput"  DataObject.Pasting="tb_size_Pasting"/>
+        <Label x:Name="l_success" Content="Item added successfully to Database!" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
+        <Label x:Name="l_failed" Content="Adding to Database failed!" VerticalAlignment="Bottom" Height="27" Width="700"  HorizontalContentAlignment="Right" Visibility="Hidden"/>
     </Grid>
 </UserControl>

@@ -10,36 +10,37 @@ namespace csharp_project.Data
     [Table("Food")]
     public class Food : Supplies
     {
-        private int weigth { get; set; }
+        [Column("Size")]
+        private int weigth { get; set; } = 0;
         public Food() { }
         public Food(string name)
         {
             Name = name;
             insertTime = DateTime.Now;
             expires = false;
-            expiryTime = DateTime.Now;
-            lasting = 0;
+            expiryTime = null;
+            lasting = null;
             weigth = 0;
         }
 
-        public Food(string name, int seize)
+        public Food(string name, int size)
         {
             Name = name;
             insertTime = DateTime.Now;
             expires = false;
-            expiryTime = DateTime.Now;
-            lasting = 0;
-            weigth = seize;
+            expiryTime = null;
+            lasting = null;
+            weigth = size;
         }
 
-        public Food(string name, DateTime inserttime, DateTime expiretime, int seize)
+        public Food(string name, DateTime inserttime, DateTime expiretime, int size)
         {
             Name = name;
             insertTime = inserttime;
             expires = true;
             expiryTime = expiretime;
             lasting = (expiretime - inserttime).Days;
-            weigth = seize;
+            weigth = size;
         }
 
         public override string ToString()

@@ -15,7 +15,47 @@
             <RowDefinition Height="200"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ListBox x:Name="lb_food" Grid.Column="0" Grid.Row="2"/>
-        <ListBox x:Name="lb_drinks" Grid.Column="1" Grid.Row="2"/>
+        <DataGrid x:Name="d_food" 
+                  Grid.Column="0" 
+                  Grid.Row="2" 
+                  AutoGenerateColumns="False" 
+                  Background="White" 
+                  RowBackground="WhiteSmoke" 
+                  AlternatingRowBackground="LightGray" 
+                  BorderBrush="Gray" 
+                  BorderThickness="2"
+                  IsReadOnly="True"
+                  CanUserReorderColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
+                <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Expires?" Binding="{Binding Path=expires}"/>
+                <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid x:Name="d_drinks" 
+                  Grid.Column="1" 
+                  Grid.Row="2"
+                  AutoGenerateColumns="False" 
+                  Background="White" 
+                  RowBackground="WhiteSmoke" 
+                  AlternatingRowBackground="LightGray" 
+                  BorderBrush="Gray" 
+                  BorderThickness="2"
+                  IsReadOnly="True"
+                  CanUserReorderColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
+                <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Expires?" Binding="{Binding Path=expires}"/>
+                <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Refresh" HorizontalAlignment="Left" Margin="326,105,0,0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" Click="Button_Click"/>
     </Grid>
 </UserControl>
