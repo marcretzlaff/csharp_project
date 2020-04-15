@@ -34,6 +34,20 @@
                 <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
                 <DataGridTextColumn Header="Weigth" Binding="{Binding Path=weigth}"/>
             </DataGrid.Columns>
+            <DataGrid.Resources>
+                <ContextMenu x:Key="RowMenu" 
+                             DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                    <MenuItem Header="Information" Click="MenuItemFood_Info"/>
+                    <MenuItem Header="Copy" Click="MenuItemFood_Copy"/>
+                    <Separator/>
+                    <MenuItem Header="Delete Item" Click="MenuItemFood_Del"/>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow" >
+                    <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
 
         <DataGrid x:Name="d_drinks" 
@@ -55,6 +69,20 @@
                 <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
                 <DataGridTextColumn Header="Volume" Binding="{Binding Path=volumen}"/>
             </DataGrid.Columns>
+            <DataGrid.Resources>
+                <ContextMenu x:Key="RowMenu" 
+                             DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                    <MenuItem Header="Information" Click="MenuItemDrinks_Info"/>
+                    <MenuItem Header="Copy" Click="MenuItemDrinks_Copy"/>
+                    <Separator/>
+                    <MenuItem Header="Delete Item" Click="MenuItemDrinks_Del"/>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow" >
+                    <Setter Property="ContextMenu" Value="{StaticResource RowMenu}" />
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
         <Button Content="Refresh" HorizontalAlignment="Left" Margin="326,105,0,0" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2" Click="Button_Click"/>
     </Grid>

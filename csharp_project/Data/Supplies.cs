@@ -24,7 +24,7 @@ namespace csharp_project.Data
 
         public string Getinformation()
         {
-            return $"{Name} was inserted at {insertTime} and lasts till {expiryTime}.";
+            return $"{Name} was inserted at {insertTime}. ";
         }
     }
 }

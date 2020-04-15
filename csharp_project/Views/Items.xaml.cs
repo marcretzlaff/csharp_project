@@ -29,7 +29,7 @@ namespace csharp_project
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var dbhelper = DataAccess.DataManager.getInstance();
-            var food_l= dbhelper.GetTable<Food>();
+            var food_l = dbhelper.GetTable<Food>();
             foreach (var x in food_l)
             {
                 x.lasting = (x.expiryTime - x.insertTime).Value.Days;
@@ -42,6 +42,98 @@ namespace csharp_project
                 x.lasting = (x.expiryTime - x.insertTime).Value.Days;
             }
             d_drinks.ItemsSource = drinks_l;
+        }
+
+        private void MenuItemFood_Info(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = contextMenu.DataContext as Food;
+            if (item.expires)
+            { 
+                MessageBox.Show(item.Getinformation() + $"It expires in {(item.expiryTime.Value.Date - item.insertTime.Date).TotalDays} days. It weigths {item.weigth} grams.", "Information of Item");
+            }
+            else
+            {
+                MessageBox.Show(item.Getinformation(), "Information of Item");
+            }
+        }
+
+        private void MenuItemFood_Del(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = contextMenu.DataContext;
+
+            var dbhelper = DataAccess.DataManager.getInstance();
+            dbhelper.Delete<Food>((item as Food).Id);
+        }
+
+        private void MenuItemFood_Copy(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = contextMenu.DataContext.ToString();
+            MessageBox.Show(item, "Copied to Clipboard!");
+            Clipboard.SetText(item);
+        }
+
+        private void MenuItemDrinks_Info(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = contextMenu.DataContext as Drinks;
+            if (item.expires)
+            {
+                MessageBox.Show(item.Getinformation() + $"It expires in {(item.expiryTime.Value.Date - item.insertTime.Date).TotalDays} days. Volume is {item.volumen} mL.", "Information of Item");
+            }
+            else
+            {
+                MessageBox.Show(item.Getinformation(), "Information of Item");
+            }
+        }
+
+        private void MenuItemDrinks_Del(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = contextMenu.DataContext;
+
+            var dbhelper = DataAccess.DataManager.getInstance();
+            dbhelper.Delete<Food>((item as Drinks).Id);
+        }
+
+        private void MenuItemDrinks_Copy(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            var item = contextMenu.DataContext.ToString();
+            MessageBox.Show(item, "Copied to Clipboard!");
+            Clipboard.SetText(item);
         }
     }
 }
