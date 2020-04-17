@@ -87,6 +87,7 @@ namespace csharp_project
         private void ListViewItem_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             SetActiveUserControl(items);
+            items.LoadTables();
         }
 
         private void ListViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)

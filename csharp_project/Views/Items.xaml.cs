@@ -26,22 +26,30 @@ namespace csharp_project
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void LoadTables()
         {
             var dbhelper = DataAccess.DataManager.getInstance();
             var food_l = dbhelper.GetTable<Food>();
             foreach (var x in food_l)
             {
-                x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                if (x.expires)
+                    x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                else x.lasting = null;
             }
             d_food.ItemsSource = food_l;
 
             var drinks_l = dbhelper.GetTable<Drinks>();
             foreach (var x in drinks_l)
             {
-                x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                if (x.expires)
+                    x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                else x.lasting = null;
             }
             d_drinks.ItemsSource = drinks_l;
+        }
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            LoadTables();
         }
 
         private void MenuItemFood_Info(object sender, RoutedEventArgs e)
@@ -75,6 +83,8 @@ namespace csharp_project
 
             var dbhelper = DataAccess.DataManager.getInstance();
             dbhelper.Delete<Food>((item as Food).Id);
+
+            LoadTables();
         }
 
         private void MenuItemFood_Copy(object sender, RoutedEventArgs e)

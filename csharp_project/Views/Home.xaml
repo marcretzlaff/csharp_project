@@ -21,5 +21,6 @@
         <TextBox x:Name="tb_size" Text="Size"  VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="452,486,0,90" TextWrapping="Wrap"  Width="120" PreviewTextInput="tb_size_PreviewTextInput"  DataObject.Pasting="tb_size_Pasting"/>
         <Label x:Name="l_success" Content="Item added successfully to Database!" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
         <Label x:Name="l_failed" Content="Adding to Database failed!" VerticalAlignment="Bottom" Height="27" Width="700"  HorizontalContentAlignment="Right" Visibility="Hidden"/>
+        <TextBox x:Name="tb_mul" HorizontalAlignment="Left" Height="24" Margin="343,486,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26" PreviewTextInput="tb_mul_PreviewTextInput"  DataObject.Pasting="tb_mul_Pasting"/>
     </Grid>
 </UserControl>

@@ -31,23 +31,30 @@ namespace csharp_project
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            bool success = false;
+
             var dbhelper = DataManager.getInstance();
-            int number = 0;
-            Int32.TryParse(tb_size.Text, out number);
+            Int32.TryParse(tb_size.Text, out int size);
+            Int32.TryParse(tb_mul.Text, out int mul);
             if ( dropdown_itemtyp.Text == "Food")
             {
                 Food data = null;
                 if (expire_checkb.IsChecked.Value)
                 {
                     //complicated item
-                    data = new Food(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, number);
+                    data = new Food(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, size);
                 }
                 else //simple item
                 {
-                    data = new Food(item_tb.Text);
+                    data = new Food(item_tb.Text,size);
                 }
 
-                if(dbhelper.Insert<Food>(data))
+                while (mul-- != 0)
+                {
+                    success = dbhelper.Insert<Food>(data);
+                    if (!success) break;
+                }
+                if (success)
                 {
                     ShowLabelFaded(l_success);
                 }
@@ -61,21 +68,26 @@ namespace csharp_project
                 Drinks data = null;
                 if (expire_checkb.IsChecked.Value)
                 {
-                    data = new Drinks(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, number);
+                    data = new Drinks(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, size);
                 }
                 else
                 {
-                    data = new Drinks(item_tb.Text);
+                    data = new Drinks(item_tb.Text, size);
                 }
 
-                if (dbhelper.Insert<Drinks>(data))
+                while (mul-- != 0)
+                {
+                    success = dbhelper.Insert<Drinks>(data);
+                    if (!success) break;
+                }
+                if (success)
                 {
                     ShowLabelFaded(l_success);
                 }
                 else
                 {
                     ShowLabelFaded(l_failed);
-                }  
+                }
             }
         }
 
@@ -112,6 +124,28 @@ namespace csharp_project
             }
         }
 
+        private void tb_mul_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void tb_mul_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                Regex regex = new Regex("[^0-9]+");
+                if (regex.IsMatch(text))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
         private void item_tb_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (item_tb.Text != "Item Name")

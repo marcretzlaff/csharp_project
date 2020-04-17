@@ -217,19 +217,7 @@
 
                 </Button>
 
-                <!--fruity text-->
-                <TextBlock  x:Name="app_name"
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Margin="50,0,0,0" 
-                            Text="Fruity Manager"
-                            Foreground="DarkGray"
-                            FontSize="28"
-                            Background="Transparent"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            FontStyle="Oblique">
-                </TextBlock>
+
                 
                 <!--Moving Form-->
                 <Border Grid.RowSpan="2" 
@@ -246,7 +234,23 @@
                              Opacity="0" 
                              Background="{x:Null}" 
                              Foreground="{x:Null}" 
-                            DragDelta="headerThumb_DragDelta"/>
+                             DragDelta="headerThumb_DragDelta"
+                             Panel.ZIndex="1"/>
+                        <!--fruity text-->
+                        <TextBlock  x:Name="app_name"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Margin="70,0,0,0" 
+                            Text="Fruity Manager"
+                            Foreground="DarkGray"
+                            FontSize="18"
+                            Background="Transparent"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontStyle="Oblique"
+                            >
+                        </TextBlock>
+
                     </Grid>
                 </Border>
             </Grid>
