@@ -1,5 +1,6 @@
 ﻿using csharp_project.Data;
 using csharp_project.DataAccess;
+using csharp_project.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,26 @@ namespace csharp_project
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void d_search_CurrentCellChanged(object sender, EventArgs e)
+        {
+            b_search_update.IsEnabled = true;
+        }
+
+        private void b_search_update_Click(object sender, RoutedEventArgs e)
+        {
+            if (dd_adding_itemtyp.Text == "Food")
+            {
+                UpdateDialog dia = new UpdateDialog((d_search.SelectedItem as Food).Id, "Food");
+                dia.Show();
+            }
+            else if (dd_adding_itemtyp.Text == "Drinks")
+            {
+                UpdateDialog dia = new UpdateDialog((d_search.SelectedItem as Food).Id, "Food");
+                dia.Show();
+            }
+
         }
 
         private void b_search_item_Click(object sender, RoutedEventArgs e)
@@ -248,6 +269,5 @@ namespace csharp_project
         }
 
         #endregion Extras
-
     }
 }

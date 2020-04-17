@@ -103,6 +103,9 @@
     <Compile Include="Views\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UpdateDialog.xaml.cs">
+      <DependentUpon>UpdateDialog.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -127,6 +130,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Settings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

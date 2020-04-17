@@ -58,7 +58,7 @@
                       BorderBrush="Gray" 
                       BorderThickness="2"
                       IsReadOnly="True"
-                      CanUserReorderColumns="False">
+                      CanUserReorderColumns="False" CurrentCellChanged="d_search_CurrentCellChanged">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="50"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
@@ -69,7 +69,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button x:Name="b_search_update" Content="Update Item" Grid.Column="4" Grid.Row="5" Width="75" Height="22" IsEnabled="False"/>
+            <Button x:Name="b_search_update" Content="Update Item" Grid.Column="4" Grid.Row="5" Width="75" Height="22" IsEnabled="False" Click="b_search_update_Click"/>
         </Grid>
         <!--ADDING -->
         <Grid Grid.Row="1">

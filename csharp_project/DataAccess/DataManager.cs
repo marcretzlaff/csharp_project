@@ -106,5 +106,22 @@ namespace csharp_project.DataAccess
                 return (from i in dbconn.Table<T>() where i.Name.ToLower() == name.ToLower() select i).ToList();
             }
         }
+
+        public bool Update<T>(T data) where T : Supplies, new()
+        {
+            using (var dbconn = GetConnection())
+            {
+                if (0 != dbconn.Update(data))
+                {
+                    Log.WriteLog($"Updated: {data.ToString()}");
+                    return true;
+                }
+                else
+                {
+                    Log.WriteLog($"Update of Item failed: {data.ToString()}");
+                }
+                return false;
+            }
+        }
     }
 }
