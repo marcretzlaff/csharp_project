@@ -29,7 +29,68 @@ namespace csharp_project
             InitializeComponent();
         }
         #region Search
+        private void tb_search_id_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
 
+        private void b_search_item_Click(object sender, RoutedEventArgs e)
+        {
+            var dbhelper = DataManager.getInstance();
+
+
+            if (dd_adding_itemtyp.Text == "Food")
+            {
+                if (rb_id.IsChecked.Value)
+                {
+                    List<Food> list = new List<Food>();
+                    Int32.TryParse(tb_search_id.Text, out int id);
+                    Food data = dbhelper.Get<Food>(id);
+                    if (data.expires)
+                        data.lasting = (data.expiryTime - data.insertTime).Value.Days;
+                    else data.lasting = null;
+                    list.Add(data);
+                    d_search.ItemsSource = list;
+                }
+                else if (rb_name.IsChecked.Value)
+                {
+                    var food_l = dbhelper.Get<Food>(tb_search_name.Text);
+                    foreach (var x in food_l)
+                    {
+                        if (x.expires)
+                            x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                        else x.lasting = null;
+                    }
+                    d_search.ItemsSource = food_l;
+                }
+            }
+            else if (dd_adding_itemtyp.Text == "Drinks")
+            {
+                if (rb_id.IsChecked.Value)
+                {
+                    List<Drinks> list = new List<Drinks>();
+                    Int32.TryParse(tb_search_id.Text, out int id);
+                    Drinks data = dbhelper.Get<Drinks>(id);
+                    if (data.expires)
+                        data.lasting = (data.expiryTime - data.insertTime).Value.Days;
+                    else data.lasting = null;
+                    list.Add(data);
+                    d_search.ItemsSource = list;
+                }
+                else if (rb_name.IsChecked.Value)
+                {
+                    var drinks_l = dbhelper.Get<Drinks>(tb_search_name.Text);
+                    foreach (var x in drinks_l)
+                    {
+                        if (x.expires)
+                            x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                        else x.lasting = null;
+                    }
+                    d_search.ItemsSource = drinks_l;
+                }
+            }
+        }
 
         #endregion Search
 
@@ -41,7 +102,7 @@ namespace csharp_project
             var dbhelper = DataManager.getInstance();
             Int32.TryParse(tb_adding_size.Text, out int size);
             Int32.TryParse(tb_adding_mul.Text, out int mul);
-            if ( dd_itemtyp.Text == "Food")
+            if ( dd_adding_itemtyp.Text == "Food")
             {
                 Food data = null;
                 if (b_adding_expire.IsChecked.Value)
@@ -187,5 +248,6 @@ namespace csharp_project
         }
 
         #endregion Extras
+
     }
 }

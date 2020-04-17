@@ -28,7 +28,7 @@ namespace csharp_project.DataAccess
 
         public SQLiteConnection GetConnection()
         {
-            return new SQLiteConnection(path);
+            return new SQLiteConnection(path,true);
         }
 
         public void DeleteDatabase()
@@ -96,6 +96,14 @@ namespace csharp_project.DataAccess
             {
                 var re = dbconn.Table<T>();
                 return re.ToList();
+            }
+        }
+
+        public List<T> Get<T>(string name) where T : Supplies, new()
+        {
+            using (SQLiteConnection dbconn = GetConnection())
+            {
+                return (from i in dbconn.Table<T>() where i.Name.ToLower() == name.ToLower() select i).ToList();
             }
         }
     }

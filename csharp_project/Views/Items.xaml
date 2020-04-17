@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:csharp_project"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="730">
-    <Grid Background="White">
+    <Grid Background="DarkGray">
         <Grid.ColumnDefinitions >
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>

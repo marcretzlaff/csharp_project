@@ -16,7 +16,8 @@
             <Grid.RowDefinitions>
                     <RowDefinition Height="45"></RowDefinition>
                     <RowDefinition Height="25"></RowDefinition>
-                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="40"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                     <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
@@ -31,20 +32,24 @@
             <!--Searching-->
             <Label Content="Search Items" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" FontFamily="Consolas"></Label>
 
-            <Label Content="ID of Item:" Grid.Row="1" Grid.Column="1"></Label>
-            <TextBox x:Name="tb_search_id" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Height="22" TextWrapping="Wrap" Text="ID" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="40"/>
+            <Button x:Name="b_search_item" Content="Search" Grid.Column="1" Grid.Row="3" Width="75" Height="22" IsEnabled="True" Click="b_search_item_Click"/>
+            <ComboBox x:Name="dd_search_itemtyp" Grid.Row="3" Grid.Column="4" VerticalAlignment="Center" Width="120">
+                <ComboBoxItem IsSelected="True" Content="Food"></ComboBoxItem>
+                <ComboBoxItem Content="Drinks"></ComboBoxItem>
+            </ComboBox>
+            <RadioButton x:Name="rb_id"   GroupName="enable" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="True"/>
+            <RadioButton x:Name="rb_name" GroupName="enable" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Content="Search with:" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"></Label>
+            
+            <Label Content="ID of Item:" Grid.Row="1" Grid.Column="2"></Label>
+            <TextBox x:Name="tb_search_id" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Height="22" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="40" PreviewTextInput="tb_search_id_PreviewTextInput"/>
 
-            <Label Content="Item Name:" Grid.Row="1" Grid.Column="2"></Label>
-            <TextBox x:Name="tb_search_name" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Height="22" TextWrapping="Wrap" Text="Item Name" VerticalAlignment="Center" Width="120"/>
+            <Label Content="Item Name:" Grid.Row="1" Grid.Column="3"></Label>
+            <TextBox x:Name="tb_search_name" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Center" Height="22" TextWrapping="Wrap" Text="Item Name" VerticalAlignment="Center" Width="120"/>
 
-            <Label Content="Date added:" Grid.Row="1" Grid.Column="3"></Label>
-            <DatePicker x:Name="dp_search_added" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-            <Button x:Name="b_search_item" Content="Search" Grid.Column="4" Grid.Row="2" Width="75" Height="22" IsEnabled="False"/>
-
-            <DataGrid x:Name="d_food" 
+            <DataGrid x:Name="d_search" 
                       Grid.Column="1" 
-                      Grid.Row="3" 
+                      Grid.Row="4" 
                       Grid.ColumnSpan="4"
                       AutoGenerateColumns="False" 
                       Background="White" 
@@ -64,7 +69,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button x:Name="b_search_update" Content="Update Item" Grid.Column="4" Grid.Row="4" Width="75" Height="22" IsEnabled="False"/>
+            <Button x:Name="b_search_update" Content="Update Item" Grid.Column="4" Grid.Row="5" Width="75" Height="22" IsEnabled="False"/>
         </Grid>
         <!--ADDING -->
         <Grid Grid.Row="1">
@@ -90,7 +95,7 @@
             <Button x:Name="b_adding_item" Content="Add Item" Grid.Column="4" Grid.Row="5" Width="75" Height="40" IsEnabled="False" Click="b_adding_item_Click"/>
 
             <Label Content="Item Typ:" Grid.Row="1" Grid.Column="1"></Label>
-            <ComboBox x:Name="dd_itemtyp" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="120">
+            <ComboBox x:Name="dd_adding_itemtyp" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="120">
                 <ComboBoxItem IsSelected="True" Content="Food"></ComboBoxItem>
                 <ComboBoxItem Content="Drinks"></ComboBoxItem>
             </ComboBox>
@@ -110,7 +115,7 @@
             <Label Content="Size of Item:" Grid.Row="3" Grid.Column="3"></Label>
             <TextBox x:Name="tb_adding_size" Text="Size"  Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" TextWrapping="Wrap"  Width="40" Height="22" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" PreviewTextInput="tb_adding_size_PreviewTextInput"  DataObject.Pasting="tb_adding_size_Pasting"/>
 
-            <Label Content="Number of Item:" Grid.Row="3" Grid.Column="4"></Label>
+            <Label Content="Number of Items:" Grid.Row="3" Grid.Column="4"></Label>
             <TextBox x:Name="tb_adding_mul" Grid.Row="4" Grid.Column="4" Height="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="26" PreviewTextInput="tb_adding_mul_PreviewTextInput"  DataObject.Pasting="tb_adding_mul_Pasting"/>
 
             <Label x:Name="l_success" Content="Item added successfully to Database!" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
