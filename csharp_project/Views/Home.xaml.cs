@@ -28,25 +28,30 @@ namespace csharp_project
         {
             InitializeComponent();
         }
+        #region Search
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        #endregion Search
+
+        #region Adding
+        private void b_adding_item_Click(object sender, RoutedEventArgs e)
         {
             bool success = false;
 
             var dbhelper = DataManager.getInstance();
-            Int32.TryParse(tb_size.Text, out int size);
-            Int32.TryParse(tb_mul.Text, out int mul);
-            if ( dropdown_itemtyp.Text == "Food")
+            Int32.TryParse(tb_adding_size.Text, out int size);
+            Int32.TryParse(tb_adding_mul.Text, out int mul);
+            if ( dd_itemtyp.Text == "Food")
             {
                 Food data = null;
-                if (expire_checkb.IsChecked.Value)
+                if (b_adding_expire.IsChecked.Value)
                 {
                     //complicated item
-                    data = new Food(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, size);
+                    data = new Food(tb_adding_name.Text, dp_adding_date_added.SelectedDate.Value, dp_adding_date_until.SelectedDate.Value, size);
                 }
                 else //simple item
                 {
-                    data = new Food(item_tb.Text,size);
+                    data = new Food(tb_adding_name.Text,size);
                 }
 
                 while (mul-- != 0)
@@ -66,13 +71,13 @@ namespace csharp_project
             else
             {
                 Drinks data = null;
-                if (expire_checkb.IsChecked.Value)
+                if (b_adding_expire.IsChecked.Value)
                 {
-                    data = new Drinks(item_tb.Text, date_added.SelectedDate.Value, date_until.SelectedDate.Value, size);
+                    data = new Drinks(tb_adding_name.Text, dp_adding_date_added.SelectedDate.Value, dp_adding_date_until.SelectedDate.Value, size);
                 }
                 else
                 {
-                    data = new Drinks(item_tb.Text, size);
+                    data = new Drinks(tb_adding_name.Text, size);
                 }
 
                 while (mul-- != 0)
@@ -91,23 +96,23 @@ namespace csharp_project
             }
         }
 
-        private void expire_checkb_Unchecked(object sender, RoutedEventArgs e)
+        private void b_adding_expire_Unchecked(object sender, RoutedEventArgs e)
         {
-            date_until.Visibility = Visibility.Hidden;
+            dp_adding_date_until.Visibility = Visibility.Hidden;
         }
 
-        private void expire_checkb_Checked(object sender, RoutedEventArgs e)
+        private void b_adding_expire_Checked(object sender, RoutedEventArgs e)
         {
-            date_until.Visibility = Visibility.Visible;
+            dp_adding_date_until.Visibility = Visibility.Visible;
         }
 
-        private void tb_size_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void tb_adding_size_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void tb_size_Pasting(object sender, DataObjectPastingEventArgs e)
+        private void tb_adding_size_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
             {
@@ -124,13 +129,13 @@ namespace csharp_project
             }
         }
 
-        private void tb_mul_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void tb_adding_mul_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void tb_mul_Pasting(object sender, DataObjectPastingEventArgs e)
+        private void tb_adding_mul_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
             {
@@ -146,19 +151,20 @@ namespace csharp_project
                 e.CancelCommand();
             }
         }
-        private void item_tb_TextChanged(object sender, TextChangedEventArgs e)
+        private void tb_adding_name_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (item_tb.Text != "Item Name")
+            if (tb_adding_name.Text != "Item Name")
             {
-                 add_item_bt.IsEnabled = true;
+                b_adding_item.IsEnabled = true;
             }
             else
             {
-                add_item_bt.IsEnabled = false;
+                b_adding_item.IsEnabled = false;
             }
         }
+        #endregion Adding
 
-
+        #region Extras
         private void ShowLabelFaded(Label label)
         {
             label.Visibility = System.Windows.Visibility.Visible;
@@ -179,5 +185,7 @@ namespace csharp_project
             storyboard.Completed += delegate { label.Visibility = System.Windows.Visibility.Hidden; };
             storyboard.Begin();
         }
+
+        #endregion Extras
     }
 }

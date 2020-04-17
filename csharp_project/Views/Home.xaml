@@ -7,20 +7,114 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="730">
-    <Grid Background="White">
-        <Label Content="HOME" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <Button x:Name="add_item_bt" Content="Add Item" HorizontalAlignment="Left" Margin="609,446,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" IsEnabled="False"/>
-        <DatePicker x:Name="date_until" SelectedDate="{x:Static sys:DateTime.Now}" HorizontalAlignment="Left" Margin="452,444,0,0" VerticalAlignment="Top"/>
-        <DatePicker x:Name="date_added" SelectedDate="{x:Static sys:DateTime.Now}" HorizontalAlignment="Left" Margin="296,444,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="expire_checkb" Content="Expires" HorizontalAlignment="Left" Margin="425,418,0,0" VerticalAlignment="Top" IsChecked="True" Unchecked="expire_checkb_Unchecked" Checked="expire_checkb_Checked"/>
-        <TextBox x:Name="item_tb" HorizontalAlignment="Left" Height="23" Margin="166,446,0,0" TextWrapping="Wrap" Text="Item Name" VerticalAlignment="Top" Width="120" TextChanged="item_tb_TextChanged"/>
-        <ComboBox x:Name="dropdown_itemtyp" HorizontalAlignment="Left" Margin="26,447,0,0" VerticalAlignment="Top" Width="120">
-            <ComboBoxItem IsSelected="True" Content="Food"></ComboBoxItem>
-            <ComboBoxItem Content="Drinks"></ComboBoxItem>
-        </ComboBox>
-        <TextBox x:Name="tb_size" Text="Size"  VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="23" Margin="452,486,0,90" TextWrapping="Wrap"  Width="120" PreviewTextInput="tb_size_PreviewTextInput"  DataObject.Pasting="tb_size_Pasting"/>
-        <Label x:Name="l_success" Content="Item added successfully to Database!" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
-        <Label x:Name="l_failed" Content="Adding to Database failed!" VerticalAlignment="Bottom" Height="27" Width="700"  HorizontalContentAlignment="Right" Visibility="Hidden"/>
-        <TextBox x:Name="tb_mul" HorizontalAlignment="Left" Height="24" Margin="343,486,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="26" PreviewTextInput="tb_mul_PreviewTextInput"  DataObject.Pasting="tb_mul_Pasting"/>
+    <Grid Background="DarkGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                    <RowDefinition Height="45"></RowDefinition>
+                    <RowDefinition Height="25"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <!--Searching-->
+            <Label Content="Search Items" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" FontFamily="Consolas"></Label>
+
+            <Label Content="ID of Item:" Grid.Row="1" Grid.Column="1"></Label>
+            <TextBox x:Name="tb_search_id" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Height="22" TextWrapping="Wrap" Text="ID" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="40"/>
+
+            <Label Content="Item Name:" Grid.Row="1" Grid.Column="2"></Label>
+            <TextBox x:Name="tb_search_name" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Height="22" TextWrapping="Wrap" Text="Item Name" VerticalAlignment="Center" Width="120"/>
+
+            <Label Content="Date added:" Grid.Row="1" Grid.Column="3"></Label>
+            <DatePicker x:Name="dp_search_added" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Button x:Name="b_search_item" Content="Search" Grid.Column="4" Grid.Row="2" Width="75" Height="22" IsEnabled="False"/>
+
+            <DataGrid x:Name="d_food" 
+                      Grid.Column="1" 
+                      Grid.Row="3" 
+                      Grid.ColumnSpan="4"
+                      AutoGenerateColumns="False" 
+                      Background="White" 
+                      RowBackground="WhiteSmoke" 
+                      AlternatingRowBackground="LightGray" 
+                      BorderBrush="Gray" 
+                      BorderThickness="2"
+                      IsReadOnly="True"
+                      CanUserReorderColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="50"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
+                    <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}" Width="90"/>
+                    <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}" Width="90"/>
+                    <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}" Width="80"/>
+                    <DataGridTextColumn Header="Weigth" Binding="{Binding Path=weigth}" Width="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button x:Name="b_search_update" Content="Update Item" Grid.Column="4" Grid.Row="4" Width="75" Height="22" IsEnabled="False"/>
+        </Grid>
+        <!--ADDING -->
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="27"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="50"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Content="Adding Items" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" FontFamily="Consolas"></Label>
+
+            <Button x:Name="b_adding_item" Content="Add Item" Grid.Column="4" Grid.Row="5" Width="75" Height="40" IsEnabled="False" Click="b_adding_item_Click"/>
+
+            <Label Content="Item Typ:" Grid.Row="1" Grid.Column="1"></Label>
+            <ComboBox x:Name="dd_itemtyp" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Width="120">
+                <ComboBoxItem IsSelected="True" Content="Food"></ComboBoxItem>
+                <ComboBoxItem Content="Drinks"></ComboBoxItem>
+            </ComboBox>
+
+            <Label Content="Item Name:" Grid.Row="1" Grid.Column="2"></Label>
+            <TextBox x:Name="tb_adding_name" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalContentAlignment="Right" TextWrapping="Wrap" Text="Item Name" Width="Auto" Height="22" TextChanged="tb_adding_name_TextChanged"/>
+
+            <Label Content="Date added:" Grid.Row="1" Grid.Column="3"></Label>
+            <DatePicker x:Name="dp_adding_date_added" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+           
+            <Label Content="Date until:" Grid.Row="3" Grid.Column="2"></Label>
+            <DatePicker x:Name="dp_adding_date_until" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+            <Label Content="Expires:" Grid.Row="3" Grid.Column="1"></Label>
+            <CheckBox x:Name="b_adding_expire" Content="Expires" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="True" Unchecked="b_adding_expire_Unchecked" Checked="b_adding_expire_Checked"/>
+
+            <Label Content="Size of Item:" Grid.Row="3" Grid.Column="3"></Label>
+            <TextBox x:Name="tb_adding_size" Text="Size"  Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" TextWrapping="Wrap"  Width="40" Height="22" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" PreviewTextInput="tb_adding_size_PreviewTextInput"  DataObject.Pasting="tb_adding_size_Pasting"/>
+
+            <Label Content="Number of Item:" Grid.Row="3" Grid.Column="4"></Label>
+            <TextBox x:Name="tb_adding_mul" Grid.Row="4" Grid.Column="4" Height="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="26" PreviewTextInput="tb_adding_mul_PreviewTextInput"  DataObject.Pasting="tb_adding_mul_Pasting"/>
+
+            <Label x:Name="l_success" Content="Item added successfully to Database!" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
+            <Label x:Name="l_failed" Content="Adding to Database failed!" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="27" Width="700"  HorizontalContentAlignment="Right" Visibility="Hidden"/>
+        </Grid>
     </Grid>
 </UserControl>
