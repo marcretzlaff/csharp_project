@@ -38,7 +38,7 @@ namespace csharp_project.Views
                 List<Food> list = new List<Food>();
                 var data = dbhelper.Get<Food>(id);
                 if (data.expires)
-                    data.lasting = (data.expiryTime - data.insertTime).Value.Days;
+                    data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
                 else data.lasting = null;
 
                 DataGridTextColumn textcol = new DataGridTextColumn();
@@ -56,7 +56,7 @@ namespace csharp_project.Views
                 List<Drinks> list = new List<Drinks>();
                 var data = dbhelper.Get<Drinks>(id);
                 if (data.expires)
-                    data.lasting = (data.expiryTime - data.insertTime).Value.Days;
+                    data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
                 else data.lasting = null;
 
                 DataGridTextColumn textcol = new DataGridTextColumn();

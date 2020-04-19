@@ -1,4 +1,5 @@
 ﻿using csharp_project.Data;
+using csharp_project.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace csharp_project
             foreach (var x in food_l)
             {
                 if (x.expires)
-                    x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                    x.lasting = (x.expiryTime - DateTime.Now).Value.Days;
                 else x.lasting = null;
             }
             d_food.ItemsSource = food_l;
@@ -42,16 +43,13 @@ namespace csharp_project
             foreach (var x in drinks_l)
             {
                 if (x.expires)
-                    x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                    x.lasting = (x.expiryTime - DateTime.Now).Value.Days;
                 else x.lasting = null;
             }
             d_drinks.ItemsSource = drinks_l;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            LoadTables();
-        }
 
+        #region Food
         private void MenuItemFood_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -100,6 +98,22 @@ namespace csharp_project
             Clipboard.SetText(item);
         }
 
+        private void MenuItemFood_Update(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            UpdateDialog dia = new UpdateDialog((contextMenu.DataContext as Food).Id, "Food");
+            dia.ShowDialog();
+            LoadTables(); //update List
+        }
+
+        #endregion Food
+
+        #region Drinks
         private void MenuItemDrinks_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -145,5 +159,19 @@ namespace csharp_project
             MessageBox.Show(item, "Copied to Clipboard!");
             Clipboard.SetText(item);
         }
+
+        private void MenuItemDrinks_Update(object sender, RoutedEventArgs e)
+        {
+            // Get the clicked MenuItem
+            MenuItem menuItem = (MenuItem)sender;
+
+            //Get the ContextMenu to which the menuItem belongs
+            ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
+
+            UpdateDialog dia = new UpdateDialog((contextMenu.DataContext as Drinks).Id, "Drinks");
+            dia.ShowDialog();
+            LoadTables(); //update List
+        }
+        #endregion Drinks
     }
 }

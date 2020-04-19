@@ -75,6 +75,7 @@ namespace csharp_project
             home.Visibility = Visibility.Collapsed;
             items.Visibility = Visibility.Collapsed;
             settings.Visibility = Visibility.Collapsed;
+            calendar.Visibility = Visibility.Collapsed;
 
             control.Visibility = Visibility.Visible;
         }
@@ -92,7 +93,7 @@ namespace csharp_project
 
         private void ListViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
         {
-            //SetActiveUserControl(calendar);
+            SetActiveUserControl(calendar);
         }
 
         private void ListViewItem_PreviewMouseLeftButtonDown_3(object sender, MouseButtonEventArgs e)

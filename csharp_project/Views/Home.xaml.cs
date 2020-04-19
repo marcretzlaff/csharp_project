@@ -46,12 +46,12 @@ namespace csharp_project
             if (dd_adding_itemtyp.Text == "Food")
             {
                 UpdateDialog dia = new UpdateDialog((d_search.SelectedItem as Food).Id, "Food");
-                dia.Show();
+                dia.ShowDialog();
             }
             else if (dd_adding_itemtyp.Text == "Drinks")
             {
                 UpdateDialog dia = new UpdateDialog((d_search.SelectedItem as Food).Id, "Food");
-                dia.Show();
+                dia.ShowDialog();
             }
 
         }
@@ -69,7 +69,7 @@ namespace csharp_project
                     Int32.TryParse(tb_search_id.Text, out int id);
                     Food data = dbhelper.Get<Food>(id);
                     if (data.expires)
-                        data.lasting = (data.expiryTime - data.insertTime).Value.Days;
+                        data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
                     else data.lasting = null;
                     list.Add(data);
                     d_search.ItemsSource = list;
@@ -80,7 +80,7 @@ namespace csharp_project
                     foreach (var x in food_l)
                     {
                         if (x.expires)
-                            x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                            x.lasting = (x.expiryTime - DateTime.Now).Value.Days;
                         else x.lasting = null;
                     }
                     d_search.ItemsSource = food_l;
@@ -94,7 +94,7 @@ namespace csharp_project
                     Int32.TryParse(tb_search_id.Text, out int id);
                     Drinks data = dbhelper.Get<Drinks>(id);
                     if (data.expires)
-                        data.lasting = (data.expiryTime - data.insertTime).Value.Days;
+                        data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
                     else data.lasting = null;
                     list.Add(data);
                     d_search.ItemsSource = list;
@@ -105,7 +105,7 @@ namespace csharp_project
                     foreach (var x in drinks_l)
                     {
                         if (x.expires)
-                            x.lasting = (x.expiryTime - x.insertTime).Value.Days;
+                            x.lasting = (x.expiryTime - DateTime.Now).Value.Days;
                         else x.lasting = null;
                     }
                     d_search.ItemsSource = drinks_l;
