@@ -43,15 +43,29 @@ namespace csharp_project
 
         private void b_search_update_Click(object sender, RoutedEventArgs e)
         {
-            if (dd_adding_itemtyp.Text == "Food")
+            var dbhelper = DataManager.getInstance();
+
+            if (dd_search_itemtyp.Text == "Food")
             {
-                UpdateDialog dia = new UpdateDialog((d_search.SelectedItem as Food).Id, "Food");
+                List<Food> list = new List<Food>();
+                int id = (d_search.SelectedItem as Food).Id;
+                UpdateDialog dia = new UpdateDialog(id, "Food");
                 dia.ShowDialog();
+
+                var data = dbhelper.Get<Food>(id);
+                list.Add(data);
+                d_search.ItemsSource = list;
             }
-            else if (dd_adding_itemtyp.Text == "Drinks")
+            else if (dd_search_itemtyp.Text == "Drinks")
             {
-                UpdateDialog dia = new UpdateDialog((d_search.SelectedItem as Food).Id, "Food");
+                List<Drinks> list = new List<Drinks>();
+                int id = (d_search.SelectedItem as Drinks).Id;
+                UpdateDialog dia = new UpdateDialog(id, "Drinks");
                 dia.ShowDialog();
+
+                var data = dbhelper.Get<Drinks>(id);
+                list.Add(data);
+                d_search.ItemsSource = list;
             }
 
         }
@@ -61,7 +75,7 @@ namespace csharp_project
             var dbhelper = DataManager.getInstance();
 
 
-            if (dd_adding_itemtyp.Text == "Food")
+            if (dd_search_itemtyp.Text == "Food")
             {
                 if (rb_id.IsChecked.Value)
                 {
@@ -86,7 +100,7 @@ namespace csharp_project
                     d_search.ItemsSource = food_l;
                 }
             }
-            else if (dd_adding_itemtyp.Text == "Drinks")
+            else if (dd_search_itemtyp.Text == "Drinks")
             {
                 if (rb_id.IsChecked.Value)
                 {
