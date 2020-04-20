@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace MyLog
 {
@@ -13,6 +14,9 @@ namespace MyLog
             CreateLogFile();
         }
 
+        /// <summary>
+        /// Creates directory and log file.
+        /// </summary>
         public static void CreateLogFile()
         {
             Directory.CreateDirectory(directorypath);
@@ -22,11 +26,25 @@ namespace MyLog
             }
         }
 
+        /// <summary>
+        /// Deletes log file.
+        /// </summary>
         public static void Delete()
         {
-            File.Delete(path);
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Exception happened!");
+            }
         }
 
+        /// <summary>
+        /// not for internal exception use
+        /// </summary>
+        /// <param name="exception"></param>
         public static void WriteException(Exception exception)
         {
             using (StreamWriter fs = new StreamWriter(path, true))
@@ -42,20 +60,34 @@ namespace MyLog
             }
         }
 
+        /// <summary>
+        /// Writes param string to log file.
+        /// </summary>
+        /// <param name="text"></param>
         public static void WriteLog(string text)
         {
-            using (StreamWriter fs = new StreamWriter(path,true))
+            try
             {
-                StringBuilder message = new StringBuilder();
+                using (StreamWriter fs = new StreamWriter(path, true))
+                {
+                    StringBuilder message = new StringBuilder();
 
-                message.AppendLine("<---------------" + DateTime.Now.ToString("G") + "--------------->");
-                message.AppendLine(text);
-                message.AppendLine("");
+                    message.AppendLine("<---------------" + DateTime.Now.ToString("G") + "--------------->");
+                    message.AppendLine(text);
+                    message.AppendLine("");
 
-                fs.Write(message.ToString());
+                    fs.Write(message.ToString());
+                }
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message, "Exception happened!");
             }
         }
 
+        /// <summary>
+        /// Opens log file in editor.
+        /// </summary>
         public static void OpenLog()
         {
             System.Diagnostics.Process.Start("notepad.exe", path);

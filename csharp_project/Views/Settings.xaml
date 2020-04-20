@@ -11,7 +11,6 @@
         <Button Content="Delete all Items" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Delete_DB_Click"/>
         <Button Content="Delete Log" HorizontalAlignment="Right" VerticalAlignment="Center" Width="125" Click="Delete_Log_Click"/>
         <Button Content="Open Log" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Click="Open_Log_Click"/>
-        <Label x:Name="l_log_delete" Content="Log deleted successfully!" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
-        <Label x:Name="l_db_delete" Content="Database deletion successfully!" VerticalAlignment="Bottom" Height="27" Width="700"  HorizontalContentAlignment="Right" Visibility="Hidden"/>
+        <Label x:Name="l_settings" Content="Log deleted successfully!" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
     </Grid>
 </UserControl>

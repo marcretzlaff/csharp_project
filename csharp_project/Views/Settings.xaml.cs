@@ -30,7 +30,7 @@ namespace csharp_project
         private void Delete_DB_Click(object sender, RoutedEventArgs e)
         {
             Log.WriteLog($"Database deleted.");
-            ShowLabelFaded(l_db_delete);
+            ShowLabelFaded(l_settings, "Database deletion successfully!");
             var dbhelper = DataAccess.DataManager.getInstance();
             dbhelper.DeleteDatabase();
             dbhelper.CheckAndLoadDefaults();
@@ -38,13 +38,14 @@ namespace csharp_project
 
         private void Delete_Log_Click(object sender, RoutedEventArgs e)
         {
-            ShowLabelFaded(l_log_delete);
+            ShowLabelFaded(l_settings, "Log deleted successfully!");
             Log.Delete();
             Log.CreateLogFile();
         }
 
-        private void ShowLabelFaded(Label label)
+        private void ShowLabelFaded(Label label, string s)
         {
+            label.Content = s;
             label.Visibility = System.Windows.Visibility.Visible;
 
             var a = new DoubleAnimation

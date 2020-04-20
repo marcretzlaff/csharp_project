@@ -68,6 +68,7 @@ namespace csharp_project
                 d_search.ItemsSource = list;
             }
 
+            ShowLabelFaded(l_adding, "Item updated!");
         }
 
         private void b_search_item_Click(object sender, RoutedEventArgs e)
@@ -157,11 +158,11 @@ namespace csharp_project
                 }
                 if (success)
                 {
-                    ShowLabelFaded(l_success);
+                    ShowLabelFaded(l_adding, "Item added successfully to Database!");
                 }
                 else
                 {
-                    ShowLabelFaded(l_failed);
+                    ShowLabelFaded(l_adding, "Adding to Database failed!");
                 }
             }
             else
@@ -183,11 +184,11 @@ namespace csharp_project
                 }
                 if (success)
                 {
-                    ShowLabelFaded(l_success);
+                    ShowLabelFaded(l_adding, "Item added successfully to Database!");
                 }
                 else
                 {
-                    ShowLabelFaded(l_failed);
+                    ShowLabelFaded(l_adding, "Adding to Database failed!");
                 }
             }
         }
@@ -261,8 +262,9 @@ namespace csharp_project
         #endregion Adding
 
         #region Extras
-        private void ShowLabelFaded(Label label)
+        private void ShowLabelFaded(Label label, string s)
         {
+            label.Content = s;
             label.Visibility = System.Windows.Visibility.Visible;
 
             var a = new DoubleAnimation

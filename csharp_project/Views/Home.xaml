@@ -116,10 +116,9 @@
             <TextBox x:Name="tb_adding_size" Text="Size"  Grid.Row="4" Grid.Column="3" VerticalAlignment="Center" TextWrapping="Wrap"  Width="40" Height="22" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" PreviewTextInput="tb_adding_size_PreviewTextInput"  DataObject.Pasting="tb_adding_size_Pasting"/>
 
             <Label Content="Number of Items:" Grid.Row="3" Grid.Column="4"></Label>
-            <TextBox x:Name="tb_adding_mul" Grid.Row="4" Grid.Column="4" Height="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" TextWrapping="Wrap" Text="0" VerticalAlignment="Center" Width="26" PreviewTextInput="tb_adding_mul_PreviewTextInput"  DataObject.Pasting="tb_adding_mul_Pasting"/>
+            <TextBox x:Name="tb_adding_mul" Grid.Row="4" Grid.Column="4" Height="22" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" TextWrapping="Wrap" Text="1" VerticalAlignment="Center" Width="26" PreviewTextInput="tb_adding_mul_PreviewTextInput"  DataObject.Pasting="tb_adding_mul_Pasting"/>
 
-            <Label x:Name="l_success" Content="Item added successfully to Database!" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
-            <Label x:Name="l_failed" Content="Adding to Database failed!" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="27" Width="700"  HorizontalContentAlignment="Right" Visibility="Hidden"/>
+            <Label x:Name="l_adding" Content="" Grid.Column="4" Grid.Row="6" Grid.ColumnSpan="3" VerticalAlignment="Center" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
         </Grid>
     </Grid>
 </UserControl>
