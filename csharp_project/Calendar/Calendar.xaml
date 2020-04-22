@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="csharp_project.Calendar.Calendar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:csharp_project.Calendar"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="LightGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Image Source="../Assets/icons8-vorheriges-48.png" Stretch="Fill" MouseLeftButtonDown="b_previous_Click"/>
+                    <TextBlock VerticalAlignment="Center">Previous</TextBlock>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="3">
+                    <TextBlock VerticalAlignment="Center">Next</TextBlock>
+                <Image Source="../Assets/icons8-naechstes-48.png" Stretch="Fill"  MouseLeftButtonDown="b_next_Click"/>
+                </StackPanel>
+        </Grid>
+
+        <Label x:Name="l_date" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Consolas" Content=""></Label>
+
+        <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" HorizontalAlignment="Center">Monday</Label>
+                <Label Grid.Column="1" HorizontalAlignment="Center">Tuesday</Label>
+                <Label Grid.Column="2" HorizontalAlignment="Center">Wednesday</Label>
+                <Label Grid.Column="3" HorizontalAlignment="Center">Thursday</Label>
+                <Label Grid.Column="4" HorizontalAlignment="Center">Friday</Label>
+                <Label Grid.Column="5" HorizontalAlignment="Center">Saturday</Label>
+                <Label Grid.Column="6" HorizontalAlignment="Center">Sunday</Label>
+            </Grid>
+        </Border>
+
+        <StackPanel x:Name="MonthSP"  Grid.Row="3" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Stretch">
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:csharp_project" 
-        xmlns:views="clr-namespace:csharp_project.Views"
+        xmlns:calendar="clr-namespace:csharp_project.Calendar"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="600" 
@@ -183,7 +183,7 @@
                     <local:Home x:Name="home" Visibility="Collapsed"></local:Home>
                     <local:Items x:Name="items" Visibility="Collapsed"></local:Items>
                     <local:Settings x:Name="settings" Visibility="Collapsed"></local:Settings>
-                    <views:Calendar x:Name="calendar" Visibility="Collapsed"></views:Calendar>
+                    <calendar:Calendar x:Name="calendar" Visibility="Collapsed"></calendar:Calendar>
                 </Grid>
             </Grid>
 

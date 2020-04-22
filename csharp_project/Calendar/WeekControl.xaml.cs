@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace csharp_project.Views
+namespace csharp_project.Calendar
 {
     /// <summary>
-    /// Interaktionslogik für Calendar.xaml
+    /// Interaktionslogik für WeekControl.xaml
     /// </summary>
-    public partial class Calendar : UserControl
+    public partial class WeekControl : UserControl
     {
-        public Calendar()
+        public WeekControl()
         {
             InitializeComponent();
         }

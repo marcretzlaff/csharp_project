@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="csharp_project.Calendar.DayControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:csharp_project.Calendar"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="100">
+    <Grid VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border x:Name="DayLabelRowBorder" Grid.Row="0" Background="DarkGray">
+            <Label x:Name="DayNumberLabel" Content="1" FontWeight="Bold" FontFamily="Arial"/>
+        </Border>
+
+        <Border Grid.Row="1" Background="LightGray" BorderBrush="DarkGray" BorderThickness="1">
+            <StackPanel Grid.Row="1" x:Name="DayStack" HorizontalAlignment="Stretch" Background="White"
+                    VerticalAlignment="Stretch" CanVerticallyScroll="True">
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>
