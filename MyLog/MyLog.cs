@@ -33,7 +33,8 @@ namespace MyLog
         {
             try
             {
-                File.Delete(path);
+                //overwrites written content
+                File.CreateText(path);
             }
             catch (Exception e)
             {
