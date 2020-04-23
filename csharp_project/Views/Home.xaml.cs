@@ -167,7 +167,7 @@ namespace csharp_project
             }
             else
             {
-                Drinks data = null;
+                Drinks data;
                 if (b_adding_expire.IsChecked.Value)
                 {
                     data = new Drinks(tb_adding_name.Text, dp_adding_date_added.SelectedDate.Value, dp_adding_date_until.SelectedDate.Value, size);

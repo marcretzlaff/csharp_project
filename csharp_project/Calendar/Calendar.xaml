@@ -16,8 +16,9 @@
             <RowDefinition Height="25"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid Grid.Column="1" Grid.Row="1">
@@ -62,7 +63,7 @@
             </Grid>
         </Border>
 
-        <StackPanel x:Name="MonthSP"  Grid.Row="3" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Stretch">
+        <StackPanel x:Name="MonthSP"  Grid.Row="4" Grid.Column="1" Orientation="Vertical" VerticalAlignment="Stretch">
         </StackPanel>
     </Grid>
 </UserControl>

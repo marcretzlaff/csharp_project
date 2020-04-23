@@ -34,7 +34,7 @@ namespace csharp_project
             foreach (var x in food_l)
             {
                 if (x.expires)
-                    x.lasting = (x.expiryTime - DateTime.Now).Value.Days;
+                    x.lasting = (x.expiryTime - DateTime.Now).Value.Days + 1;
                 else x.lasting = null;
             }
             d_food.ItemsSource = food_l;
@@ -43,7 +43,7 @@ namespace csharp_project
             foreach (var x in drinks_l)
             {
                 if (x.expires)
-                    x.lasting = (x.expiryTime - DateTime.Now).Value.Days;
+                    x.lasting = (x.expiryTime - DateTime.Now).Value.Days + 1;
                 else x.lasting = null;
             }
             d_drinks.ItemsSource = drinks_l;

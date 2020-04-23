@@ -16,9 +16,15 @@
         </Border>
 
         <Border Grid.Row="1" Background="LightGray" BorderBrush="DarkGray" BorderThickness="1">
-            <StackPanel Grid.Row="1" x:Name="DayStack" HorizontalAlignment="Stretch" Background="White"
-                    VerticalAlignment="Stretch" CanVerticallyScroll="True">
-            </StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label x:Name="l_food_count" Grid.Row="0" HorizontalAlignment="Center" FontSize="12" FontWeight="DemiBold" MouseLeftButtonDown="l_food_count_MouseLeftButtonDown"></Label>
+                <Label x:Name="l_drinks_count" Grid.Row="1" HorizontalAlignment="Center" FontSize="12" FontWeight="DemiBold" MouseLeftButtonDown="l_drinks_count_MouseLeftButtonDown"></Label>
+            </Grid>
         </Border>
     </Grid>
 </UserControl>

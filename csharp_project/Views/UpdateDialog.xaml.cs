@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MyLog;
 
 namespace csharp_project.Views
 {
@@ -79,7 +80,7 @@ namespace csharp_project.Views
              dbhelper.Update(d_update.SelectedItem as Food);
             else if (d_update.SelectedItem.GetType().Name == "Drinks")
              dbhelper.Update(d_update.SelectedItem as Drinks);
-
+            Log.WriteLog($"Updated Item: {d_update.SelectedItem.ToString()}");
             Close();
         }
     }

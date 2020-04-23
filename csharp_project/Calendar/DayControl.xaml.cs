@@ -1,4 +1,6 @@
-﻿using System;
+﻿using csharp_project.Data;
+using csharp_project.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,20 @@ namespace csharp_project.Calendar
         public DayControl()
         {
             InitializeComponent();
+        }
+
+        private void l_food_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var dayitems = Calendar.list_f.FindAll(x => x.expiryTime.Value.Date == ((DateTime)Tag).Date);
+            CalendarItemsDialog dia = new CalendarItemsDialog(dayitems, "Food");
+            dia.ShowDialog();
+        }
+
+        private void l_drinks_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var dayitems = Calendar.list_d.FindAll(x => x.expiryTime.Value.Date == ((DateTime)Tag).Date);
+            CalendarItemsDialog dia = new CalendarItemsDialog(dayitems, "Drinks");
+            dia.ShowDialog();
         }
     }
 }

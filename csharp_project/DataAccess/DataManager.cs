@@ -107,6 +107,15 @@ namespace csharp_project.DataAccess
             }
         }
 
+        public List<T> Get<T>(DateTime month) where T : Supplies, new()
+        {
+            using (SQLiteConnection dbconn = GetConnection())
+            {
+                var list = (from i in dbconn.Table<T>() where i.expires == true select i).ToList();
+                return list.Where(x => x.expiryTime.Value.Month == month.Month).ToList();
+            }
+        }
+
         public bool Update<T>(T data) where T : Supplies, new()
         {
             using (var dbconn = GetConnection())

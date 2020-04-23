@@ -7,24 +7,25 @@
         mc:Ignorable="d"
         Title="Update the selected Item" Height="180" Width="600"
         WindowStartupLocation="CenterScreen">
-    <Grid>
+    <Grid Background="LightGray">
         <Grid.RowDefinitions>
-            <RowDefinition Height="45"></RowDefinition>
             <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="45"></RowDefinition>
         </Grid.RowDefinitions>
         <Label Content="Change the Item properties." Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Left" Width="300"></Label>
 
         <DataGrid x:Name="d_update" 
-                      Grid.Row="1" 
+                      Grid.Row="1"
+                      Height="Auto"
                       AutoGenerateColumns="False" 
-                      Background="White" 
+                      Background="LightGray" 
                       RowBackground="LightGray" 
-                      AlternatingRowBackground="LightGray" 
                       BorderBrush="Gray" 
                       BorderThickness="2"
                       IsReadOnly="False"
-                      CanUserReorderColumns="False">
+                      CanUserReorderColumns="False"
+                      >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="50"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
