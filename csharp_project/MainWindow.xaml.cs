@@ -94,6 +94,7 @@ namespace csharp_project
         private void ListViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
         {
             SetActiveUserControl(calendar);
+            calendar.InitLists();
             calendar.SetCalendar();
         }
 

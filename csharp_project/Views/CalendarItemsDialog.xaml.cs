@@ -22,23 +22,25 @@ namespace csharp_project.Views
     public partial class CalendarItemsDialog : Window
     {
         private string _listtyp;
+        private Calendar.DayControl _parent;
         public CalendarItemsDialog()
         {
             InitializeComponent();
         }
 
-        public CalendarItemsDialog(List<Food> list, string typ)
+        public CalendarItemsDialog(string typ, Calendar.DayControl parent)
         {
             InitializeComponent();
-            d_items.ItemsSource = list;
             _listtyp = typ;
+            _parent = parent;
+            FillList();
         }
-
-        public CalendarItemsDialog(List<Drinks> list, string typ)
+        public void FillList()
         {
-            InitializeComponent();
-            d_items.ItemsSource = list;
-            _listtyp = typ;
+            if(_listtyp == "Food")
+                d_items.ItemsSource = _parent.parent.list_f.FindAll(x => x.expiryTime.Value.Date == ((DateTime)_parent.Tag).Date);
+            if(_listtyp == "Drinks")
+                d_items.ItemsSource = _parent.parent.list_d.FindAll(x => x.expiryTime.Value.Date == ((DateTime)_parent.Tag).Date);
         }
 
         private void MenuItem_Info(object sender, RoutedEventArgs e)
@@ -72,8 +74,9 @@ namespace csharp_project.Views
 
             var dbhelper = DataAccess.DataManager.getInstance();
             dbhelper.Delete<Food>((item as Food).Id);
-            
-            //remake Calendar!!!!
+
+            _parent.parent.InitLists();
+            _parent.parent.SetCalendar();
         }
 
         private void MenuItem_Copy(object sender, RoutedEventArgs e)
@@ -104,7 +107,10 @@ namespace csharp_project.Views
                 dia = new UpdateDialog((contextMenu.DataContext as Drinks).Id, "Drinks");
             dia.ShowDialog();
 
-            //remake Calendar!!!!
+            //remake Calendar
+            _parent.parent.InitLists();
+            _parent.parent.SetCalendar();
+            FillList();
         }
     }
 }

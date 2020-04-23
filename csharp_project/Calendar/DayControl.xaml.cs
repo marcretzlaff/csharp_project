@@ -22,22 +22,26 @@ namespace csharp_project.Calendar
     /// </summary>
     public partial class DayControl : UserControl
     {
+        public Calendar parent { get; private set; }
         public DayControl()
         {
             InitializeComponent();
         }
+        public DayControl( Calendar source)
+        {
+            InitializeComponent();
+            parent = source;
+        }
 
         private void l_food_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var dayitems = Calendar.list_f.FindAll(x => x.expiryTime.Value.Date == ((DateTime)Tag).Date);
-            CalendarItemsDialog dia = new CalendarItemsDialog(dayitems, "Food");
+            CalendarItemsDialog dia = new CalendarItemsDialog("Food", this);
             dia.ShowDialog();
         }
 
         private void l_drinks_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var dayitems = Calendar.list_d.FindAll(x => x.expiryTime.Value.Date == ((DateTime)Tag).Date);
-            CalendarItemsDialog dia = new CalendarItemsDialog(dayitems, "Drinks");
+            CalendarItemsDialog dia = new CalendarItemsDialog("Drinks", this);
             dia.ShowDialog();
         }
     }

@@ -25,13 +25,12 @@ namespace csharp_project.Calendar
     public partial class Calendar : UserControl
     {
         public DateTime currentmonth { get; private set; } = DateTime.Now;
-        public static List<Food> list_f { get; private set; }
-        public static List<Drinks> list_d { get; private set; }
+        public List<Food> list_f { get; private set; }
+        public List<Drinks> list_d { get; private set; }
 
         public Calendar()
         {
             InitializeComponent();
-            InitLists();
         }
 
         public void InitLists()
@@ -72,7 +71,7 @@ namespace csharp_project.Calendar
                 }
 
                 //load DayControls in week rows
-                DayControl currentday = new DayControl();
+                DayControl currentday = new DayControl(this);
                 currentday.DayNumberLabel.Content = (i+1).ToString();
                 currentday.Tag = FirstDayOfMonth(currentmonth).AddDays(i);
                 if(((DateTime)currentday.Tag).Date == DateTime.Now.Date)
