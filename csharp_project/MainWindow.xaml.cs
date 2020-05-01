@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using csharp_project.Speech;
 using MyLog;
 
 namespace csharp_project
@@ -30,6 +31,9 @@ namespace csharp_project
             var dbhelper = DataAccess.DataManager.getInstance();
             dbhelper.CheckAndLoadDefaults();
             Log.CreateLogFile();
+
+            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.LoadDefault();
         }
 
         private void ListViewItem_MouseEnter(object sender, MouseEventArgs e)
