@@ -1,0 +1,8 @@
+Hello 
+Add Item
+Cancel
+Food
+Drink
+Hold
+Delete
+Yes

@@ -8,13 +8,16 @@ using System.Speech.Recognition;
 using System.Speech.Synthesis;
 using System.Timers;
 using csharp_project.Data;
+using System.Windows;
 
 namespace csharp_project.Speech
 {
     public class SpeechSynthesis
     {
         //choices
-        private readonly string[] _choices = new string[] { "Hello", "Cancel", "Hold", "Cancel", "Add", "Delete" };
+        public List<string> _choices = new List<string>() { "Null" };
+        private readonly string _filepath_commands = @"..\..\DataAccess\SpeechCommands.txt"; 
+        private List<string> _numbers = new List<string>() { "Null" };
 
         #region StateMachines
         enum internalState
@@ -67,7 +70,7 @@ namespace csharp_project.Speech
         private int _sizeDummy { get; set; }
         #endregion DummyItems
 
-        SpeechRecognitionEngine _recognizer = new SpeechRecognitionEngine(new System.Globalization.CultureInfo("en-US"));
+        SpeechRecognitionEngine _recognizer = new SpeechRecognitionEngine();
         SpeechSynthesizer _synth = new SpeechSynthesizer();
         SpeechRecognitionEngine _uirecognizer = new SpeechRecognitionEngine();
         int timeout = 0;
@@ -87,16 +90,35 @@ namespace csharp_project.Speech
 
             _synth.Rate = -2;
             _recognizer.SetInputToDefaultAudioDevice();
-            //_recognizer.LoadGrammarAsync(new Grammar(new GrammarBuilder(new Choices(_choices))));
-            _recognizer.LoadGrammar(new DictationGrammar());
-            _recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(Default_SpeechRecognized);
-            _recognizer.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(_recognizer_SpeechRecognized);
+            //Load saved strings from file
+            if (File.Exists(_filepath_commands))
+            {
+                _choices = File.ReadAllLines(_filepath_commands).ToList();
+            }
+            else
+            {
+                File.Create(_filepath_commands);
+                File.WriteAllLines(_filepath_commands, new string[] { "Hello", "Cancel", "Hold", "Add", "Delete", "Food", "Drink"});
+                _choices = File.ReadAllLines(_filepath_commands).ToList();
+            }
 
+            for (int i = 1; i < 1000; i++)
+            {
+                _numbers.Add(i.ToString());
+            }
+            var usergrammar = new Grammar(new GrammarBuilder(new Choices(_choices.ToArray())));
+            usergrammar.Priority = 127;
+            var numbergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
+            numbergrammar.Priority = 126;
+            _recognizer.LoadGrammar(usergrammar);
+            _recognizer.LoadGrammar(numbergrammar);
+            _recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(default_SpeechRecognized);
+            _recognizer.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(recognizer_SpeechRecognized);
 
             _uirecognizer.SetInputToDefaultAudioDevice();
             _uirecognizer.LoadGrammarAsync(new Grammar(new GrammarBuilder(new Choices("Sarah"))));
             _uirecognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(uirecognizer_SpeechRecognized);
-            _uirecognizer.RecognizeAsync(RecognizeMode.Multiple);
+            _uirecognizer.RecognizeAsync(RecognizeMode.Single);
         }
 
         private void timeOverEvent(object sender, ElapsedEventArgs e)
@@ -110,9 +132,9 @@ namespace csharp_project.Speech
                 try
                 {
                     _recognizer.RecognizeAsyncCancel();
-                    _uirecognizer.RecognizeAsync(RecognizeMode.Multiple);
+                    _uirecognizer.RecognizeAsync(RecognizeMode.Single);
                 }
-                catch { };
+                catch { }
             }
         }
 
@@ -133,14 +155,14 @@ namespace csharp_project.Speech
             }
         }
 
-        private void _recognizer_SpeechRecognized(object sender, SpeechDetectedEventArgs e)
+        private void recognizer_SpeechRecognized(object sender, SpeechDetectedEventArgs e)
         {
             timeout = 0;
             if(_timer.Enabled == false)
                 _timer.Start();
         }
 
-        private void Default_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        private void default_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             string speech = e.Result.Text;
 
@@ -165,7 +187,7 @@ namespace csharp_project.Speech
                             _timer.Stop();
                             break;
 
-                        case "Add":
+                        case "Add Item":
                             _synth.SpeakAsync("Proceed with item typ");
                             _state = internalState.Adding;
                             break;
@@ -209,13 +231,15 @@ namespace csharp_project.Speech
                     {
                         case "Food":
                             _typDummy = typeState.FoodSmall;
-                            _synth.SpeakAsync("Please provide the ID of the item.");
+                            _synth.SpeakAsync("Please provide the name of the item.");
+                            _recognizer.LoadGrammar(new DictationGrammar());
                             _deletingState = deletingState.Name;
                             break;
 
                         case "Drink":
                             _typDummy = typeState.DrinkSmall;
-                            _synth.SpeakAsync("Please provide the ID of the item.");
+                            _synth.SpeakAsync("Please provide the name of the item.");
+                            _recognizer.LoadGrammar(new DictationGrammar());
                             _deletingState = deletingState.Name;
                             break;
 
@@ -232,11 +256,16 @@ namespace csharp_project.Speech
                         _state = internalState.MainCommand;
                         _synth.SpeakAsync("Sucessfully cancelled");
                     }
+                    else if (s == "Yes")
+                    {
+                        _synth.SpeakAsync("Does it expire?");
+                        _recognizer.UnloadGrammar(new DictationGrammar());
+                        _addingstate = addingState.Expires;
+                    }
                     else
                     {
                         _nameDummy = s;
-                        _synth.SpeakAsync("Does it expire?");
-                        _addingstate = addingState.Expires;
+                        _synth.SpeakAsync($"Is {_nameDummy} correct? Otherwise repeat the name!");
                     }
                     break;
 
@@ -282,7 +311,7 @@ namespace csharp_project.Speech
                         break;
                     }
 
-                    if (Int16.TryParse(s, out var result))
+                    if (!Int16.TryParse(s, out var result))
                     {
                         _synth.SpeakAsync("Try again or say cancel.");
                     }
@@ -304,7 +333,7 @@ namespace csharp_project.Speech
                     }
 
 
-                    if (Int16.TryParse(s, out var mul))
+                    if (!Int16.TryParse(s, out var mul))
                     {
                         _synth.SpeakAsync("Try again or say cancel.");
                     }
@@ -420,7 +449,7 @@ namespace csharp_project.Speech
                     }
                     else
                     {
-                        if (Int16.TryParse(s, out var result))
+                        if (!Int16.TryParse(s, out var result))
                         {
                             _synth.SpeakAsync("Try again or say cancel.");
                         }
