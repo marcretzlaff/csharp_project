@@ -4,13 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:csharp_project"
+             xmlns:speech="clr-namespace:csharp_project.Speech"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="730">
-    <Grid Background="White">
-        <Label Content="Settings" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <Button Content="Delete all Items" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Delete_DB_Click"/>
-        <Button Content="Delete Log" HorizontalAlignment="Right" VerticalAlignment="Center" Width="125" Click="Delete_Log_Click"/>
-        <Button Content="Open Log" HorizontalAlignment="Left" VerticalAlignment="Center" Width="125" Click="Open_Log_Click"/>
-        <Label x:Name="l_settings" Content="Log deleted successfully!" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right" Visibility="Hidden"/>
+    <Grid Background="LightGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <!--Database / Log -->
+        <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Database settings" FontFamily="Consolas" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <Button Grid.Row="1" Grid.Column="0" Content="Delete all Items" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Delete_DB_Click"/>
+        <Button Content="Delete Log" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Delete_Log_Click"/>
+        <Button Content="Open Log" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Open_Log_Click"/>
+        <!--Speech-->
+        <Label Grid.Row="2" Grid.ColumnSpan="3" Content="Speech settings" FontFamily="Consolas" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+        <ListView Grid.Row="3" Grid.RowSpan="2" x:Name="LV_commands" Grid.ColumnSpan="3" Margin="10,0,10,0" ItemsSource="{Binding Choices, Mode=OneWay}"></ListView>
+        <Button Grid.Row="5" Grid.Column="1" x:Name="b_add" VerticalAlignment="Center" Margin="40,0,40,0" IsEnabled="False" Click="b_add_Click">Add Speech Option</Button>
+        <Button Grid.Row="5" Grid.Column="2" x:Name="b_delete" VerticalAlignment="Center" Margin="40,0,40,0" Click="b_delete_Click">Delete Speech Option</Button>
+        <TextBox Grid.Row="5" Grid.Column="0" x:Name="tb_command" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" VerticalContentAlignment="Center" TextChanged="tb_command_TextChanged">Command</TextBox>
+        <!--UIMessage-->
+        <Label x:Name="l_settings" Grid.Row="5" Grid.Column="2" Content="" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right"/>
     </Grid>
 </UserControl>

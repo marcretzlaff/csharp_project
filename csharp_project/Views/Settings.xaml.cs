@@ -13,6 +13,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using csharp_project.Speech;
 using MyLog;
 
 namespace csharp_project
@@ -25,6 +26,7 @@ namespace csharp_project
         public Settings()
         {
             InitializeComponent();
+            this.DataContext = SpeechSynthesis.Instance;
         }
 
         private void Delete_DB_Click(object sender, RoutedEventArgs e)
@@ -68,6 +70,37 @@ namespace csharp_project
         private void Open_Log_Click(object sender, RoutedEventArgs e)
         {
             Log.OpenLog();
+        }
+
+        private void b_add_Click(object sender, RoutedEventArgs e)
+        {
+            SpeechSynthesis.Instance.UnloadCustomGrammar();
+            SpeechSynthesis.Choices.Add(tb_command.Text);
+            SpeechSynthesis.Instance.LoadCustomGrammar();
+            SpeechSynthesis.Instance.StoreGrammar();
+            Log.WriteLog($"Speech Command {tb_command.Text} added.");
+        }
+
+        private void b_delete_Click(object sender, RoutedEventArgs e)
+        {
+            if(SpeechSynthesis.Choices.Contains(tb_command.Text))
+            {
+                SpeechSynthesis.Choices.Remove(tb_command.Text);
+                Log.WriteLog($"Speech Command {tb_command.Text} deleted.");
+            }
+            else
+            {
+                ShowLabelFaded(l_settings, "Command not found.");
+            }
+
+        }
+
+        private void tb_command_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (tb_command.Text != "Command")
+                b_add.IsEnabled = true;
+            else
+                b_add.IsEnabled = false;
         }
     }
 }

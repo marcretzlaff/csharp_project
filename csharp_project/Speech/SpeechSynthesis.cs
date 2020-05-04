@@ -9,15 +9,18 @@ using System.Speech.Synthesis;
 using System.Timers;
 using csharp_project.Data;
 using System.Windows;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace csharp_project.Speech
 {
     public class SpeechSynthesis
     {
-        //choices
-        public List<string> _choices = new List<string>() { "Null" };
+        public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Null" };
+
         private readonly string _filepath_commands = @"..\..\DataAccess\SpeechCommands.txt"; 
         private List<string> _numbers = new List<string>() { "Null" };
+        private Grammar usergrammar;
 
         #region StateMachines
         enum internalState
@@ -82,7 +85,21 @@ namespace csharp_project.Speech
             (() => new SpeechSynthesis());
         public static SpeechSynthesis Instance => lazy.Value;
 
+        public void StoreGrammar()
+        {
+            //File.WriteAllText(_filepath_commands, null);
+            File.WriteAllLines(_filepath_commands, Choices.ToArray());
+        }
 
+        public void UnloadCustomGrammar()
+        {
+            _recognizer.UnloadGrammar(usergrammar);
+        }
+        public void LoadCustomGrammar()
+        {
+            usergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
+            _recognizer.LoadGrammar(usergrammar);
+        }
         public void LoadDefault()
         {
             _timer = new Timer(1000);
@@ -93,20 +110,20 @@ namespace csharp_project.Speech
             //Load saved strings from file
             if (File.Exists(_filepath_commands))
             {
-                _choices = File.ReadAllLines(_filepath_commands).ToList();
+                Choices = new ObservableCollection<string>(File.ReadAllLines(_filepath_commands).ToList());
             }
             else
             {
                 File.Create(_filepath_commands);
                 File.WriteAllLines(_filepath_commands, new string[] { "Hello", "Cancel", "Hold", "Add", "Delete", "Food", "Drink"});
-                _choices = File.ReadAllLines(_filepath_commands).ToList();
+                Choices = new ObservableCollection<string>(File.ReadAllLines(_filepath_commands).ToList());
             }
 
             for (int i = 1; i < 1000; i++)
             {
                 _numbers.Add(i.ToString());
             }
-            var usergrammar = new Grammar(new GrammarBuilder(new Choices(_choices.ToArray())));
+            usergrammar = new Grammar(new GrammarBuilder(new Choices(Choices.ToArray())));
             usergrammar.Priority = 127;
             var numbergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
             numbergrammar.Priority = 126;
@@ -187,7 +204,7 @@ namespace csharp_project.Speech
                             _timer.Stop();
                             break;
 
-                        case "Add Item":
+                        case "Insert":
                             _synth.SpeakAsync("Proceed with item typ");
                             _state = internalState.Adding;
                             break;

@@ -1,8 +1,9 @@
 Hello 
-Add Item
+Insert
 Cancel
 Food
 Drink
 Hold
 Delete
 Yes
+Hans
