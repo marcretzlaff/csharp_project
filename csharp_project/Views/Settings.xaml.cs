@@ -74,23 +74,34 @@ namespace csharp_project
 
         private void b_add_Click(object sender, RoutedEventArgs e)
         {
-            SpeechSynthesis.Instance.UnloadCustomGrammar();
-            SpeechSynthesis.Choices.Add(tb_command.Text);
-            SpeechSynthesis.Instance.LoadCustomGrammar();
-            SpeechSynthesis.Instance.StoreGrammar();
-            Log.WriteLog($"Speech Command {tb_command.Text} added.");
+            if (!SpeechSynthesis.Choices.Contains(tb_command.Text))
+            {
+                SpeechSynthesis.Instance.UnloadCustomGrammar();
+                SpeechSynthesis.Choices.Add(tb_command.Text);
+                SpeechSynthesis.Instance.LoadCustomGrammar();
+                SpeechSynthesis.Instance.StoreGrammar();
+                Log.WriteLog($"Speech Command {tb_command.Text} added.");
+            }
+            else
+            {
+                ShowLabelFaded(l_settings, "Command already in Grammar.");
+            }
         }
 
         private void b_delete_Click(object sender, RoutedEventArgs e)
         {
-            if(SpeechSynthesis.Choices.Contains(tb_command.Text))
+            var sel = LV_commands.SelectedItem?.ToString();
+            if (SpeechSynthesis.Choices.Contains(sel) && sel != null)
             {
-                SpeechSynthesis.Choices.Remove(tb_command.Text);
-                Log.WriteLog($"Speech Command {tb_command.Text} deleted.");
+                SpeechSynthesis.Choices.Remove(sel);
+                Log.WriteLog($"Speech Command {sel} deleted.");
+                SpeechSynthesis.Instance.UnloadCustomGrammar();
+                SpeechSynthesis.Instance.LoadCustomGrammar();
+                SpeechSynthesis.Instance.StoreGrammar();
             }
             else
             {
-                ShowLabelFaded(l_settings, "Command not found.");
+                ShowLabelFaded(l_settings, "Select a item and try again.");
             }
 
         }

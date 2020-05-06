@@ -39,6 +39,13 @@ namespace csharp_project.Calendar
             list_d = loadItems<Drinks>();
         }
 
+
+        /// <summary>
+        /// CalendarLogic
+        /// calculates dayofWeek from currentmonth for daycolumns
+        /// Fills weekcontrols with DayControls
+        /// Adds weeecontrols to calendar stackpanel
+        /// </summary>
         public void SetCalendar()
         {
             l_date.Content = currentmonth.Date.ToString("y");
@@ -98,6 +105,11 @@ namespace csharp_project.Calendar
             MonthSP.Children.Add(weekctrl);
         }
 
+        /// <summary>
+        /// Loads Items to lists which expire in currentmonth
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         private List<T> loadItems<T>() where T : Supplies,new()
         {
             var dbhelper = DataManager.getInstance();
@@ -106,11 +118,21 @@ namespace csharp_project.Calendar
             return list;
         }
 
+        /// <summary>
+        /// Helper function to get first day of given month
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public DateTime FirstDayOfMonth(DateTime value)
         {
             return new DateTime(value.Year, value.Month, 1);
         }
 
+        /// <summary>
+        /// Button PreviousMonth Click Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_previous_Click(object sender, MouseButtonEventArgs e)
         {
             currentmonth = currentmonth.AddMonths(-1);
@@ -118,6 +140,11 @@ namespace csharp_project.Calendar
             SetCalendar();
         }
 
+        /// <summary>
+        /// Button NextMonth Click Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_next_Click(object sender, MouseButtonEventArgs e)
         {
             currentmonth = currentmonth.AddMonths(1);

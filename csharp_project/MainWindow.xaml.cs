@@ -36,6 +36,12 @@ namespace csharp_project
             speech.LoadDefault();
         }
 
+        /// <summary>
+        /// ListView MousEnter Event Handler
+        /// decides which Tooltip View is visible
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewItem_MouseEnter(object sender, MouseEventArgs e)
         {
             //Tooltip visability
@@ -53,26 +59,51 @@ namespace csharp_project
             }
         }
 
+        /// <summary>
+        /// ToggleButton Unchecked Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tg_Btn_Unchecked(object sender, RoutedEventArgs e)
         {
             img_bg.Opacity = 1;
         }
 
+        /// <summary>
+        /// ToggleButton Checked Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tg_Btn_Checked(object sender, RoutedEventArgs e)
         {
             img_bg.Opacity = 0.3;
         }
 
+        /// <summary>
+        /// Background LeftButtonDown Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BG_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Tg_Btn.IsChecked = false;
         }
 
+        /// <summary>
+        /// Close Button Click Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
+        #region set usercontrols
+        /// <summary>
+        /// Sets parameter control to visbile
+        /// </summary>
+        /// <param name="control"></param>
         private void SetActiveUserControl(UserControl control)
         {
             app_name.Visibility = Visibility.Collapsed;
@@ -84,17 +115,35 @@ namespace csharp_project
             control.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// ListViewItem MouseLeftButtonDown Event Handler
+        /// View Home
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SetActiveUserControl(home);
         }
 
+        /// <summary>
+        /// ListViewItem MouseLeftButtonDown Event Handler
+        /// View Items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewItem_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             SetActiveUserControl(items);
             items.LoadTables();
         }
 
+        /// <summary>
+        /// ListViewItem MouseLeftButtonDown Event Handler
+        /// View calendar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
         {
             SetActiveUserControl(calendar);
@@ -102,10 +151,25 @@ namespace csharp_project
             calendar.SetCalendar();
         }
 
+        /// <summary>
+        /// ListViewItem MouseLeftButtonDown Event Handler
+        /// View Settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListViewItem_PreviewMouseLeftButtonDown_3(object sender, MouseButtonEventArgs e)
         {
             SetActiveUserControl(settings);
         }
+
+        #endregion set usercontrols
+
+        /// <summary>
+        /// Thumb DragDelta Event Handler
+        /// HelperFuntction to move window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void headerThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
             Left = Left + e.HorizontalChange;

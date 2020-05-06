@@ -27,6 +27,11 @@ namespace csharp_project.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// own constructor to get item to change
+        /// </summary>
+        /// <param name="id">Item to update</param>
+        /// <param name="type">Food or Drinks</param>
         public UpdateDialog(int id, string type)
         {
             InitializeComponent();
@@ -72,6 +77,12 @@ namespace csharp_project.Views
             }
         }
 
+        /// <summary>
+        /// Button Click Event Handler
+        /// Stores changes to item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var dbhelper = DataManager.getInstance();

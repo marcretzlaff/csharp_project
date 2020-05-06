@@ -30,17 +30,36 @@ namespace csharp_project
             InitializeComponent();
         }
         #region Search
+
+        /// <summary>
+        /// Textbox SearchID Preview Event Handler
+        /// Only accpets digits 0-9
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tb_search_id_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// DataGrid CellChanged Event Handler
+        /// Activates Update Button to store changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void d_search_CurrentCellChanged(object sender, EventArgs e)
         {
             b_search_update.IsEnabled = true;
         }
 
+        /// <summary>
+        /// Button Update Click Event Handler
+        /// Opens Update Dialog on selected Item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_search_update_Click(object sender, RoutedEventArgs e)
         {
             var dbhelper = DataManager.getInstance();
@@ -71,23 +90,34 @@ namespace csharp_project
             ShowLabelFaded(l_adding, "Item updated!");
         }
 
+        /// <summary>
+        /// Button Search Click Event Handler
+        /// Decides wether to search in databse with ID or Name/>
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_search_item_Click(object sender, RoutedEventArgs e)
         {
             var dbhelper = DataManager.getInstance();
-
+            bool success = false;
 
             if (dd_search_itemtyp.Text == "Food")
             {
                 if (rb_id.IsChecked.Value)
                 {
                     List<Food> list = new List<Food>();
-                    Int32.TryParse(tb_search_id.Text, out int id);
-                    Food data = dbhelper.Get<Food>(id);
-                    if (data.expires)
-                        data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
-                    else data.lasting = null;
-                    list.Add(data);
-                    d_search.ItemsSource = list;
+                    success = Int32.TryParse(tb_search_id.Text, out int id);
+                    if (success)
+                    {
+                        Food data = dbhelper.Get<Food>(id);
+                        if (data.expires)
+                            data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
+                        else data.lasting = null;
+                        list.Add(data);
+                        d_search.ItemsSource = list;
+                    }
+                    else
+                      ShowLabelFaded(l_adding, "ID could not be converted to INT.");
                 }
                 else if (rb_name.IsChecked.Value)
                 {
@@ -106,13 +136,18 @@ namespace csharp_project
                 if (rb_id.IsChecked.Value)
                 {
                     List<Drinks> list = new List<Drinks>();
-                    Int32.TryParse(tb_search_id.Text, out int id);
-                    Drinks data = dbhelper.Get<Drinks>(id);
-                    if (data.expires)
-                        data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
-                    else data.lasting = null;
-                    list.Add(data);
-                    d_search.ItemsSource = list;
+                    success = Int32.TryParse(tb_search_id.Text, out int id);
+                    if (success)
+                    {
+                        Drinks data = dbhelper.Get<Drinks>(id);
+                        if (data.expires)
+                            data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
+                        else data.lasting = null;
+                        list.Add(data);
+                        d_search.ItemsSource = list;
+                    }
+                    else
+                        ShowLabelFaded(l_adding, "ID could not be converted to INT.");
                 }
                 else if (rb_name.IsChecked.Value)
                 {
@@ -131,84 +166,108 @@ namespace csharp_project
         #endregion Search
 
         #region Adding
+        /// <summary>
+        /// Adding Button: Adding item to database. Logic decides if it's a simple or complicated item.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_adding_item_Click(object sender, RoutedEventArgs e)
         {
             bool success = false;
+            int mul = 1;
 
             var dbhelper = DataManager.getInstance();
-            Int32.TryParse(tb_adding_size.Text, out int size);
-            Int32.TryParse(tb_adding_mul.Text, out int mul);
-            if ( dd_adding_itemtyp.Text == "Food")
+            success = Int32.TryParse(tb_adding_size.Text, out int size);
+            if(success)
+                Int32.TryParse(tb_adding_mul.Text, out mul);
+            if (success)
             {
-                Food data = null;
-                if (b_adding_expire.IsChecked.Value)
+                if (dd_adding_itemtyp.Text == "Food")
                 {
-                    //complicated item
-                    data = new Food(tb_adding_name.Text, dp_adding_date_added.SelectedDate.Value, dp_adding_date_until.SelectedDate.Value, size);
-                }
-                else //simple item
-                {
-                    data = new Food(tb_adding_name.Text,size);
-                }
+                    Food data = null;
+                    if (b_adding_expire.IsChecked.Value)
+                    {
+                        //complicated item
+                        data = new Food(tb_adding_name.Text, dp_adding_date_added.SelectedDate.Value, dp_adding_date_until.SelectedDate.Value, size);
+                    }
+                    else //simple item
+                    {
+                        data = new Food(tb_adding_name.Text, size);
+                    }
 
-                while (mul-- != 0)
-                {
-                    success = dbhelper.Insert<Food>(data);
-                    if (!success) break;
-                }
-                if (success)
-                {
-                    ShowLabelFaded(l_adding, "Item added successfully to Database!");
+                    while (mul-- != 0)
+                    {
+                        success = dbhelper.Insert<Food>(data);
+                        if (!success) break;
+                    }
                 }
                 else
                 {
-                    ShowLabelFaded(l_adding, "Adding to Database failed!");
+                    Drinks data;
+                    if (b_adding_expire.IsChecked.Value)
+                    {
+                        data = new Drinks(tb_adding_name.Text, dp_adding_date_added.SelectedDate.Value, dp_adding_date_until.SelectedDate.Value, size);
+                    }
+                    else
+                    {
+                        data = new Drinks(tb_adding_name.Text, size);
+                    }
+
+                    while (mul-- != 0)
+                    {
+                        success = dbhelper.Insert<Drinks>(data);
+                        if (!success) break;
+                    }
                 }
+            }
+            if (success)
+            {
+                ShowLabelFaded(l_adding, "Item added successfully to Database!");
             }
             else
             {
-                Drinks data;
-                if (b_adding_expire.IsChecked.Value)
-                {
-                    data = new Drinks(tb_adding_name.Text, dp_adding_date_added.SelectedDate.Value, dp_adding_date_until.SelectedDate.Value, size);
-                }
-                else
-                {
-                    data = new Drinks(tb_adding_name.Text, size);
-                }
-
-                while (mul-- != 0)
-                {
-                    success = dbhelper.Insert<Drinks>(data);
-                    if (!success) break;
-                }
-                if (success)
-                {
-                    ShowLabelFaded(l_adding, "Item added successfully to Database!");
-                }
-                else
-                {
-                    ShowLabelFaded(l_adding, "Adding to Database failed!");
-                }
+                ShowLabelFaded(l_adding, "Adding to Database failed!");
             }
         }
 
+        /// <summary>
+        /// Expire Checkbox Uncheck Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_adding_expire_Unchecked(object sender, RoutedEventArgs e)
         {
             dp_adding_date_until.Visibility = Visibility.Hidden;
         }
 
+        /// <summary>
+        /// Expire Checkbox Checked Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_adding_expire_Checked(object sender, RoutedEventArgs e)
         {
             dp_adding_date_until.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Textbox Size Preview Event Handler
+        /// Only accpets digits 0-9
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tb_adding_size_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Textbox Size Pasting Handler
+        /// Only paste text containing digits 0-9
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tb_adding_size_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
@@ -226,12 +285,24 @@ namespace csharp_project
             }
         }
 
+        /// <summary>
+        /// Textbox number of items Preview Event Handler
+        /// Only accpets digits 0-9
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tb_adding_mul_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
 
+        /// <summary>
+        /// Textbox number of items Pasting Event Handler
+        /// Only accpets digits 0-9
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tb_adding_mul_Pasting(object sender, DataObjectPastingEventArgs e)
         {
             if (e.DataObject.GetDataPresent(typeof(String)))
@@ -248,6 +319,13 @@ namespace csharp_project
                 e.CancelCommand();
             }
         }
+
+        /// <summary>
+        /// Textbox Name of Item TextChanged Event Handler
+        /// Enables Add Button if Text varies from default.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tb_adding_name_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tb_adding_name.Text != "Item Name")
@@ -262,6 +340,11 @@ namespace csharp_project
         #endregion Adding
 
         #region Extras
+        /// <summary>
+        /// Helper funtcion to display temporyry label which fades out after 3s
+        /// </summary>
+        /// <param name="label"> Label to activate on</param>
+        /// <param name="s"> Content of label</param>
         private void ShowLabelFaded(Label label, string s)
         {
             label.Content = s;

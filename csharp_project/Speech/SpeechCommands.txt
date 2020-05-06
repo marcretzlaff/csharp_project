@@ -6,4 +6,3 @@ Drink
 Hold
 Delete
 Yes
-Hans

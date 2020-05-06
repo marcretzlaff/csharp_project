@@ -12,11 +12,17 @@ namespace csharp_project.DataAccess
 {
     public class DataManager
     {
-        private DataManager() {}
 
         private readonly string path = "./database.db";
+
+        #region Singelton
+        private DataManager() { }
         private static DataManager _instance;
 
+        /// <summary>
+        /// Singelton implementation
+        /// </summary>
+        /// <returns></returns>
         public static DataManager getInstance()
         {
             if (_instance == null)
@@ -25,12 +31,20 @@ namespace csharp_project.DataAccess
             }
             return _instance;
         }
+        #endregion Singleton
 
+        /// <summary>
+        /// returns activ Connection
+        /// </summary>
+        /// <returns></returns>
         public SQLiteConnection GetConnection()
         {
             return new SQLiteConnection(path,true);
         }
 
+        /// <summary>
+        /// Deletes Item tables and reloads with default
+        /// </summary>
         public void DeleteDatabase()
         {
             using (var dbconn = GetConnection())
@@ -41,6 +55,10 @@ namespace csharp_project.DataAccess
 
             CheckAndLoadDefaults();
         }
+
+        /// <summary>
+        /// Default Table Creation
+        /// </summary>
         public void CheckAndLoadDefaults()
         {
             using (var dbconn = GetConnection())
@@ -50,6 +68,12 @@ namespace csharp_project.DataAccess
             }
         }
 
+        /// <summary>
+        /// Inserts Item in corresponding table
+        /// </summary>
+        /// <typeparam name="T">Itemtyp</typeparam>
+        /// <param name="data">Item</param>
+        /// <returns></returns>
         public bool Insert<T>(T data) where T: new()
         {
             using( var dbconn = GetConnection())
@@ -64,6 +88,12 @@ namespace csharp_project.DataAccess
             return false;
         }
 
+        /// <summary>
+        /// Gets item from table with corresponding ID
+        /// </summary>
+        /// <typeparam name="T">Itemtyp</typeparam>
+        /// <param name="primarykey">ID of Item</param>
+        /// <returns></returns>
         public T Get<T>(int primarykey) where T : new()
         {
             using (SQLiteConnection dbconn = GetConnection())
@@ -73,6 +103,12 @@ namespace csharp_project.DataAccess
             }
         }
 
+        /// <summary>
+        /// Deletes item from table with corresponding ID
+        /// </summary>
+        /// <typeparam name="T">Itemtyp</typeparam>
+        /// <param name="primarykey">Id of Item to delete</param>
+        /// <returns></returns>
         public bool Delete<T>(int primarykey) where T : new()
         {
             using (var dbconn = GetConnection())
@@ -90,6 +126,12 @@ namespace csharp_project.DataAccess
                 return false;
             }
         }
+
+        /// <summary>
+        /// Loads Table from database
+        /// </summary>
+        /// <typeparam name="T">Itemtyp</typeparam>
+        /// <returns></returns>
         public List<T> GetTable<T>() where T : new()
         {
             using (SQLiteConnection dbconn = GetConnection())
@@ -99,6 +141,12 @@ namespace csharp_project.DataAccess
             }
         }
 
+        /// <summary>
+        /// Returns List with Items corresponding to name search
+        /// </summary>
+        /// <typeparam name="T">Itemtyp</typeparam>
+        /// <param name="name">search string</param>
+        /// <returns></returns>
         public List<T> Get<T>(string name) where T : Supplies, new()
         {
             using (SQLiteConnection dbconn = GetConnection())
@@ -107,6 +155,12 @@ namespace csharp_project.DataAccess
             }
         }
 
+        /// <summary>
+        /// Returns List of Items which expire in supplied month
+        /// </summary>
+        /// <typeparam name="T">Itemtyp</typeparam>
+        /// <param name="month">Month</param>
+        /// <returns></returns>
         public List<T> Get<T>(DateTime month) where T : Supplies, new()
         {
             using (SQLiteConnection dbconn = GetConnection())
@@ -116,6 +170,12 @@ namespace csharp_project.DataAccess
             }
         }
 
+        /// <summary>
+        /// Updates corresponding Item
+        /// </summary>
+        /// <typeparam name="T">Itemtyp</typeparam>
+        /// <param name="data">item to update</param>
+        /// <returns></returns>
         public bool Update<T>(T data) where T : Supplies, new()
         {
             using (var dbconn = GetConnection())

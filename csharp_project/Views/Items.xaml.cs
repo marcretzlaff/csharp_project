@@ -26,7 +26,9 @@ namespace csharp_project
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Run on startup and update to get current data.
+        /// </summary>
         public void LoadTables()
         {
             var dbhelper = DataAccess.DataManager.getInstance();
@@ -50,6 +52,12 @@ namespace csharp_project
         }
 
         #region Food
+
+        /// <summary>
+        /// MenuItem Table Food Action Info Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemFood_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -69,6 +77,12 @@ namespace csharp_project
             }
         }
 
+        /// <summary>
+        /// MenuItem Table Food Action Delete Handler
+        /// Reloads table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemFood_Del(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -85,6 +99,11 @@ namespace csharp_project
             LoadTables();
         }
 
+        /// <summary>
+        /// MenuItem Table Food Action Copy Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemFood_Copy(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -98,6 +117,12 @@ namespace csharp_project
             Clipboard.SetText(item);
         }
 
+        /// <summary>
+        /// MenuItem Table Food Action Update Handler
+        /// Opens update dialog and reloads table on dialog close
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemFood_Update(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -114,6 +139,12 @@ namespace csharp_project
         #endregion Food
 
         #region Drinks
+
+        /// <summary>
+        /// MenuItem Table Drinks Action Info Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemDrinks_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -133,6 +164,12 @@ namespace csharp_project
             }
         }
 
+        /// <summary>
+        /// MenuItem Table Drinks Action delete Handler
+        /// Reloads table
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemDrinks_Del(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -147,6 +184,11 @@ namespace csharp_project
             dbhelper.Delete<Food>((item as Drinks).Id);
         }
 
+        /// <summary>
+        /// MenuItem Table Drinks Action Copy Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemDrinks_Copy(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -160,6 +202,12 @@ namespace csharp_project
             Clipboard.SetText(item);
         }
 
+        /// <summary>
+        /// MenuItem Table Drinks Action Update Handler 
+        /// reloads table on dialog close
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItemDrinks_Update(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem

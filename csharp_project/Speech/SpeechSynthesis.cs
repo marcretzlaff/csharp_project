@@ -18,7 +18,7 @@ namespace csharp_project.Speech
     {
         public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Null" };
 
-        private readonly string _filepath_commands = @"..\..\DataAccess\SpeechCommands.txt"; 
+        private readonly string _filepath_commands = @"..\..\Speech\SpeechCommands.txt"; 
         private List<string> _numbers = new List<string>() { "Null" };
         private Grammar usergrammar;
 
@@ -85,21 +85,34 @@ namespace csharp_project.Speech
             (() => new SpeechSynthesis());
         public static SpeechSynthesis Instance => lazy.Value;
 
+        /// <summary>
+        /// Saves available commands to file
+        /// </summary>
         public void StoreGrammar()
         {
             //File.WriteAllText(_filepath_commands, null);
             File.WriteAllLines(_filepath_commands, Choices.ToArray());
         }
 
+        /// <summary>
+        /// Unloads Grammar from SpeechRecognitionEngine to change
+        /// </summary>
         public void UnloadCustomGrammar()
         {
             _recognizer.UnloadGrammar(usergrammar);
         }
+        /// <summary>
+        /// Loads Grammar to SpeechRecognitionEngine
+        /// </summary>
         public void LoadCustomGrammar()
         {
             usergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
             _recognizer.LoadGrammar(usergrammar);
         }
+        /// <summary>
+        /// Default intizialisation from SpeechRecognitionEngines and SpeechSynthesizer
+        /// If Command file doesn't exist, default command will be used and file created
+        /// </summary>
         public void LoadDefault()
         {
             _timer = new Timer(1000);
@@ -130,7 +143,7 @@ namespace csharp_project.Speech
             _recognizer.LoadGrammar(usergrammar);
             _recognizer.LoadGrammar(numbergrammar);
             _recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(default_SpeechRecognized);
-            _recognizer.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(recognizer_SpeechRecognized);
+            _recognizer.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(recognizer_SpeechDetected);
 
             _uirecognizer.SetInputToDefaultAudioDevice();
             _uirecognizer.LoadGrammarAsync(new Grammar(new GrammarBuilder(new Choices("Sarah"))));
@@ -138,6 +151,12 @@ namespace csharp_project.Speech
             _uirecognizer.RecognizeAsync(RecognizeMode.Single);
         }
 
+        /// <summary>
+        /// Timer Elapsed Event Handler
+        /// After 10s silence the command SpeechRecognitionEngine shuts down.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timeOverEvent(object sender, ElapsedEventArgs e)
         {
             ++timeout;
@@ -155,6 +174,12 @@ namespace csharp_project.Speech
             }
         }
 
+        /// <summary>
+        /// Startup SpeechRecognitionEngine Speechrecognized Event Handler
+        /// With Keyword "Sarah" command SpeechRecognitionEngine starts
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void uirecognizer_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             string speech = e.Result.Text;
@@ -172,13 +197,25 @@ namespace csharp_project.Speech
             }
         }
 
-        private void recognizer_SpeechRecognized(object sender, SpeechDetectedEventArgs e)
+        /// <summary>
+        /// Command SpeechRecognitionEngine SpeechDetected Event Handler
+        /// Timer reset
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void recognizer_SpeechDetected(object sender, SpeechDetectedEventArgs e)
         {
             timeout = 0;
             if(_timer.Enabled == false)
                 _timer.Start();
         }
 
+        /// <summary>
+        /// Command SpeechRecognitionEngine SpeechRecognized Event Handler
+        /// Main state machine for standard commands
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void default_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             string speech = e.Result.Text;
@@ -221,7 +258,7 @@ namespace csharp_project.Speech
                     break;
 
                 case internalState.Adding:
-                    addingItemSM(speech);
+                    insertItemSM(speech);
                     break;
 
                 case internalState.DeletingID:
@@ -230,7 +267,11 @@ namespace csharp_project.Speech
             }
         }
 
-        private void addingItemSM(string s)
+        /// <summary>
+        /// Called if Command SpeechRecognitionEngine SpeechDetected State Insert
+        /// </summary>
+        /// <param name="s"></param>
+        private void insertItemSM(string s)
         {
             //state machine
             switch (_addingstate)
@@ -423,6 +464,10 @@ namespace csharp_project.Speech
             }
         }
 
+        /// <summary>
+        /// Called if Command SpeechRecognitionEngine SpeechDetected State Delete
+        /// </summary>
+        /// <param name="s"></param>
         private void deletingItemIDSM( string s)
         {
             //state machine

@@ -28,6 +28,11 @@ namespace csharp_project.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// own contstructor to get Item typ and day
+        /// </summary>
+        /// <param name="typ"></param>
+        /// <param name="parent"></param>
         public CalendarItemsDialog(string typ, Calendar.DayControl parent)
         {
             InitializeComponent();
@@ -35,6 +40,10 @@ namespace csharp_project.Views
             _parent = parent;
             FillList();
         }
+
+        /// <summary>
+        /// Fills lists with items on Day _parent
+        /// </summary>
         public void FillList()
         {
             if(_listtyp == "Food")
@@ -43,6 +52,12 @@ namespace csharp_project.Views
                 d_items.ItemsSource = _parent.parent.list_d.FindAll(x => x.expiryTime.Value.Date == ((DateTime)_parent.Tag).Date);
         }
 
+        #region MenuItem
+        /// <summary>
+        /// MenuItem Info Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -62,6 +77,12 @@ namespace csharp_project.Views
             }
         }
 
+        /// <summary>
+        /// MenuItem Delete Event Handler
+        /// reloads calendar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Del(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -77,8 +98,14 @@ namespace csharp_project.Views
 
             _parent.parent.InitLists();
             _parent.parent.SetCalendar();
+            FillList();
         }
 
+        /// <summary>
+        /// Menu Item Copy Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Copy(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -92,6 +119,12 @@ namespace csharp_project.Views
             Clipboard.SetText(item);
         }
 
+        /// <summary>
+        /// MenuItem Update Event Handler
+        /// reloads calendar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuItem_Update(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
@@ -112,5 +145,7 @@ namespace csharp_project.Views
             _parent.parent.SetCalendar();
             FillList();
         }
+
+        #endregion MenuItem
     }
 }
