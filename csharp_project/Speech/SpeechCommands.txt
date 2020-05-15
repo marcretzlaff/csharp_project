@@ -1,8 +1,0 @@
-Hello 
-Insert
-Cancel
-Food
-Drink
-Hold
-Delete
-Yes

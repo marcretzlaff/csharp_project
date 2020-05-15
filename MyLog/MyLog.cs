@@ -46,13 +46,14 @@ namespace MyLog
         /// not for internal exception use
         /// </summary>
         /// <param name="exception"></param>
-        public static void WriteException(Exception exception)
+        public static void WriteException(Exception exception, string s)
         {
             using (StreamWriter fs = new StreamWriter(path, true))
             {
                 StringBuilder message = new StringBuilder();
 
                 message.AppendLine("<---------------" + DateTime.Now.ToString("G") + "--------------->");
+                message.AppendLine($"While: {s}");
                 message.AppendLine("Message: " + exception.Message);
                 message.AppendLine("Stacktrace: " + exception.StackTrace);
                 message.AppendLine("");

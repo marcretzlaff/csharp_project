@@ -11,6 +11,8 @@ using csharp_project.Data;
 using System.Windows;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using System.Xml.Serialization;
+using MyLog;
 
 namespace csharp_project.Speech
 {
@@ -18,7 +20,7 @@ namespace csharp_project.Speech
     {
         public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Null" };
 
-        private readonly string _filepath_commands = @"..\..\Speech\SpeechCommands.txt"; 
+        private readonly string _filepath_commands = @"SpeechCommands.xml"; 
         private List<string> _numbers = new List<string>() { "Null" };
         private Grammar usergrammar;
 
@@ -90,8 +92,18 @@ namespace csharp_project.Speech
         /// </summary>
         public void StoreGrammar()
         {
-            //File.WriteAllText(_filepath_commands, null);
-            File.WriteAllLines(_filepath_commands, Choices.ToArray());
+            XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<string>));
+            try
+            {
+                using (TextWriter writer = new StreamWriter(_filepath_commands))
+                {
+                    serializer.Serialize(writer, Choices);
+                }
+            }
+            catch (Exception e)
+            {
+                Log.WriteException(e, "Trying to save XML SpeechCommands.");
+            }
         }
 
         /// <summary>
@@ -120,16 +132,28 @@ namespace csharp_project.Speech
 
             _synth.Rate = -2;
             _recognizer.SetInputToDefaultAudioDevice();
+
             //Load saved strings from file
             if (File.Exists(_filepath_commands))
             {
-                Choices = new ObservableCollection<string>(File.ReadAllLines(_filepath_commands).ToList());
+                XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<string>));
+                try
+                {
+                    using (TextReader reader = new StreamReader(_filepath_commands))
+                    {
+                        Choices = serializer.Deserialize(reader) as ObservableCollection<string>;
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.WriteException(e,"Trying to load XML SpeechCommands.");
+                }
             }
             else
             {
-                File.Create(_filepath_commands);
-                File.WriteAllLines(_filepath_commands, new string[] { "Hello", "Cancel", "Hold", "Add", "Delete", "Food", "Drink"});
-                Choices = new ObservableCollection<string>(File.ReadAllLines(_filepath_commands).ToList());
+                string[] standard = new string[] { "Hello", "Cancel", "Hold", "Add", "Delete", "Food", "Drink"};
+                Choices = new ObservableCollection<string>(standard.ToList());
+                StoreGrammar();
             }
 
             for (int i = 1; i < 1000; i++)
