@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Speech.Recognition;
 using System.Speech.Synthesis;
-using System.Timers;
 using csharp_project.Data;
-using System.Windows;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using MyLog;
+using System.Timers;
 
 namespace csharp_project.Speech
 {
@@ -20,7 +16,7 @@ namespace csharp_project.Speech
     {
         public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Null" };
 
-        private readonly string _filepath_commands = @"SpeechCommands.xml"; 
+        private readonly string _filepath_commands = System.Windows.Forms.Application.StartupPath + "SpeechCommands.xml"; 
         private List<string> _numbers = new List<string>() { "Null" };
         private Grammar usergrammar;
 

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SQLite;
-using System.IO;
 using csharp_project.Data;
 using MyLog;
+using System.Windows.Forms;
 
 namespace csharp_project.DataAccess
 {
     public class DataManager
     {
 
-        private readonly string path = "./database.db";
+        private readonly string path = Application.StartupPath + "/database.db";
 
         #region Singelton
         private DataManager() { }

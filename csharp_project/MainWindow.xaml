@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:csharp_project" 
         xmlns:calendar="clr-namespace:csharp_project.Calendar"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="Fruity Manager" 
         Height="600" 
         Width="800"
         ResizeMode="NoResize"

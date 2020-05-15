@@ -7,11 +7,11 @@ using System.Windows;
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("csharp_project")]
+[assembly: AssemblyTitle("Expire Manager")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("csharp_project")]
+[assembly: AssemblyProduct("Epire Manager")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
