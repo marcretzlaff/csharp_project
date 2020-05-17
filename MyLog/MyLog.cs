@@ -7,8 +7,8 @@ namespace MyLog
 {
     public static class Log
     {
-        private static readonly string path = Application.StartupPath + "/Logs/log.txt";
-        private static readonly string directorypath = Application.StartupPath + "/Logs";
+        private static readonly string path = Application.CommonAppDataPath + "/Logs/log.txt";
+        private static readonly string directorypath = Application.CommonAppDataPath + "/Logs";
         static Log()
         {
             CreateLogFile();

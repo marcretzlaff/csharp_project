@@ -16,7 +16,7 @@ namespace csharp_project.Speech
     {
         public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Null" };
 
-        private readonly string _filepath_commands = System.Windows.Forms.Application.StartupPath + "SpeechCommands.xml"; 
+        private readonly string _filepath_commands = System.Windows.Forms.Application.CommonAppDataPath + "\\SpeechCommands.xml"; 
         private List<string> _numbers = new List<string>() { "Null" };
         private Grammar usergrammar;
 

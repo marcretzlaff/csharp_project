@@ -5,13 +5,14 @@ using SQLite;
 using csharp_project.Data;
 using MyLog;
 using System.Windows.Forms;
+using System.IO;
 
 namespace csharp_project.DataAccess
 {
     public class DataManager
     {
 
-        private readonly string path = Application.StartupPath + "/database.db";
+        private readonly string path = Application.CommonAppDataPath + "\\database.db";
 
         #region Singelton
         private DataManager() { }
@@ -37,7 +38,16 @@ namespace csharp_project.DataAccess
         /// <returns></returns>
         public SQLiteConnection GetConnection()
         {
-            return new SQLiteConnection(path,true);
+            SQLiteConnection con = null;
+            try
+            {
+                con = new SQLiteConnection(path, true);
+            }
+            catch (Exception e)
+            {
+                Log.WriteException(e, "Connection String Loading");
+            }
+            return con;
         }
 
         /// <summary>

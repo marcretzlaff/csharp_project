@@ -93,12 +93,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2613CC10CBCF95DDDE961C060382A113"
-        "OwnerKey" = "8:_58352F17741B4230845BDE88A467C4C5"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2614DDDD7786D47BEEFA5D90357260B4"
         "OwnerKey" = "8:_58352F17741B4230845BDE88A467C4C5"
         "MsmSig" = "8:_UNDEFINED"
@@ -550,7 +544,7 @@
         "Entry"
         {
         "MsmKey" = "8:_B23D420D3E849B8892EE814D2FFD213C"
-        "OwnerKey" = "8:_2613CC10CBCF95DDDE961C060382A113"
+        "OwnerKey" = "8:_C6E0757753EA288ABFE3800A73332D56"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -610,6 +604,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C662376330CD747CF8717F3FDD06B61A"
+        "OwnerKey" = "8:_58352F17741B4230845BDE88A467C4C5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C6E0757753EA288ABFE3800A73332D56"
         "OwnerKey" = "8:_58352F17741B4230845BDE88A467C4C5"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -773,6 +773,12 @@
         {
         "MsmKey" = "8:_EA8D7033D53C7BD6EFA6A4CD4F419F1C"
         "OwnerKey" = "8:_6C43FA52BC6AEC5F1F39DDEB566674AC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EB675E5CC4524562A449EDEA5BCA93E7"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -952,7 +958,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2613CC10CBCF95DDDE961C060382A113"
+        "OwnerKey" = "8:_C6E0757753EA288ABFE3800A73332D56"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1640,6 +1646,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -2057,37 +2071,6 @@
                     }
                 }
             "SourcePath" = "8:System.Net.WebSockets.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2613CC10CBCF95DDDE961C060382A113"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:MyLog, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_2613CC10CBCF95DDDE961C060382A113"
-                    {
-                    "Name" = "8:MyLog.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:MyLog.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
@@ -2958,7 +2941,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -3299,7 +3282,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -3547,7 +3530,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -3733,7 +3716,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -4043,7 +4026,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -4477,7 +4460,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -4495,6 +4478,37 @@
                     }
                 }
             "SourcePath" = "8:System.Net.Security.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C6E0757753EA288ABFE3800A73332D56"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:MyLog, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C6E0757753EA288ABFE3800A73332D56"
+                    {
+                    "Name" = "8:MyLog.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:MyLog.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
@@ -4725,7 +4739,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -5066,7 +5080,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -5256,6 +5270,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EB675E5CC4524562A449EDEA5BCA93E7"
+            {
+            "SourcePath" = "8:..\\csharp_project\\bin\\Debug\\x64\\e_sqlite3.dll"
+            "TargetName" = "8:e_sqlite3.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EE07EE4505FF5DB555D1B213089DAE45"
             {
             "AssemblyRegister" = "3:1"
@@ -5314,7 +5348,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -5438,7 +5472,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -5562,7 +5596,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -5593,7 +5627,7 @@
             "SharedLegacy" = "11:FALSE"
             "PackageAs" = "3:1"
             "Register" = "3:1"
-            "Exclude" = "11:TRUE"
+            "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
@@ -5727,7 +5761,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:FruityManagerSetup"
         "ProductCode" = "8:{8E165651-E101-45C7-9348-E5E1970426C1}"
-        "PackageCode" = "8:{A14FF851-CAC3-431D-B237-B617D4E6CDC1}"
+        "PackageCode" = "8:{E6F4BB90-22A5-48F7-A7E7-C6B2042C654B}"
         "UpgradeCode" = "8:{0F9EB40F-0159-4F97-8C3E-7659F04FEA96}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -6276,7 +6310,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_58352F17741B4230845BDE88A467C4C5"
             {
-            "SourcePath" = "8:..\\csharp_project\\obj\\Release\\Expire Manager.exe"
+            "SourcePath" = "8:..\\csharp_project\\obj\\Debug\\Expire Manager.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
