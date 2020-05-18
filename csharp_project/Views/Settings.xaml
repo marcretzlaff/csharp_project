@@ -29,9 +29,11 @@
         <Button Content="Open Log" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Open_Log_Click"/>
         <!--Speech-->
         <Label Grid.Row="2" Grid.ColumnSpan="3" Content="Speech settings" FontFamily="Consolas" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <ListView Grid.Row="3" Grid.RowSpan="2" x:Name="LV_commands" Grid.ColumnSpan="3" Margin="10,0,10,0" ItemsSource="{Binding Choices, Mode=OneWay}"></ListView>
+        <ListView Grid.Row="3" Grid.RowSpan="2" x:Name="LV_commands" Grid.ColumnSpan="2" Margin="10,0,0,0" ItemsSource="{Binding Choices, Mode=OneWay}"></ListView>
         <Button Grid.Row="5" Grid.Column="1" x:Name="b_add" VerticalAlignment="Center" Margin="40,0,40,0" IsEnabled="False" Click="b_add_Click">Add Speech Option</Button>
         <Button Grid.Row="5" Grid.Column="2" x:Name="b_delete" VerticalAlignment="Center" Margin="40,0,40,0" Click="b_delete_Click">Delete Speech Option</Button>
+        <CheckBox Grid.Row="4" Grid.Column="3" x:Name="cb_speech_dict" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Activate universal dictionary" Checked="cb_speech_dict_Checked" Unchecked="cb_speech_dict_Unchecked"></CheckBox>
+        <CheckBox Grid.Row="3" Grid.Column="3" x:Name="cb_speech_activ"  HorizontalAlignment="Center" VerticalAlignment="Center" Content="Activate speech recognition" Checked="cb_speech_activ_Checked" Unchecked="cb_speech_activ_Unchecked"></CheckBox>
         <TextBox Grid.Row="5" Grid.Column="0" x:Name="tb_command" VerticalAlignment="Center" Margin="10,0,10,0" Height="30" VerticalContentAlignment="Center" TextChanged="tb_command_TextChanged">Command</TextBox>
         <!--UIMessage-->
         <Label x:Name="l_settings" Grid.Row="5" Grid.Column="2" Content="" VerticalAlignment="Bottom" Height="27" HorizontalContentAlignment="Right"/>

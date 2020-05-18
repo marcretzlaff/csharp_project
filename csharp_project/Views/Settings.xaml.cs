@@ -16,6 +16,7 @@ namespace csharp_project
         {
             InitializeComponent();
             this.DataContext = SpeechSynthesis.Instance;
+            if (Properties.Settings.Default.SpeechActivated) cb_speech_activ.IsChecked = true;
         }
 
         private void Delete_DB_Click(object sender, RoutedEventArgs e)
@@ -102,5 +103,38 @@ namespace csharp_project
             else
                 b_add.IsEnabled = false;
         }
+
+        #region CheckBoxHandler
+        private void cb_speech_dict_Checked(object sender, RoutedEventArgs e)
+        {
+            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.LoadRegularDict();
+        }
+
+        private void cb_speech_dict_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.UnloadRegularDict();
+        }
+
+        private void cb_speech_activ_Checked(object sender, RoutedEventArgs e)
+        {
+            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.LoadDefault();
+
+            Properties.Settings.Default.SpeechActivated = true;
+            Properties.Settings.Default.Save();
+        }
+
+        private void cb_speech_activ_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.DeactivateSpeech();
+
+            Properties.Settings.Default.SpeechActivated = false;
+            Properties.Settings.Default.Save();
+        }
+        #endregion CheckBoxHandler
+
     }
 }

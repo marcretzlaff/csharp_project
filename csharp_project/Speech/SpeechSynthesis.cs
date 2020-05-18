@@ -9,16 +9,19 @@ using System.Collections.ObjectModel;
 using System.Xml.Serialization;
 using MyLog;
 using System.Timers;
+using System.Linq.Expressions;
 
 namespace csharp_project.Speech
 {
     public class SpeechSynthesis
     {
-        public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Null" };
+        public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Speech recognition deactivated" };
 
         private readonly string _filepath_commands = System.Windows.Forms.Application.CommonAppDataPath + "\\SpeechCommands.xml"; 
         private List<string> _numbers = new List<string>() { "Null" };
         private Grammar usergrammar;
+        private bool _loaded = false;
+        private Grammar dict = new DictationGrammar();
 
         #region StateMachines
         enum internalState
@@ -109,6 +112,7 @@ namespace csharp_project.Speech
         {
             _recognizer.UnloadGrammar(usergrammar);
         }
+
         /// <summary>
         /// Loads Grammar to SpeechRecognitionEngine
         /// </summary>
@@ -117,58 +121,96 @@ namespace csharp_project.Speech
             usergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
             _recognizer.LoadGrammar(usergrammar);
         }
+
         /// <summary>
         /// Default intizialisation from SpeechRecognitionEngines and SpeechSynthesizer
         /// If Command file doesn't exist, default command will be used and file created
         /// </summary>
         public void LoadDefault()
         {
-            _timer = new Timer(1000);
-            _timer.Elapsed += timeOverEvent;
-
-            _synth.Rate = -2;
-            _recognizer.SetInputToDefaultAudioDevice();
-
-            //Load saved strings from file
-            if (File.Exists(_filepath_commands))
+            if (_loaded)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<string>));
-                try
-                {
-                    using (TextReader reader = new StreamReader(_filepath_commands))
-                    {
-                        Choices = serializer.Deserialize(reader) as ObservableCollection<string>;
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log.WriteException(e,"Trying to load XML SpeechCommands.");
-                }
+                _uirecognizer.RecognizeAsync(RecognizeMode.Single);
             }
             else
             {
-                string[] standard = new string[] { "Hello", "Cancel", "Hold", "Add", "Delete", "Food", "Drink"};
-                Choices = new ObservableCollection<string>(standard.ToList());
-                StoreGrammar();
-            }
+                _timer = new Timer(1000);
+                _timer.Elapsed += timeOverEvent;
 
-            for (int i = 1; i < 1000; i++)
-            {
-                _numbers.Add(i.ToString());
-            }
-            usergrammar = new Grammar(new GrammarBuilder(new Choices(Choices.ToArray())));
-            usergrammar.Priority = 127;
-            var numbergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
-            numbergrammar.Priority = 126;
-            _recognizer.LoadGrammar(usergrammar);
-            _recognizer.LoadGrammar(numbergrammar);
-            _recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(default_SpeechRecognized);
-            _recognizer.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(recognizer_SpeechDetected);
+                _synth.Rate = -2;
+                _recognizer.SetInputToDefaultAudioDevice();
 
-            _uirecognizer.SetInputToDefaultAudioDevice();
-            _uirecognizer.LoadGrammarAsync(new Grammar(new GrammarBuilder(new Choices("Sarah"))));
-            _uirecognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(uirecognizer_SpeechRecognized);
-            _uirecognizer.RecognizeAsync(RecognizeMode.Single);
+                //Load saved strings from file
+                if (File.Exists(_filepath_commands))
+                {
+                    XmlSerializer serializer = new XmlSerializer(typeof(ObservableCollection<string>));
+                    try
+                    {
+                        using (TextReader reader = new StreamReader(_filepath_commands))
+                        {
+                            Choices = serializer.Deserialize(reader) as ObservableCollection<string>;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Log.WriteException(e, "Trying to load XML SpeechCommands.");
+                    }
+                }
+                else
+                {
+                    string[] standard = new string[] { "Hello", "Cancel", "Hold", "Add", "Delete", "Food", "Drink" };
+                    Choices = new ObservableCollection<string>(standard.ToList());
+                    StoreGrammar();
+                }
+
+                for (int i = 1; i < 1000; i++)
+                {
+                    _numbers.Add(i.ToString());
+                }
+                usergrammar = new Grammar(new GrammarBuilder(new Choices(Choices.ToArray())));
+                usergrammar.Priority = 127;
+                var numbergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
+                numbergrammar.Priority = 126;
+                _recognizer.LoadGrammar(usergrammar);
+                _recognizer.LoadGrammar(numbergrammar);
+                _recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(default_SpeechRecognized);
+                _recognizer.SpeechDetected += new EventHandler<SpeechDetectedEventArgs>(recognizer_SpeechDetected);
+
+                _uirecognizer.SetInputToDefaultAudioDevice();
+                _uirecognizer.LoadGrammarAsync(new Grammar(new GrammarBuilder(new Choices("Sarah"))));
+                _uirecognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(uirecognizer_SpeechRecognized);
+                if(Properties.Settings.Default.SpeechActivated)
+                    _uirecognizer.RecognizeAsync(RecognizeMode.Single);
+                _loaded = true;
+            }
+        }
+
+        /// <summary>
+        /// Deactivates Speech recognition engines
+        /// </summary>
+        public void DeactivateSpeech()
+        {
+            _uirecognizer.RecognizeAsyncCancel();
+            _recognizer.RecognizeAsyncCancel();
+
+            _timer.Stop();
+            timeout = 0;
+        }
+
+        /// <summary>
+        /// Loads regular dictionary to recognizer
+        /// </summary>
+        public void LoadRegularDict()
+        {
+            _recognizer.LoadGrammar(dict);
+        }
+
+        /// <summary>
+        /// Unloads regular dictionary to recognizer
+        /// </summary>
+        public void UnloadRegularDict()
+        {
+            _recognizer.UnloadGrammar(dict);
         }
 
         /// <summary>
@@ -190,7 +232,10 @@ namespace csharp_project.Speech
                     _recognizer.RecognizeAsyncCancel();
                     _uirecognizer.RecognizeAsync(RecognizeMode.Single);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Log.WriteException(ex, "Exception at start of new recognize");
+                }
             }
         }
 
@@ -212,7 +257,10 @@ namespace csharp_project.Speech
                 {
                     _recognizer.RecognizeAsync(RecognizeMode.Multiple);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Log.WriteException(ex, "Exception at start of new recognize");
+                }
                 _timer.Start();
             }
         }
