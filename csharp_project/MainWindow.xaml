@@ -167,7 +167,7 @@
 
             <!--// Background Image //-->
 
-            <Grid x:Name="BG" PreviewMouseLeftButtonDown="BG_PreviewMouseLeftButtonDown">
+            <Grid x:Name="BG" PreviewMouseLeftButtonDown="bg_PreviewMouseLeftButtonDown">
 
                 <Grid.Background>
 
@@ -209,7 +209,7 @@
                         Height="40"
                         Width="40"
                         BorderThickness="0"
-                        Style="{StaticResource Close_btn}" Click="CloseBtn_Click">
+                        Style="{StaticResource Close_btn}" Click="closeBtn_Click">
 
                     <Button.Background>
 
@@ -295,7 +295,7 @@
                                       Height="30"
                                       Width="30"
                                       BorderThickness="0"
-                                      Style="{StaticResource tb_style}" Unchecked="Tg_Btn_Unchecked" Checked="Tg_Btn_Checked">
+                                      Style="{StaticResource tb_style}" Unchecked="tg_Btn_Unchecked" Checked="tg_Btn_Checked">
 
                             <!--// Toggle button default background image //-->
 
@@ -371,7 +371,7 @@
                         <!--// Home //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter" PreviewMouseLeftButtonDown="ListViewItem_PreviewMouseLeftButtonDown"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown"
                                       >
 
                             <StackPanel Orientation="Horizontal"
@@ -402,7 +402,7 @@
                         <!--// items //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter" PreviewMouseLeftButtonDown="ListViewItem_PreviewMouseLeftButtonDown_1"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_1"
                                       >
 
                             <StackPanel Orientation="Horizontal"
@@ -433,7 +433,7 @@
                         <!--// calendar //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter" PreviewMouseLeftButtonDown="ListViewItem_PreviewMouseLeftButtonDown_2"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_2"
                                       >
 
                             <StackPanel Orientation="Horizontal"
@@ -464,7 +464,7 @@
                         <!--// Settings //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="ListViewItem_MouseEnter" PreviewMouseLeftButtonDown="ListViewItem_PreviewMouseLeftButtonDown_3"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_3"
                                       >
 
                             <StackPanel Orientation="Horizontal"

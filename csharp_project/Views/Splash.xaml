@@ -1,0 +1,23 @@
+﻿<Window x:Class="csharp_project.Views.Splash"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:csharp_project.Views"
+        mc:Ignorable="d"
+        Height="300" 
+        Width="600"
+        ResizeMode="NoResize"
+        Topmost="True"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen" 
+        Background="SlateGray">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="32" FontWeight="Bold" FontFamily="Consolas">Loading</Label>
+        <Label x:Name="l_activ" Grid.Row="2" HorizontalAlignment="Center" FontSize="28" FontFamily="Consolas">Connecting to database...</Label>
+    </Grid>
+</Window>

@@ -24,12 +24,12 @@
         
         <!--Database / Log -->
         <Label Grid.Row="0" Grid.ColumnSpan="3" Content="Database settings" FontFamily="Consolas" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <Button Grid.Row="1" Grid.Column="0" Content="Delete all Items" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Delete_DB_Click"/>
-        <Button Content="Delete Log" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Delete_Log_Click"/>
-        <Button Content="Open Log" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="Open_Log_Click"/>
+        <Button Grid.Row="1" Grid.Column="0" Content="Delete all Items" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="delete_DB_Click"/>
+        <Button Content="Delete Log" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="delete_Log_Click"/>
+        <Button Content="Open Log" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="125" Click="open_Log_Click"/>
         <!--Speech-->
         <Label Grid.Row="2" Grid.ColumnSpan="3" Content="Speech settings" FontFamily="Consolas" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-        <ListView Grid.Row="3" Grid.RowSpan="2" x:Name="LV_commands" Grid.ColumnSpan="2" Margin="10,0,0,0" ItemsSource="{Binding Choices, Mode=OneWay}"></ListView>
+        <ListView Grid.Row="3" Grid.RowSpan="2" x:Name="LV_commands" Grid.ColumnSpan="2" Margin="10,0,0,0" ItemsSource="{Binding Path=Choices, Mode=OneWay}"></ListView>
         <Button Grid.Row="5" Grid.Column="1" x:Name="b_add" VerticalAlignment="Center" Margin="40,0,40,0" IsEnabled="False" Click="b_add_Click">Add Speech Option</Button>
         <Button Grid.Row="5" Grid.Column="2" x:Name="b_delete" VerticalAlignment="Center" Margin="40,0,40,0" Click="b_delete_Click">Delete Speech Option</Button>
         <CheckBox Grid.Row="4" Grid.Column="3" x:Name="cb_speech_dict" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Activate universal dictionary" Checked="cb_speech_dict_Checked" Unchecked="cb_speech_dict_Unchecked"></CheckBox>

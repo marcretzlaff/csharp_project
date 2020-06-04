@@ -16,26 +16,43 @@ namespace csharp_project
         {
             InitializeComponent();
             this.DataContext = SpeechSynthesis.Instance;
+            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.LoadDefault();
             if (Properties.Settings.Default.SpeechActivated) cb_speech_activ.IsChecked = true;
         }
 
-        private void Delete_DB_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Deletes current SQLite database and loads default new one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void delete_DB_Click(object sender, RoutedEventArgs e)
         {
             Log.WriteLog($"Database deleted.");
-            ShowLabelFaded(l_settings, "Database deletion successfully!");
+            showLabelFaded(l_settings, "Database deletion successfully!");
             var dbhelper = DataAccess.DataManager.getInstance();
             dbhelper.DeleteDatabase();
             dbhelper.CheckAndLoadDefaults();
         }
 
-        private void Delete_Log_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// deletes log file and creates new one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void delete_Log_Click(object sender, RoutedEventArgs e)
         {
-            ShowLabelFaded(l_settings, "Log deleted successfully!");
+            showLabelFaded(l_settings, "Log deleted successfully!");
             Log.Delete();
             Log.CreateLogFile();
         }
 
-        private void ShowLabelFaded(Label label, string s)
+        /// <summary>
+        /// Helper function shows fading text on button clicks
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="s"></param>
+        private void showLabelFaded(Label label, string s)
         {
             label.Content = s;
             label.Visibility = System.Windows.Visibility.Visible;
@@ -57,66 +74,103 @@ namespace csharp_project
             storyboard.Begin();
         }
 
-        private void Open_Log_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Opens Log file for reading
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void open_Log_Click(object sender, RoutedEventArgs e)
         {
             Log.OpenLog();
         }
 
+        /// <summary>
+        /// Adds Speech recognition choice to custom grammar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_add_Click(object sender, RoutedEventArgs e)
         {
-            if (!SpeechSynthesis.Choices.Contains(tb_command.Text))
+            var speech = SpeechSynthesis.Instance;
+            if (!speech.Choices.Contains(tb_command.Text))
             {
-                SpeechSynthesis.Instance.UnloadCustomGrammar();
-                SpeechSynthesis.Choices.Add(tb_command.Text);
-                SpeechSynthesis.Instance.LoadCustomGrammar();
-                SpeechSynthesis.Instance.StoreGrammar();
+                speech.UnloadCustomGrammar();
+                speech.Choices.Add(tb_command.Text);
+                speech.LoadCustomGrammar();
+                speech.StoreGrammar();
                 Log.WriteLog($"Speech Command {tb_command.Text} added.");
+                tb_command.Text = "";
             }
             else
             {
-                ShowLabelFaded(l_settings, "Command already in Grammar.");
+                showLabelFaded(l_settings, "Command already in Grammar.");
             }
         }
 
+        /// <summary>
+        /// deletes speech recognition chouice from custom grammar
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void b_delete_Click(object sender, RoutedEventArgs e)
         {
             var sel = LV_commands.SelectedItem?.ToString();
-            if (SpeechSynthesis.Choices.Contains(sel) && sel != null)
+            var speech = SpeechSynthesis.Instance;
+            if (speech.Choices.Contains(sel) && sel != null)
             {
-                SpeechSynthesis.Choices.Remove(sel);
-                Log.WriteLog($"Speech Command {sel} deleted.");
-                SpeechSynthesis.Instance.UnloadCustomGrammar();
-                SpeechSynthesis.Instance.LoadCustomGrammar();
-                SpeechSynthesis.Instance.StoreGrammar();
+                speech.Choices.Remove(sel);
+                Log.WriteLog($"Speech Command \"{sel}\" deleted.");
+                speech.UnloadCustomGrammar();
+                speech.LoadCustomGrammar();
+                speech.StoreGrammar();
             }
             else
             {
-                ShowLabelFaded(l_settings, "Select a item and try again.");
+                showLabelFaded(l_settings, "Select a item and try again.");
             }
-
         }
 
+        /// <summary>
+        /// filter for choice command text
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tb_command_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (tb_command.Text != "Command")
+            if ((tb_command.Text != "Command") && (tb_command.Text != ""))
                 b_add.IsEnabled = true;
             else
                 b_add.IsEnabled = false;
         }
 
         #region CheckBoxHandler
+        /// <summary>
+        /// Loads regular dictionary to speech recognition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cb_speech_dict_Checked(object sender, RoutedEventArgs e)
         {
             SpeechSynthesis speech = SpeechSynthesis.Instance;
             speech.LoadRegularDict();
         }
 
+        /// <summary>
+        /// unloads regular dictionary to speech recognition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cb_speech_dict_Unchecked(object sender, RoutedEventArgs e)
         {
             SpeechSynthesis speech = SpeechSynthesis.Instance;
             speech.UnloadRegularDict();
         }
 
+        /// <summary>
+        /// activates speech recogniton
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cb_speech_activ_Checked(object sender, RoutedEventArgs e)
         {
             SpeechSynthesis speech = SpeechSynthesis.Instance;
@@ -126,6 +180,11 @@ namespace csharp_project
             Properties.Settings.Default.Save();
         }
 
+        /// <summary>
+        /// deactivates Speec recognition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cb_speech_activ_Unchecked(object sender, RoutedEventArgs e)
         {
             SpeechSynthesis speech = SpeechSynthesis.Instance;

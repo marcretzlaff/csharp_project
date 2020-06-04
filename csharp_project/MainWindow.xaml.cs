@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using csharp_project.Speech;
+using csharp_project.Views;
 using MyLog;
 
 namespace csharp_project
@@ -15,14 +16,13 @@ namespace csharp_project
         public MainWindow()
         {
             InitializeComponent();
-
+            var splash = new Splash();
+            splash.Show();
             //DB setup
             var dbhelper = DataAccess.DataManager.getInstance();
             dbhelper.CheckAndLoadDefaults();
             Log.CreateLogFile();
-
-            SpeechSynthesis speech = SpeechSynthesis.Instance;
-            speech.LoadDefault();
+            splash.Hide();
         }
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListViewItem_MouseEnter(object sender, MouseEventArgs e)
+        private void listViewItem_MouseEnter(object sender, MouseEventArgs e)
         {
             //Tooltip visability
             if (Tg_Btn.IsChecked == true)
@@ -53,7 +53,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Tg_Btn_Unchecked(object sender, RoutedEventArgs e)
+        private void tg_Btn_Unchecked(object sender, RoutedEventArgs e)
         {
             img_bg.Opacity = 1;
         }
@@ -63,7 +63,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Tg_Btn_Checked(object sender, RoutedEventArgs e)
+        private void tg_Btn_Checked(object sender, RoutedEventArgs e)
         {
             img_bg.Opacity = 0.3;
         }
@@ -73,7 +73,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BG_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void bg_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Tg_Btn.IsChecked = false;
         }
@@ -83,7 +83,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -93,7 +93,7 @@ namespace csharp_project
         /// Sets parameter control to visbile
         /// </summary>
         /// <param name="control"></param>
-        private void SetActiveUserControl(UserControl control)
+        private void setActiveUserControl(UserControl control)
         {
             app_name.Visibility = Visibility.Collapsed;
             home.Visibility = Visibility.Collapsed;
@@ -110,9 +110,9 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SetActiveUserControl(home);
+            setActiveUserControl(home);
         }
 
         /// <summary>
@@ -121,9 +121,9 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListViewItem_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
-            SetActiveUserControl(items);
+            setActiveUserControl(items);
             items.LoadTables();
         }
 
@@ -133,9 +133,9 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
         {
-            SetActiveUserControl(calendar);
+            setActiveUserControl(calendar);
             calendar.InitLists();
             calendar.SetCalendar();
         }
@@ -146,9 +146,9 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ListViewItem_PreviewMouseLeftButtonDown_3(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown_3(object sender, MouseButtonEventArgs e)
         {
-            SetActiveUserControl(settings);
+            setActiveUserControl(settings);
         }
 
         #endregion set usercontrols

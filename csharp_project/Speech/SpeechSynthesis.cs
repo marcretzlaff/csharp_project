@@ -10,12 +10,13 @@ using System.Xml.Serialization;
 using MyLog;
 using System.Timers;
 using System.Linq.Expressions;
+using System.ComponentModel;
 
 namespace csharp_project.Speech
 {
     public class SpeechSynthesis
     {
-        public static ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Speech recognition deactivated" };
+        public  ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Speech Recognition deactived. Activate and restart." };
 
         private readonly string _filepath_commands = System.Windows.Forms.Application.CommonAppDataPath + "\\SpeechCommands.xml"; 
         private List<string> _numbers = new List<string>() { "Null" };
@@ -118,7 +119,7 @@ namespace csharp_project.Speech
         /// </summary>
         public void LoadCustomGrammar()
         {
-            usergrammar = new Grammar(new GrammarBuilder(new Choices(_numbers.ToArray())));
+            usergrammar = new Grammar(new GrammarBuilder(new Choices(Choices.ToArray())));
             _recognizer.LoadGrammar(usergrammar);
         }
 
@@ -163,7 +164,7 @@ namespace csharp_project.Speech
                     StoreGrammar();
                 }
 
-                for (int i = 1; i < 1000; i++)
+                for (int i = 1; i < 100; i++)
                 {
                     _numbers.Add(i.ToString());
                 }
@@ -179,8 +180,6 @@ namespace csharp_project.Speech
                 _uirecognizer.SetInputToDefaultAudioDevice();
                 _uirecognizer.LoadGrammarAsync(new Grammar(new GrammarBuilder(new Choices("Sarah"))));
                 _uirecognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(uirecognizer_SpeechRecognized);
-                if(Properties.Settings.Default.SpeechActivated)
-                    _uirecognizer.RecognizeAsync(RecognizeMode.Single);
                 _loaded = true;
             }
         }
