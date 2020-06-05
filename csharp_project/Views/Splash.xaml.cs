@@ -1,4 +1,5 @@
-﻿using System;
+﻿using csharp_project.Speech;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,21 @@ namespace csharp_project.Views
         public Splash()
         {
             InitializeComponent();
+            load();
+        }
+
+        private void load()
+        {
+            //DB setup
+            var dbhelper = DataAccess.DataManager.getInstance();
+            dbhelper.CheckAndLoadDefaults();
+
+            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.LoadDefault();
+
+            var mainview = new MainWindow();
+            mainview.Show();
+            this.Hide();
         }
     }
 }

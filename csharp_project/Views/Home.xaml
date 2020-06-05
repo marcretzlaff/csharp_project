@@ -65,7 +65,6 @@
                     <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}" Width="90"/>
                     <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}" Width="90"/>
                     <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}" Width="80"/>
-                    <DataGridTextColumn Header="Weigth" Binding="{Binding Path=weigth}" Width="80"/>
                 </DataGrid.Columns>
             </DataGrid>
 

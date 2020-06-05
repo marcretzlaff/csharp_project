@@ -16,6 +16,7 @@ namespace csharp_project
         public MainWindow()
         {
             InitializeComponent();
+            /*
             var splash = new Splash();
             splash.Show();
             //DB setup
@@ -23,6 +24,7 @@ namespace csharp_project
             dbhelper.CheckAndLoadDefaults();
             Log.CreateLogFile();
             splash.Hide();
+            */
         }
 
         /// <summary>

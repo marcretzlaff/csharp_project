@@ -51,6 +51,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_163CC38A00DE4B8692B23DD483A185B7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_17954788CA558DE650E0359C6DF6AFE2"
         "OwnerKey" = "8:_D73AB22C554B505A8B5E86FD0A3A0590"
         "MsmSig" = "8:_UNDEFINED"
@@ -197,12 +203,6 @@
         {
         "MsmKey" = "8:_4089FB6A9F7691955AD4F452874EA5F5"
         "OwnerKey" = "8:_D73AB22C554B505A8B5E86FD0A3A0590"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_40BE3E103105453C9D777D54905E2023"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1902,6 +1902,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_163CC38A00DE4B8692B23DD483A185B7"
+            {
+            "SourcePath" = "8:..\\csharp_project\\icons8-zeitspanne-64.ico"
+            "TargetName" = "8:icons8-zeitspanne-64.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_17954788CA558DE650E0359C6DF6AFE2"
             {
             "AssemblyRegister" = "3:1"
@@ -2644,26 +2664,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_40BE3E103105453C9D777D54905E2023"
-            {
-            "SourcePath" = "8:..\\..\\..\\..\\Downloads\\icons8-zeitspanne-64.ico"
-            "TargetName" = "8:icons8-zeitspanne-64.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4418A931E9872623CB0C466AA1681B57"
@@ -5778,7 +5778,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_40BE3E103105453C9D777D54905E2023"
+        "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -5892,7 +5892,7 @@
             "Target" = "8:_58352F17741B4230845BDE88A467C4C5"
             "Folder" = "8:_A5C4B4CE3B6C43C694087EF28F4AA369"
             "WorkingFolder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
-            "Icon" = "8:_40BE3E103105453C9D777D54905E2023"
+            "Icon" = "8:_163CC38A00DE4B8692B23DD483A185B7"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CDB0DC127B794CCDAB269B770CF7E9A6"
@@ -5906,7 +5906,7 @@
             "Target" = "8:_58352F17741B4230845BDE88A467C4C5"
             "Folder" = "8:_692B35EB91A94736A4E2C41DEE9EB194"
             "WorkingFolder" = "8:_810A739FDC2B47AA9E81589EAAF29176"
-            "Icon" = "8:_40BE3E103105453C9D777D54905E2023"
+            "Icon" = "8:_163CC38A00DE4B8692B23DD483A185B7"
             "Feature" = "8:"
             }
         }

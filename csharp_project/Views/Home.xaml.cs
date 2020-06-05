@@ -1,6 +1,7 @@
 ﻿using csharp_project.Data;
 using csharp_project.DataAccess;
 using csharp_project.Views;
+using MyLog;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -58,26 +59,39 @@ namespace csharp_project
             if (dd_search_itemtyp.Text == "Food")
             {
                 List<Food> list = new List<Food>();
-                int id = (d_search.SelectedItem as Food).Id;
-                UpdateDialog dia = new UpdateDialog(id, "Food");
-                dia.ShowDialog();
+                try
+                {
+                    int id = (d_search.SelectedItem as Food).Id;
+                    UpdateDialog dia = new UpdateDialog(id, "Food");
+                    dia.ShowDialog();
 
-                var data = dbhelper.Get<Food>(id);
-                list.Add(data);
-                d_search.ItemsSource = list;
+                    var data = dbhelper.Get<Food>(id);
+                    list.Add(data);
+                    d_search.ItemsSource = list;
+                }
+                catch(Exception ex)
+                {
+                    Log.WriteException(ex, "Unsuccessful update in Home Screen.");
+                }
             }
             else if (dd_search_itemtyp.Text == "Drinks")
             {
                 List<Drinks> list = new List<Drinks>();
-                int id = (d_search.SelectedItem as Drinks).Id;
-                UpdateDialog dia = new UpdateDialog(id, "Drinks");
-                dia.ShowDialog();
+                try
+                {
+                    int id = (d_search.SelectedItem as Drinks).Id;
+                    UpdateDialog dia = new UpdateDialog(id, "Drinks");
+                    dia.ShowDialog();
 
-                var data = dbhelper.Get<Drinks>(id);
-                list.Add(data);
-                d_search.ItemsSource = list;
+                    var data = dbhelper.Get<Drinks>(id);
+                    list.Add(data);
+                    d_search.ItemsSource = list;
+                }
+                catch (Exception ex)
+                {
+                Log.WriteException(ex, "Unsuccessful update in Home Screen.");
+                }
             }
-
             ShowLabelFaded(l_adding, "Item updated!");
         }
 
@@ -100,15 +114,23 @@ namespace csharp_project
                     success = Int32.TryParse(tb_search_id.Text, out int id);
                     if (success)
                     {
-                        Food data = dbhelper.Get<Food>(id);
-                        if (data.expires)
-                            data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
-                        else data.lasting = null;
-                        list.Add(data);
-                        d_search.ItemsSource = list;
+                        try
+                        {
+                            Food data = dbhelper.Get<Food>(id);
+                            if (data.expires)
+                                data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
+                            else data.lasting = null;
+                            list.Add(data);
+                            d_search.ItemsSource = list;
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.WriteException(ex, "Home: Searched key invalid.");
+                            ShowLabelFaded(l_adding, "ERROR: ID not in database.");
+                        }
                     }
                     else
-                      ShowLabelFaded(l_adding, "ID could not be converted to INT.");
+                      ShowLabelFaded(l_adding, "ERROR: ID could not be converted to INT.");
                 }
                 else if (rb_name.IsChecked.Value)
                 {
@@ -130,12 +152,20 @@ namespace csharp_project
                     success = Int32.TryParse(tb_search_id.Text, out int id);
                     if (success)
                     {
-                        Drinks data = dbhelper.Get<Drinks>(id);
-                        if (data.expires)
-                            data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
-                        else data.lasting = null;
-                        list.Add(data);
-                        d_search.ItemsSource = list;
+                        try
+                        {
+                            Drinks data = dbhelper.Get<Drinks>(id);
+                            if (data.expires)
+                                data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
+                            else data.lasting = null;
+                            list.Add(data);
+                            d_search.ItemsSource = list;
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.WriteException(ex, "Home: Searched key invalid.");
+                            ShowLabelFaded(l_adding, "ERROR: ID not in database.");
+                        }
                     }
                     else
                         ShowLabelFaded(l_adding, "ID could not be converted to INT.");

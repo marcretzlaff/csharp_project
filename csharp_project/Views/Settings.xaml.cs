@@ -16,8 +16,6 @@ namespace csharp_project
         {
             InitializeComponent();
             this.DataContext = SpeechSynthesis.Instance;
-            SpeechSynthesis speech = SpeechSynthesis.Instance;
-            speech.LoadDefault();
             if (Properties.Settings.Default.SpeechActivated) cb_speech_activ.IsChecked = true;
         }
 
