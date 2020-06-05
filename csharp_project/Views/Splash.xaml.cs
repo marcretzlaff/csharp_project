@@ -23,17 +23,14 @@ namespace csharp_project.Views
         public Splash()
         {
             InitializeComponent();
-            load();
+            this.ContentRendered += onLoad;
         }
 
-        private void load()
+        private void onLoad(object sender, EventArgs e)
         {
             //DB setup
-            var dbhelper = DataAccess.DataManager.getInstance();
-            dbhelper.CheckAndLoadDefaults();
-
-            SpeechSynthesis speech = SpeechSynthesis.Instance;
-            speech.LoadDefault();
+            Task db = new Task(() => DataAccess.DataManager.getInstance().CheckAndLoadDefaults());
+            Task speech = new Task(() => SpeechSynthesis.Instance.LoadDefault());
 
             var mainview = new MainWindow();
             mainview.Show();
