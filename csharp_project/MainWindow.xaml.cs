@@ -16,15 +16,6 @@ namespace csharp_project
         public MainWindow()
         {
             InitializeComponent();
-            /*
-            var splash = new Splash();
-            splash.Show();
-            //DB setup
-            var dbhelper = DataAccess.DataManager.getInstance();
-            dbhelper.CheckAndLoadDefaults();
-            Log.CreateLogFile();
-            splash.Hide();
-            */
         }
 
         /// <summary>
@@ -35,18 +26,20 @@ namespace csharp_project
         /// <param name="e"></param>
         private void listViewItem_MouseEnter(object sender, MouseEventArgs e)
         {
-            //Tooltip visability
+            //Tooltip visability while navbar open
             if (Tg_Btn.IsChecked == true)
             {
                 tt_home.Visibility = Visibility.Collapsed;
                 tt_items.Visibility = Visibility.Collapsed;
                 tt_settings.Visibility = Visibility.Collapsed;
+                tt_calendar.Visibility = Visibility.Collapsed;
             }
             else
             {
                 tt_home.Visibility = Visibility.Visible;
                 tt_items.Visibility = Visibility.Visible;
                 tt_settings.Visibility = Visibility.Visible;
+                tt_calendar.Visibility = Visibility.Visible;
             }
         }
 
@@ -87,6 +80,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
+            SpeechSynthesis.Instance.DeactivateSpeech();
             Close();
         }
 
@@ -97,7 +91,7 @@ namespace csharp_project
         /// <param name="control"></param>
         private void setActiveUserControl(UserControl control)
         {
-            app_name.Visibility = Visibility.Collapsed;
+            tb_app_name.Visibility = Visibility.Collapsed;
             home.Visibility = Visibility.Collapsed;
             items.Visibility = Visibility.Collapsed;
             settings.Visibility = Visibility.Collapsed;
@@ -112,7 +106,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void listViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown_home(object sender, MouseButtonEventArgs e)
         {
             setActiveUserControl(home);
         }
@@ -123,7 +117,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void listViewItem_PreviewMouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown_items(object sender, MouseButtonEventArgs e)
         {
             setActiveUserControl(items);
             items.LoadTables();
@@ -135,7 +129,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void listViewItem_PreviewMouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown_calendar(object sender, MouseButtonEventArgs e)
         {
             setActiveUserControl(calendar);
             calendar.InitLists();
@@ -148,7 +142,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void listViewItem_PreviewMouseLeftButtonDown_3(object sender, MouseButtonEventArgs e)
+        private void listViewItem_PreviewMouseLeftButtonDown_settings(object sender, MouseButtonEventArgs e)
         {
             setActiveUserControl(settings);
         }

@@ -209,7 +209,8 @@
                         Height="40"
                         Width="40"
                         BorderThickness="0"
-                        Style="{StaticResource Close_btn}" Click="closeBtn_Click">
+                        Style="{StaticResource Close_btn}" 
+                        Click="closeBtn_Click">
 
                     <Button.Background>
 
@@ -239,7 +240,7 @@
                              DragDelta="headerThumb_DragDelta"
                              Panel.ZIndex="1"/>
                         <!--fruity text-->
-                        <TextBlock  x:Name="app_name"
+                        <TextBlock  x:Name="tb_app_name"
                             Grid.Row="2"
                             Grid.Column="0"
                             Margin="70,0,0,0" 
@@ -371,7 +372,7 @@
                         <!--// Home //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_home"
                                       >
 
                             <StackPanel Orientation="Horizontal"
@@ -402,7 +403,7 @@
                         <!--// items //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_1"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_items"
                                       >
 
                             <StackPanel Orientation="Horizontal"
@@ -433,7 +434,7 @@
                         <!--// calendar //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_2"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_calendar"
                                       >
 
                             <StackPanel Orientation="Horizontal"
@@ -464,7 +465,7 @@
                         <!--// Settings //-->
 
                         <ListViewItem HorizontalAlignment="Left"
-                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_3"
+                                      Margin="0,0,0,15" MouseEnter="listViewItem_MouseEnter" PreviewMouseLeftButtonDown="listViewItem_PreviewMouseLeftButtonDown_settings"
                                       >
 
                             <StackPanel Orientation="Horizontal"

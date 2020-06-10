@@ -159,7 +159,7 @@ namespace csharp_project.Speech
                 }
                 else
                 {
-                    string[] standard = new string[] { "Hello", "Cancel", "Hold", "Add", "Delete", "Food", "Drink" };
+                    string[] standard = new string[] { "Hello", "Cancel", "Hold", "Insert", "Delete", "Food", "Drink" };
                     Choices = new ObservableCollection<string>(standard.ToList());
                     StoreGrammar();
                 }

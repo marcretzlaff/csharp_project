@@ -1,4 +1,5 @@
 ﻿using csharp_project.Speech;
+using MyLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,9 +30,9 @@ namespace csharp_project.Views
         private void onLoad(object sender, EventArgs e)
         {
             //DB setup
-            Task db = new Task(() => DataAccess.DataManager.getInstance().CheckAndLoadDefaults());
-            Task speech = new Task(() => SpeechSynthesis.Instance.LoadDefault());
-
+            Task db = Task.Run(() => DataAccess.DataManager.getInstance().CheckAndLoadDefaults());
+            Task l  = Task.Run(() => Log.CreateLogFile());
+            SpeechSynthesis.Instance.LoadDefault();
             var mainview = new MainWindow();
             mainview.Show();
             this.Hide();

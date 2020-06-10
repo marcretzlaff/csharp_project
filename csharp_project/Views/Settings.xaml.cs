@@ -172,6 +172,7 @@ namespace csharp_project
         private void cb_speech_activ_Checked(object sender, RoutedEventArgs e)
         {
             SpeechSynthesis speech = SpeechSynthesis.Instance;
+            speech.DeactivateSpeech();
             speech.LoadDefault();
 
             Properties.Settings.Default.SpeechActivated = true;
