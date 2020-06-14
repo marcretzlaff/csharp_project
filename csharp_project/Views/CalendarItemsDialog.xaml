@@ -27,11 +27,11 @@
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowMenu" 
                              DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                    <MenuItem Header="Information" Click="MenuItem_Info"/>
-                    <MenuItem Header="Copy" Click="MenuItem_Copy"/>
-                    <MenuItem Header="Update" Click="MenuItem_Update"/>
+                    <MenuItem Header="Information" Click="menuItem_Info"/>
+                    <MenuItem Header="Copy" Click="menuItem_Copy"/>
+                    <MenuItem Header="Update" Click="menuItem_Update"/>
                     <Separator/>
-                    <MenuItem Header="Delete Item" Click="MenuItem_Del"/>
+                    <MenuItem Header="Delete Item" Click="menuItem_Del"/>
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.RowStyle>

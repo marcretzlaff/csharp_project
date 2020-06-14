@@ -47,7 +47,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemFood_Info(object sender, RoutedEventArgs e)
+        private void menuItemFood_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -58,11 +58,11 @@ namespace csharp_project
             var item = contextMenu.DataContext as Food;
             if (item.expires)
             { 
-                MessageBox.Show(item.Getinformation() + $"It expires in {(item.expiryTime.Value.Date - item.insertTime.Date).TotalDays} days. It weigths {item.weigth} grams.", "Information of Item");
+                MessageBox.Show(item.GetInformation() + $"It expires in {(item.expiryTime.Value.Date - item.insertTime.Date).TotalDays} days. It weigths {item.weigth} grams.", "Information of Item");
             }
             else
             {
-                MessageBox.Show(item.Getinformation(), "Information of Item");
+                MessageBox.Show(item.GetInformation(), "Information of Item");
             }
         }
 
@@ -72,7 +72,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemFood_Del(object sender, RoutedEventArgs e)
+        private void menuItemFood_Del(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -93,7 +93,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemFood_Copy(object sender, RoutedEventArgs e)
+        private void menuItemFood_Copy(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -112,7 +112,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemFood_Update(object sender, RoutedEventArgs e)
+        private void menuItemFood_Update(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -134,7 +134,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemDrinks_Info(object sender, RoutedEventArgs e)
+        private void menuItemDrinks_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -145,11 +145,11 @@ namespace csharp_project
             var item = contextMenu.DataContext as Drinks;
             if (item.expires)
             {
-                MessageBox.Show(item.Getinformation() + $"It expires in {(item.expiryTime.Value.Date - item.insertTime.Date).TotalDays} days. Volume is {item.volumen} mL.", "Information of Item");
+                MessageBox.Show(item.GetInformation() + $"It expires in {(item.expiryTime.Value.Date - item.insertTime.Date).TotalDays} days. Volume is {item.volumen} mL.", "Information of Item");
             }
             else
             {
-                MessageBox.Show(item.Getinformation(), "Information of Item");
+                MessageBox.Show(item.GetInformation(), "Information of Item");
             }
         }
 
@@ -159,7 +159,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemDrinks_Del(object sender, RoutedEventArgs e)
+        private void menuItemDrinks_Del(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -178,7 +178,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemDrinks_Copy(object sender, RoutedEventArgs e)
+        private void menuItemDrinks_Copy(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -197,7 +197,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItemDrinks_Update(object sender, RoutedEventArgs e)
+        private void menuItemDrinks_Update(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;

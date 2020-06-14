@@ -43,11 +43,11 @@
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowMenu" 
                              DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                    <MenuItem Header="Information" Click="MenuItemFood_Info"/>
-                    <MenuItem Header="Copy" Click="MenuItemFood_Copy"/>
-                    <MenuItem Header="Update" Click="MenuItemFood_Update"/>
+                    <MenuItem Header="Information" Click="menuItemFood_Info"/>
+                    <MenuItem Header="Copy" Click="menuItemFood_Copy"/>
+                    <MenuItem Header="Update" Click="menuItemFood_Update"/>
                     <Separator/>
-                    <MenuItem Header="Delete Item" Click="MenuItemFood_Del"/>
+                    <MenuItem Header="Delete Item" Click="menuItemFood_Del"/>
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.RowStyle>
@@ -79,11 +79,11 @@
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowMenu" 
                              DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
-                    <MenuItem Header="Information" Click="MenuItemDrinks_Info"/>
-                    <MenuItem Header="Copy" Click="MenuItemDrinks_Copy"/>
-                    <MenuItem Header="Update" Click="MenuItemDrinks_Update"/>
+                    <MenuItem Header="Information" Click="menuItemDrinks_Info"/>
+                    <MenuItem Header="Copy" Click="menuItemDrinks_Copy"/>
+                    <MenuItem Header="Update" Click="menuItemDrinks_Update"/>
                     <Separator/>
-                    <MenuItem Header="Delete Item" Click="MenuItemDrinks_Del"/>
+                    <MenuItem Header="Delete Item" Click="menuItemDrinks_Del"/>
                 </ContextMenu>
             </DataGrid.Resources>
             <DataGrid.RowStyle>

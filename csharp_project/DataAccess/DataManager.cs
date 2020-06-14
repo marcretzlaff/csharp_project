@@ -9,7 +9,7 @@ using System.IO;
 
 namespace csharp_project.DataAccess
 {
-    public class DataManager
+    public class DataManager :IDatabase
     {
 
         private readonly string path = Application.CommonAppDataPath + "\\database.db";

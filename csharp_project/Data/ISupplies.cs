@@ -2,7 +2,9 @@
 namespace csharp_project.Data
 {
     interface ISupplies
-    {  
-        string Getinformation();
+    {
+        int Id { get; set; }
+        string Name { get; set; }
+        string GetInformation();
     }
 }

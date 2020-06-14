@@ -104,6 +104,7 @@
       <DependentUpon>WeekControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataAccess\DataManager.cs" />
+    <Compile Include="DataAccess\IDatabase.cs" />
     <Compile Include="Data\Drinks.cs" />
     <Compile Include="Data\Food.cs" />
     <Compile Include="Data\ISupplies.cs" />

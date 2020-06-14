@@ -18,7 +18,7 @@ namespace csharp_project.Data
 
         public bool expires { get; set; } = true;
 
-        public string Getinformation()
+        public string GetInformation()
         {
             return $"{Name} was inserted at {insertTime}. ";
         }
