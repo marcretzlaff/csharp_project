@@ -1,4 +1,5 @@
-﻿using csharp_project.Speech;
+﻿using csharp_project.DataAccess;
+using csharp_project.Speech;
 using MyLog;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Unity;
+using Unity.Injection;
 
 namespace csharp_project.Views
 {
@@ -29,11 +32,16 @@ namespace csharp_project.Views
 
         private void onLoad(object sender, EventArgs e)
         {
-            //DB setup
-            Task db = Task.Run(() => DataAccess.DataManager.getInstance().CheckAndLoadDefaults());
-            Task l  = Task.Run(() => Log.CreateLogFile());
-            SpeechSynthesis.Instance.LoadDefault();
-            var mainview = new MainWindow();
+            var container = new UnityContainer();
+            container.RegisterSingleton<Log>();
+            container.RegisterType<IDatabase, DataManager>(TypeLifetime.Singleton, new InjectionProperty("Container", container));
+            container.RegisterSingleton<SpeechSynthesis>(new InjectionProperty("Container", container));
+
+            container.Resolve<IDatabase>().CheckAndLoadDefaults();
+            container.Resolve<Log>().CreateLogFile();
+            container.Resolve<SpeechSynthesis>().LoadDefault();
+
+            var mainview = new MainWindow(container);
             mainview.Show();
             this.Hide();
         }

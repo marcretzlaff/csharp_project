@@ -5,11 +5,11 @@ using System.Windows.Forms;
 
 namespace MyLog
 {
-    public static class Log
+    public class Log
     {
-        private static readonly string path = Application.CommonAppDataPath + "/Logs/log.txt";
-        private static readonly string directorypath = Application.CommonAppDataPath + "/Logs";
-        static Log()
+        private readonly string path = Application.CommonAppDataPath + "/Logs/log.txt";
+        private readonly string directorypath = Application.CommonAppDataPath + "/Logs";
+        public Log()
         {
             CreateLogFile();
         }
@@ -17,7 +17,7 @@ namespace MyLog
         /// <summary>
         /// Creates directory and log file.
         /// </summary>
-        public static void CreateLogFile()
+        public void CreateLogFile()
         {
             Directory.CreateDirectory(directorypath);
             if (!File.Exists(path))
@@ -29,7 +29,7 @@ namespace MyLog
         /// <summary>
         /// Deletes log file.
         /// </summary>
-        public static void Delete()
+        public void Delete()
         {
             try
             {
@@ -46,7 +46,7 @@ namespace MyLog
         /// not for internal exception use
         /// </summary>
         /// <param name="exception"></param>
-        public static void WriteException(Exception exception, string s)
+        public void WriteException(Exception exception, string s)
         {
             using (StreamWriter fs = new StreamWriter(path, true))
             {
@@ -66,7 +66,7 @@ namespace MyLog
         /// Writes param string to log file.
         /// </summary>
         /// <param name="text"></param>
-        public static void WriteLog(string text)
+        public void WriteLog(string text)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace MyLog
         /// <summary>
         /// Opens log file in editor.
         /// </summary>
-        public static void OpenLog()
+        public void OpenLog()
         {
             System.Diagnostics.Process.Start("notepad.exe", path);
         }

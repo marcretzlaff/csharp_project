@@ -179,12 +179,6 @@
                     <ColumnDefinition Width="70"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid Grid.Column="1">
-                    <local:Home x:Name="home" Visibility="Collapsed"></local:Home>
-                    <local:Items x:Name="items" Visibility="Collapsed"></local:Items>
-                    <local:Settings x:Name="settings" Visibility="Collapsed"></local:Settings>
-                    <calendar:Calendar x:Name="calendar" Visibility="Collapsed"></calendar:Calendar>
-                </Grid>
             </Grid>
 
             <!--// App Close Button //-->

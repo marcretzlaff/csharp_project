@@ -4,11 +4,13 @@ using csharp_project.Views;
 using MyLog;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using Unity;
 
 namespace csharp_project
 {
@@ -17,9 +19,11 @@ namespace csharp_project
     /// </summary>
     public partial class Home : UserControl
     {
-        public Home()
+        UnityContainer _container;
+        public Home(UnityContainer container)
         {
             InitializeComponent();
+            _container = container;
         }
         #region Search
 
@@ -54,7 +58,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void b_search_update_Click(object sender, RoutedEventArgs e)
         {
-            var dbhelper = DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
 
             if (dd_search_itemtyp.Text == "Food")
             {
@@ -62,7 +66,7 @@ namespace csharp_project
                 try
                 {
                     int id = (d_search.SelectedItem as Food).Id;
-                    UpdateDialog dia = new UpdateDialog(id, "Food");
+                    UpdateDialog dia = new UpdateDialog(id, "Food",_container);
                     dia.ShowDialog();
 
                     var data = dbhelper.Get<Food>(id);
@@ -71,7 +75,7 @@ namespace csharp_project
                 }
                 catch(Exception ex)
                 {
-                    Log.WriteException(ex, "Unsuccessful update in Home Screen.");
+                    _container.Resolve<Log>().WriteException(ex, "Unsuccessful update in Home Screen.");
                 }
             }
             else if (dd_search_itemtyp.Text == "Drinks")
@@ -80,7 +84,7 @@ namespace csharp_project
                 try
                 {
                     int id = (d_search.SelectedItem as Drinks).Id;
-                    UpdateDialog dia = new UpdateDialog(id, "Drinks");
+                    UpdateDialog dia = new UpdateDialog(id, "Drinks",_container);
                     dia.ShowDialog();
 
                     var data = dbhelper.Get<Drinks>(id);
@@ -89,10 +93,10 @@ namespace csharp_project
                 }
                 catch (Exception ex)
                 {
-                Log.WriteException(ex, "Unsuccessful update in Home Screen.");
+                   _container.Resolve<Log>().WriteException(ex, "Unsuccessful update in Home Screen.");
                 }
             }
-            ShowLabelFaded(l_adding, "Item updated!");
+            showLabelFaded(l_adding, "Item updated!");
         }
 
         /// <summary>
@@ -103,7 +107,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void b_search_item_Click(object sender, RoutedEventArgs e)
         {
-            var dbhelper = DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
             bool success = false;
 
             if (dd_search_itemtyp.Text == "Food")
@@ -125,12 +129,12 @@ namespace csharp_project
                         }
                         catch (Exception ex)
                         {
-                            Log.WriteException(ex, "Home: Searched key invalid.");
-                            ShowLabelFaded(l_adding, "ERROR: ID not in database.");
+                            _container.Resolve<Log>().WriteException(ex, "Home: Searched key invalid.");
+                            showLabelFaded(l_adding, "ERROR: ID not in database.");
                         }
                     }
                     else
-                      ShowLabelFaded(l_adding, "ERROR: ID could not be converted to INT.");
+                      showLabelFaded(l_adding, "ERROR: ID could not be converted to INT.");
                 }
                 else if (rb_name.IsChecked.Value)
                 {
@@ -163,12 +167,12 @@ namespace csharp_project
                         }
                         catch (Exception ex)
                         {
-                            Log.WriteException(ex, "Home: Searched key invalid.");
-                            ShowLabelFaded(l_adding, "ERROR: ID not in database.");
+                            _container.Resolve<Log>().WriteException(ex, "Home: Searched key invalid.");
+                            showLabelFaded(l_adding, "ERROR: ID not in database.");
                         }
                     }
                     else
-                        ShowLabelFaded(l_adding, "ID could not be converted to INT.");
+                        showLabelFaded(l_adding, "ID could not be converted to INT.");
                 }
                 else if (rb_name.IsChecked.Value)
                 {
@@ -197,7 +201,7 @@ namespace csharp_project
             bool success = false;
             int mul = 1;
 
-            var dbhelper = DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
             success = Int32.TryParse(tb_adding_size.Text, out int size);
             if(success)
                 Int32.TryParse(tb_adding_mul.Text, out mul);
@@ -243,11 +247,11 @@ namespace csharp_project
             }
             if (success)
             {
-                ShowLabelFaded(l_adding, "Item added successfully to Database!");
+                showLabelFaded(l_adding, "Item added successfully to Database!");
             }
             else
             {
-                ShowLabelFaded(l_adding, "Adding to Database failed!");
+                showLabelFaded(l_adding, "Adding to Database failed!");
             }
         }
 
@@ -366,7 +370,7 @@ namespace csharp_project
         /// </summary>
         /// <param name="label"> Label to activate on</param>
         /// <param name="s"> Content of label</param>
-        private void ShowLabelFaded(Label label, string s)
+        private void showLabelFaded(Label label, string s)
         {
             label.Content = s;
             label.Visibility = System.Windows.Visibility.Visible;

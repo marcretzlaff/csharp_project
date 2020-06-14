@@ -11,11 +11,14 @@ using MyLog;
 using System.Timers;
 using System.Linq.Expressions;
 using System.ComponentModel;
+using Unity;
+using csharp_project.DataAccess;
 
 namespace csharp_project.Speech
 {
     public class SpeechSynthesis
     {
+        public UnityContainer Container { get; set; }
         public  ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Speech Recognition deactived. Activate and restart." };
 
         private readonly string _filepath_commands = System.Windows.Forms.Application.CommonAppDataPath + "\\SpeechCommands.xml"; 
@@ -80,13 +83,15 @@ namespace csharp_project.Speech
         SpeechRecognitionEngine _uirecognizer = new SpeechRecognitionEngine();
         int timeout = 0;
         Timer _timer;
-
+        /*
         //Singelton with Lazy
         private SpeechSynthesis() { }
         private static readonly Lazy<SpeechSynthesis> lazy = new Lazy<SpeechSynthesis>
             (() => new SpeechSynthesis());
         public static SpeechSynthesis Instance => lazy.Value;
-
+        */
+        [InjectionConstructor]
+        public SpeechSynthesis(UnityContainer container) { Container = container; }
         /// <summary>
         /// Saves available commands to file
         /// </summary>
@@ -102,7 +107,7 @@ namespace csharp_project.Speech
             }
             catch (Exception e)
             {
-                Log.WriteException(e, "Trying to save XML SpeechCommands.");
+                Container.Resolve<Log>().WriteException(e, "Trying to save XML SpeechCommands.");
             }
         }
 
@@ -154,7 +159,7 @@ namespace csharp_project.Speech
                     }
                     catch (Exception e)
                     {
-                        Log.WriteException(e, "Trying to load XML SpeechCommands.");
+                        Container.Resolve<Log>().WriteException(e, "Trying to load XML SpeechCommands.");
                     }
                 }
                 else
@@ -233,7 +238,7 @@ namespace csharp_project.Speech
                 }
                 catch (Exception ex)
                 {
-                    Log.WriteException(ex, "Exception at start of new recognize");
+                    Container.Resolve<Log>().WriteException(ex, "Exception at start of new recognize");
                 }
             }
         }
@@ -258,7 +263,7 @@ namespace csharp_project.Speech
                 }
                 catch (Exception ex)
                 {
-                    Log.WriteException(ex, "Exception at start of new recognize");
+                    Container.Resolve<Log>().WriteException(ex, "Exception at start of new recognize");
                 }
                 _timer.Start();
             }
@@ -487,7 +492,7 @@ namespace csharp_project.Speech
 
                 case addingState.Store:
                     bool success = false;
-                    var dbhelper = DataAccess.DataManager.getInstance();
+                    var dbhelper = Container.Resolve<IDatabase>();
                     Food food;
                     Drinks drink;
 
@@ -607,7 +612,7 @@ namespace csharp_project.Speech
 
                 case deletingState.Store:
                     bool success = false;
-                    var dbhelper = DataAccess.DataManager.getInstance();
+                    var dbhelper = Container.Resolve<IDatabase>();
                     if (_typDummy == typeState.FoodBig || _typDummy == typeState.FoodSmall)
                     {
                         success = dbhelper.Delete<Food>(_idDummy);

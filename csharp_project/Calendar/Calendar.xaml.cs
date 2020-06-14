@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using Unity;
 
 namespace csharp_project.Calendar
 {
@@ -13,13 +14,15 @@ namespace csharp_project.Calendar
     /// </summary>
     public partial class Calendar : UserControl
     {
+        private UnityContainer _container;
         public DateTime currentmonth { get; private set; } = DateTime.Now;
         public List<Food> list_f { get; private set; }
         public List<Drinks> list_d { get; private set; }
 
-        public Calendar()
+        public Calendar(UnityContainer container)
         {
             InitializeComponent();
+            _container = container;
         }
 
         public void InitLists()
@@ -67,7 +70,7 @@ namespace csharp_project.Calendar
                 }
 
                 //load DayControls in week rows
-                DayControl currentday = new DayControl(this);
+                DayControl currentday = new DayControl(this, _container);
                 currentday.DayNumberLabel.Content = (i+1).ToString();
                 currentday.Tag = FirstDayOfMonth(currentmonth).AddDays(i);
                 if(((DateTime)currentday.Tag).Date == DateTime.Now.Date)
@@ -101,7 +104,7 @@ namespace csharp_project.Calendar
         /// <returns></returns>
         private List<T> loadItems<T>() where T : Supplies,new()
         {
-            var dbhelper = DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
             List<T> list;
             list = dbhelper.Get<T>(currentmonth);
             return list;

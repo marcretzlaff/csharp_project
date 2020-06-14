@@ -1,10 +1,13 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using csharp_project.Speech;
 using csharp_project.Views;
+using csharp_project.Calendar;
 using MyLog;
+using Unity;
 
 namespace csharp_project
 {
@@ -13,9 +16,51 @@ namespace csharp_project
     /// </summary>
     public partial class MainWindow : Window
     {
+        private UnityContainer _container;
+
+        Home home;
+        Items items;
+        Settings settings;
+        Calendar.Calendar calendar;
+
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public MainWindow(UnityContainer container)
+        {
+            InitializeComponent();
+            _container = container;
+
+            home = new Home(container);
+            items = new Items(container);
+            settings = new Settings(container);
+            calendar = new Calendar.Calendar(container);
+
+            onLoad();
+        }
+
+        /// <summary>
+        /// Sets Views to corresponding grid not in xaml due the non default constructor
+        /// </summary>
+        private void onLoad()
+        {
+            home.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(home, 1);
+            BG.Children.Add(home);
+
+            items.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(items, 1);
+            BG.Children.Add(items);
+
+            settings.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(settings, 1);
+            BG.Children.Add(settings);
+
+            calendar.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(calendar, 1);
+            BG.Children.Add(calendar);
         }
 
         /// <summary>
@@ -80,7 +125,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
-            SpeechSynthesis.Instance.DeactivateSpeech();
+            _container.Resolve<SpeechSynthesis>();
             Close();
         }
 

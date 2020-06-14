@@ -1,8 +1,11 @@
 ﻿using csharp_project.Data;
+using csharp_project.DataAccess;
 using csharp_project.Views;
 using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using Unity;
 
 namespace csharp_project
 {
@@ -11,16 +14,18 @@ namespace csharp_project
     /// </summary>
     public partial class Items : UserControl
     {
-        public Items()
+        private UnityContainer _container;
+        public Items(UnityContainer container)
         {
             InitializeComponent();
+            _container = container;
         }
         /// <summary>
         /// Run on startup and update to get current data.
         /// </summary>
         public void LoadTables()
         {
-            var dbhelper = DataAccess.DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
             var food_l = dbhelper.GetTable<Food>();
             foreach (var x in food_l)
             {
@@ -82,8 +87,7 @@ namespace csharp_project
 
             var item = contextMenu.DataContext;
 
-            var dbhelper = DataAccess.DataManager.getInstance();
-            dbhelper.Delete<Food>((item as Food).Id);
+            _container.Resolve<IDatabase>().Delete<Food>((item as Food).Id);
 
             LoadTables();
         }
@@ -120,7 +124,7 @@ namespace csharp_project
             //Get the ContextMenu to which the menuItem belongs
             ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
 
-            UpdateDialog dia = new UpdateDialog((contextMenu.DataContext as Food).Id, "Food");
+            UpdateDialog dia = new UpdateDialog((contextMenu.DataContext as Food).Id, "Food", _container);
             dia.ShowDialog();
             LoadTables(); //update List
         }
@@ -169,8 +173,7 @@ namespace csharp_project
 
             var item = contextMenu.DataContext;
 
-            var dbhelper = DataAccess.DataManager.getInstance();
-            dbhelper.Delete<Food>((item as Drinks).Id);
+            _container.Resolve<IDatabase>().Delete<Food>((item as Drinks).Id);
         }
 
         /// <summary>
@@ -205,7 +208,7 @@ namespace csharp_project
             //Get the ContextMenu to which the menuItem belongs
             ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
 
-            UpdateDialog dia = new UpdateDialog((contextMenu.DataContext as Drinks).Id, "Drinks");
+            UpdateDialog dia = new UpdateDialog((contextMenu.DataContext as Drinks).Id, "Drinks", _container);
             dia.ShowDialog();
             LoadTables(); //update List
         }

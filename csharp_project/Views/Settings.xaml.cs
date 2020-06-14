@@ -2,8 +2,10 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using csharp_project.DataAccess;
 using csharp_project.Speech;
 using MyLog;
+using Unity;
 
 namespace csharp_project
 {
@@ -12,10 +14,12 @@ namespace csharp_project
     /// </summary>
     public partial class Settings : UserControl
     {
-        public Settings()
+        private UnityContainer _container;
+        public Settings(UnityContainer container)
         {
             InitializeComponent();
-            this.DataContext = SpeechSynthesis.Instance;
+            _container = container;
+            this.DataContext = _container.Resolve<SpeechSynthesis>();
             if (Properties.Settings.Default.SpeechActivated) cb_speech_activ.IsChecked = true;
         }
 
@@ -26,9 +30,9 @@ namespace csharp_project
         /// <param name="e"></param>
         private void delete_DB_Click(object sender, RoutedEventArgs e)
         {
-            Log.WriteLog($"Database deleted.");
+            _container.Resolve<Log>().WriteLog($"Database deleted.");
             showLabelFaded(l_settings, "Database deletion successfully!");
-            var dbhelper = DataAccess.DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
             dbhelper.DeleteDatabase();
             dbhelper.CheckAndLoadDefaults();
         }
@@ -41,8 +45,8 @@ namespace csharp_project
         private void delete_Log_Click(object sender, RoutedEventArgs e)
         {
             showLabelFaded(l_settings, "Log deleted successfully!");
-            Log.Delete();
-            Log.CreateLogFile();
+            _container.Resolve<Log>().Delete();
+            _container.Resolve<Log>().CreateLogFile();
         }
 
         /// <summary>
@@ -79,7 +83,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void open_Log_Click(object sender, RoutedEventArgs e)
         {
-            Log.OpenLog();
+            _container.Resolve<Log>().OpenLog();
         }
 
         /// <summary>
@@ -89,14 +93,14 @@ namespace csharp_project
         /// <param name="e"></param>
         private void b_add_Click(object sender, RoutedEventArgs e)
         {
-            var speech = SpeechSynthesis.Instance;
+            var speech = _container.Resolve<SpeechSynthesis>();
             if (!speech.Choices.Contains(tb_command.Text))
             {
                 speech.UnloadCustomGrammar();
                 speech.Choices.Add(tb_command.Text);
                 speech.LoadCustomGrammar();
                 speech.StoreGrammar();
-                Log.WriteLog($"Speech Command {tb_command.Text} added.");
+                _container.Resolve<Log>().WriteLog($"Speech Command {tb_command.Text} added.");
                 tb_command.Text = "";
             }
             else
@@ -113,11 +117,11 @@ namespace csharp_project
         private void b_delete_Click(object sender, RoutedEventArgs e)
         {
             var sel = LV_commands.SelectedItem?.ToString();
-            var speech = SpeechSynthesis.Instance;
+            var speech = _container.Resolve<SpeechSynthesis>();
             if (speech.Choices.Contains(sel) && sel != null)
             {
                 speech.Choices.Remove(sel);
-                Log.WriteLog($"Speech Command \"{sel}\" deleted.");
+                _container.Resolve<Log>().WriteLog($"Speech Command \"{sel}\" deleted.");
                 speech.UnloadCustomGrammar();
                 speech.LoadCustomGrammar();
                 speech.StoreGrammar();
@@ -149,8 +153,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void cb_speech_dict_Checked(object sender, RoutedEventArgs e)
         {
-            SpeechSynthesis speech = SpeechSynthesis.Instance;
-            speech.LoadRegularDict();
+            _container.Resolve<SpeechSynthesis>().LoadRegularDict();
         }
 
         /// <summary>
@@ -160,7 +163,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void cb_speech_dict_Unchecked(object sender, RoutedEventArgs e)
         {
-            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            SpeechSynthesis speech = _container.Resolve<SpeechSynthesis>();
             speech.UnloadRegularDict();
         }
 
@@ -171,7 +174,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void cb_speech_activ_Checked(object sender, RoutedEventArgs e)
         {
-            SpeechSynthesis speech = SpeechSynthesis.Instance;
+            SpeechSynthesis speech = _container.Resolve<SpeechSynthesis>();
             speech.DeactivateSpeech();
             speech.LoadDefault();
 
@@ -186,8 +189,7 @@ namespace csharp_project
         /// <param name="e"></param>
         private void cb_speech_activ_Unchecked(object sender, RoutedEventArgs e)
         {
-            SpeechSynthesis speech = SpeechSynthesis.Instance;
-            speech.DeactivateSpeech();
+            _container.Resolve<SpeechSynthesis>().DeactivateSpeech();
 
             Properties.Settings.Default.SpeechActivated = false;
             Properties.Settings.Default.Save();

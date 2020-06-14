@@ -1,6 +1,7 @@
 ﻿using csharp_project.Views;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Unity;
 
 namespace csharp_project.Calendar
 {
@@ -9,19 +10,22 @@ namespace csharp_project.Calendar
     /// </summary>
     public partial class DayControl : UserControl
     {
+        private UnityContainer _container;
         public Calendar parent { get; private set; }
-        public DayControl()
+        public DayControl( UnityContainer container)
         {
             InitializeComponent();
+            _container = container;
         }
 
         /// <summary>
         /// custom contructor to have simplified parent handling
         /// </summary>
         /// <param name="source"></param>
-        public DayControl( Calendar source)
+        public DayControl( Calendar source, UnityContainer container)
         {
             InitializeComponent();
+            _container = container;
             parent = source;
         }
 
@@ -32,7 +36,7 @@ namespace csharp_project.Calendar
         /// <param name="e"></param>
         private void l_food_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            CalendarItemsDialog dia = new CalendarItemsDialog("Food", this);
+            CalendarItemsDialog dia = new CalendarItemsDialog("Food", this, _container);
             dia.ShowDialog();
         }
         /// <summary>
@@ -42,7 +46,7 @@ namespace csharp_project.Calendar
         /// <param name="e"></param>
         private void l_drinks_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            CalendarItemsDialog dia = new CalendarItemsDialog("Drinks", this);
+            CalendarItemsDialog dia = new CalendarItemsDialog("Drinks", this, _container);
             dia.ShowDialog();
         }
     }

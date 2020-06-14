@@ -2,6 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using Unity;
 
 namespace csharp_project.Views
 {
@@ -10,11 +11,13 @@ namespace csharp_project.Views
     /// </summary>
     public partial class CalendarItemsDialog : Window
     {
+        private UnityContainer _container;
         private string _listtyp;
         private Calendar.DayControl _parent;
-        public CalendarItemsDialog()
+        public CalendarItemsDialog(UnityContainer container)
         {
             InitializeComponent();
+            _container = container;
         }
 
         /// <summary>
@@ -22,11 +25,12 @@ namespace csharp_project.Views
         /// </summary>
         /// <param name="typ"></param>
         /// <param name="parent"></param>
-        public CalendarItemsDialog(string typ, Calendar.DayControl parent)
+        public CalendarItemsDialog(string typ, Calendar.DayControl parent, UnityContainer container)
         {
             InitializeComponent();
             _listtyp = typ;
             _parent = parent;
+            _container = container;
             FillList();
         }
 
@@ -82,8 +86,7 @@ namespace csharp_project.Views
 
             var item = contextMenu.DataContext;
 
-            var dbhelper = DataAccess.DataManager.getInstance();
-            dbhelper.Delete<Food>((item as Food).Id);
+            _container.Resolve<DataAccess.IDatabase>().Delete<Food>((item as Food).Id);
 
             _parent.parent.InitLists();
             _parent.parent.SetCalendar();
@@ -122,11 +125,11 @@ namespace csharp_project.Views
             //Get the ContextMenu to which the menuItem belongs
             ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
 
-            UpdateDialog dia = new UpdateDialog();
+            UpdateDialog dia = new UpdateDialog(_container);
             if (_listtyp == "Food")
-                dia = new UpdateDialog((contextMenu.DataContext as Food).Id, "Food");
-            if(_listtyp == "Drinks")
-                dia = new UpdateDialog((contextMenu.DataContext as Drinks).Id, "Drinks");
+                dia = new UpdateDialog((contextMenu.DataContext as Food).Id, "Food", _container);
+            if (_listtyp == "Drinks")
+                dia = new UpdateDialog((contextMenu.DataContext as Drinks).Id, "Drinks", _container);
             dia.ShowDialog();
 
             //remake Calendar

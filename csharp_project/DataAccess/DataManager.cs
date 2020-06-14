@@ -6,32 +6,37 @@ using csharp_project.Data;
 using MyLog;
 using System.Windows.Forms;
 using System.IO;
+using Unity;
+using System.ComponentModel;
 
 namespace csharp_project.DataAccess
 {
     public class DataManager :IDatabase
     {
-
+        public UnityContainer Container { get; set; }
         private readonly string path = Application.CommonAppDataPath + "\\database.db";
 
         #region Singelton
-        private DataManager() { }
+        [InjectionConstructor]
+        public DataManager(UnityContainer container) { Container = container; }
+        /*
         private static DataManager _instance;
 
         /// <summary>
         /// Singelton implementation
         /// </summary>
         /// <returns></returns>
-        public static DataManager getInstance()
+        public static DataManager getInstance(UnityContainer container)
         {
             if (_instance == null)
             {
-                _instance = new DataManager();
+                _instance = new DataManager(container);
             }
             return _instance;
         }
+        */
         #endregion Singleton
-
+        
         /// <summary>
         /// returns activ Connection
         /// </summary>
@@ -45,7 +50,7 @@ namespace csharp_project.DataAccess
             }
             catch (Exception e)
             {
-                Log.WriteException(e, "Connection String Loading");
+                Container.Resolve<Log>().WriteException(e, "Connection String Loading");
             }
             return con;
         }
@@ -89,7 +94,7 @@ namespace csharp_project.DataAccess
                 dbconn.CreateTable<T>(); //creates table if not exists
                 if (dbconn.Insert(data) != 0)
                 {
-                    Log.WriteLog($"Insert: {data.ToString()}");
+                    Container.Resolve<Log>().WriteLog($"Insert: {data.ToString()}");
                     return true;
                 }
             }
@@ -124,12 +129,12 @@ namespace csharp_project.DataAccess
                 var temp = Get<T>(primarykey);
                 if (0 != dbconn.Delete<T>(primarykey))
                 {
-                    Log.WriteLog($"Deleted: {temp.ToString()}");
+                    Container.Resolve<Log>().WriteLog($"Deleted: {temp.ToString()}");
                     return true;
                 }
                 else
                 {
-                    Log.WriteLog($"Delete of Item failed: {temp.ToString()}");
+                    Container.Resolve<Log>().WriteLog($"Delete of Item failed: {temp.ToString()}");
                 }
                 return false;
             }
@@ -190,12 +195,12 @@ namespace csharp_project.DataAccess
             {
                 if (0 != dbconn.Update(data))
                 {
-                    Log.WriteLog($"Updated: {data.ToString()}");
+                    Container.Resolve<Log>().WriteLog($"Updated: {data.ToString()}");
                     return true;
                 }
                 else
                 {
-                    Log.WriteLog($"Update of Item failed: {data.ToString()}");
+                    Container.Resolve<Log>().WriteLog($"Update of Item failed: {data.ToString()}");
                 }
                 return false;
             }

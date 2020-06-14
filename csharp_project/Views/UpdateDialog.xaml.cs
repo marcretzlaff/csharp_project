@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using MyLog;
+using Unity;
 
 namespace csharp_project.Views
 {
@@ -14,9 +15,11 @@ namespace csharp_project.Views
     /// </summary>
     public partial class UpdateDialog : Window
     {
-        public UpdateDialog()
+        private UnityContainer _container;
+        public UpdateDialog(UnityContainer container)
         {
             InitializeComponent();
+            _container = container;
         }
 
         /// <summary>
@@ -24,13 +27,13 @@ namespace csharp_project.Views
         /// </summary>
         /// <param name="id">Item to update</param>
         /// <param name="type">Food or Drinks</param>
-        public UpdateDialog(int id, string type)
+        public UpdateDialog(int id, string type, UnityContainer container)
         {
             InitializeComponent();
-
+            _container = container;
             d_update.Items.Clear();
 
-            var dbhelper = DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
             if (type == "Food")
             {
                 List<Food> list = new List<Food>();
@@ -75,15 +78,15 @@ namespace csharp_project.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void button_Click(object sender, RoutedEventArgs e)
         {
-            var dbhelper = DataManager.getInstance();
+            var dbhelper = _container.Resolve<IDatabase>();
 
-            if(d_update.SelectedItem.GetType().Name == "Food")
+            if (d_update.SelectedItem.GetType().Name == "Food")
              dbhelper.Update(d_update.SelectedItem as Food);
             else if (d_update.SelectedItem.GetType().Name == "Drinks")
              dbhelper.Update(d_update.SelectedItem as Drinks);
-            Log.WriteLog($"Updated Item: {d_update.SelectedItem.ToString()}");
+            _container.Resolve<Log>().WriteLog($"Updated Item: {d_update.SelectedItem.ToString()}");
             Close();
         }
     }

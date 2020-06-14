@@ -35,6 +35,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Content="Update" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" Margin="0,0,15,0" Click="Button_Click"></Button>
+        <Button Content="Update" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Width="150" Margin="0,0,15,0" Click="button_Click"></Button>
     </Grid>
 </Window>
