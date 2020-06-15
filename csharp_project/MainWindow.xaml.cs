@@ -125,8 +125,8 @@ namespace csharp_project
         /// <param name="e"></param>
         private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
-            _container.Resolve<SpeechSynthesis>();
-            Close();
+            _container.Resolve<SpeechSynthesis>().DeactivateSpeech();
+            Application.Current.Shutdown();
         }
 
         #region set usercontrols
