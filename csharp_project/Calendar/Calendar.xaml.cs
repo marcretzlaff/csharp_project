@@ -15,7 +15,7 @@ namespace csharp_project.Calendar
     public partial class Calendar : UserControl
     {
         private UnityContainer _container;
-        public DateTime currentmonth { get; private set; } = DateTime.Now;
+        private DateTime _currentmonth { get; set; } = DateTime.Now;
         public List<Food> list_f { get; private set; }
         public List<Drinks> list_d { get; private set; }
 
@@ -25,6 +25,9 @@ namespace csharp_project.Calendar
             _container = container;
         }
 
+        /// <summary>
+        /// Loads Items for given month
+        /// </summary>
         public void InitLists()
         {
             list_f = loadItems<Food>();
@@ -40,12 +43,12 @@ namespace csharp_project.Calendar
         /// </summary>
         public void SetCalendar()
         {
-            l_date.Content = currentmonth.Date.ToString("y");
+            l_date.Content = _currentmonth.Date.ToString("y");
             int daycolumn;
             int iweek = 0;
-            int idays = DateTime.DaysInMonth(currentmonth.Year, currentmonth.Month);
+            int idays = DateTime.DaysInMonth(_currentmonth.Year, _currentmonth.Month);
 
-            int temp = (int)FirstDayOfMonth(currentmonth).DayOfWeek; //starts Sunday
+            int temp = (int)FirstDayOfMonth(_currentmonth).DayOfWeek; //starts Sunday
             if ( temp == 0)
             {
                 daycolumn = 6;
@@ -72,7 +75,7 @@ namespace csharp_project.Calendar
                 //load DayControls in week rows
                 DayControl currentday = new DayControl(this, _container);
                 currentday.DayNumberLabel.Content = (i+1).ToString();
-                currentday.Tag = FirstDayOfMonth(currentmonth).AddDays(i);
+                currentday.Tag = FirstDayOfMonth(_currentmonth).AddDays(i);
                 if(((DateTime)currentday.Tag).Date == DateTime.Now.Date)
                 {
                     currentday.DayLabelRowBorder.Background = Brushes.Green;
@@ -106,7 +109,7 @@ namespace csharp_project.Calendar
         {
             var dbhelper = _container.Resolve<IDatabase>();
             List<T> list;
-            list = dbhelper.Get<T>(currentmonth);
+            list = dbhelper.Get<T>(_currentmonth);
             return list;
         }
 
@@ -127,7 +130,7 @@ namespace csharp_project.Calendar
         /// <param name="e"></param>
         private void b_previous_Click(object sender, MouseButtonEventArgs e)
         {
-            currentmonth = currentmonth.AddMonths(-1);
+            _currentmonth = _currentmonth.AddMonths(-1);
             InitLists();
             SetCalendar();
         }
@@ -139,7 +142,7 @@ namespace csharp_project.Calendar
         /// <param name="e"></param>
         private void b_next_Click(object sender, MouseButtonEventArgs e)
         {
-            currentmonth = currentmonth.AddMonths(1);
+            _currentmonth = _currentmonth.AddMonths(1);
             InitLists();
             SetCalendar();
         }

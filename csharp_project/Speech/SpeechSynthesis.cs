@@ -18,6 +18,7 @@ namespace csharp_project.Speech
 {
     public class SpeechSynthesis
     {
+        //public Container due InjectionProperty UnityContainer
         public UnityContainer Container { get; set; }
         public  ObservableCollection<string> Choices { get; set; } = new ObservableCollection<string>() { "Speech Recognition deactived. Activate and restart." };
 
@@ -62,6 +63,7 @@ namespace csharp_project.Speech
         #endregion StateMachines
 
         #region DummyItems
+        //used for loading a item through voice commands
         enum typeState
         {
             FoodSmall,
@@ -78,20 +80,14 @@ namespace csharp_project.Speech
         private int _sizeDummy { get; set; }
         #endregion DummyItems
 
-        SpeechRecognitionEngine _recognizer = new SpeechRecognitionEngine();
-        SpeechSynthesizer _synth = new SpeechSynthesizer();
-        SpeechRecognitionEngine _uirecognizer = new SpeechRecognitionEngine();
-        int timeout = 0;
-        Timer _timer;
-        /*
-        //Singelton with Lazy
-        private SpeechSynthesis() { }
-        private static readonly Lazy<SpeechSynthesis> lazy = new Lazy<SpeechSynthesis>
-            (() => new SpeechSynthesis());
-        public static SpeechSynthesis Instance => lazy.Value;
-        */
-        [InjectionConstructor]
+        private SpeechRecognitionEngine _recognizer = new SpeechRecognitionEngine();
+        private SpeechSynthesizer _synth = new SpeechSynthesizer();
+        private SpeechRecognitionEngine _uirecognizer = new SpeechRecognitionEngine();
+        private int _timeout = 0;
+        private Timer _timer;
+
         public SpeechSynthesis(UnityContainer container) { Container = container; }
+
         /// <summary>
         /// Saves available commands to file
         /// </summary>
@@ -198,7 +194,7 @@ namespace csharp_project.Speech
             _recognizer.RecognizeAsyncCancel();
 
             _timer.Stop();
-            timeout = 0;
+            _timeout = 0;
         }
 
         /// <summary>
@@ -225,11 +221,11 @@ namespace csharp_project.Speech
         /// <param name="e"></param>
         private void timeOverEvent(object sender, ElapsedEventArgs e)
         {
-            ++timeout;
-            if (timeout > 10)
+            ++_timeout;
+            if (_timeout > 10)
             {
                 _timer.Stop();
-                timeout = 0;
+                _timeout = 0;
                 _synth.SpeakAsync("Back to Sleep");
                 try
                 {
@@ -277,7 +273,7 @@ namespace csharp_project.Speech
         /// <param name="e"></param>
         private void recognizer_SpeechDetected(object sender, SpeechDetectedEventArgs e)
         {
-            timeout = 0;
+            _timeout = 0;
             if(_timer.Enabled == false)
                 _timer.Start();
         }

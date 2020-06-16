@@ -9,29 +9,29 @@ namespace csharp_project.Data
         [Column("size")]
         public int volumen { get; set; } = 0;
 
-        public Drinks() { }
-        public Drinks(string name)
+        public Drinks() 
         {
-            Name = name;
+            Name = "";
             insertTime = DateTime.Now;
             expires = false;
             expiryTime = null;
             lasting = null;
             volumen = 0;
         }
-        public Drinks(string name, int size)
+        public Drinks(string name)
+            :this()
         {
             Name = name;
-            insertTime = DateTime.Now;
-            expires = false;
-            expiryTime = null;
-            lasting = null;
+        }
+        public Drinks(string name, int size)
+            :this(name)
+        {
             volumen = size;
         }
 
         public Drinks(string name, DateTime inserttime, DateTime expiretime, int size)
+            :this(name)
         {
-            Name = name;
             insertTime = inserttime;
             expires = true;
             expiryTime = expiretime;

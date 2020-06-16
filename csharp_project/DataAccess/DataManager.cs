@@ -13,29 +13,11 @@ namespace csharp_project.DataAccess
 {
     public class DataManager :IDatabase
     {
+        //public Container due InjectionProperty UnityContainer
         public UnityContainer Container { get; set; }
         private readonly string path = Application.CommonAppDataPath + "\\database.db";
 
-        #region Singelton
-        [InjectionConstructor]
         public DataManager(UnityContainer container) { Container = container; }
-        /*
-        private static DataManager _instance;
-
-        /// <summary>
-        /// Singelton implementation
-        /// </summary>
-        /// <returns></returns>
-        public static DataManager getInstance(UnityContainer container)
-        {
-            if (_instance == null)
-            {
-                _instance = new DataManager(container);
-            }
-            return _instance;
-        }
-        */
-        #endregion Singleton
         
         /// <summary>
         /// returns activ Connection

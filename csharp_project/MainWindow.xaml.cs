@@ -18,10 +18,13 @@ namespace csharp_project
     {
         private UnityContainer _container;
 
-        Home home;
-        Items items;
-        Settings settings;
-        Calendar.Calendar calendar;
+        #region Visible Views
+        private Home home;
+        private Items items;
+        private Settings settings;
+        private Calendar.Calendar calendar;
+
+        #endregion Visible Views
 
         public MainWindow()
         {
@@ -29,8 +32,8 @@ namespace csharp_project
         }
 
         public MainWindow(UnityContainer container)
+            :this()
         {
-            InitializeComponent();
             _container = container;
 
             home = new Home(container);

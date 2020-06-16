@@ -30,6 +30,12 @@ namespace csharp_project.Views
             this.ContentRendered += onLoad;
         }
 
+        /// <summary>
+        /// Runs after Splash screen (Loading Screen) is shown
+        /// Loads Unity Containers, database and speech recognition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void onLoad(object sender, EventArgs e)
         {
             var container = new UnityContainer();

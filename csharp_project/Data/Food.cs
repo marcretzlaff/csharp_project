@@ -8,30 +8,31 @@ namespace csharp_project.Data
     {
         [Column("size")]
         public int weigth { get; set; } = 0;
-        public Food() { }
-        public Food(string name)
+        public Food()
         {
-            Name = name;
+            Name = "";
             insertTime = DateTime.Now;
             expires = false;
             expiryTime = null;
             lasting = null;
             weigth = 0;
         }
-
-        public Food(string name, int size)
+        public Food(string name)
+            :this()
         {
             Name = name;
             insertTime = DateTime.Now;
-            expires = false;
-            expiryTime = null;
-            lasting = null;
+        }
+
+        public Food(string name, int size)
+            :this(name)
+        {
             weigth = size;
         }
 
         public Food(string name, DateTime inserttime, DateTime expiretime, int size)
+            :this(name)
         {
-            Name = name;
             insertTime = inserttime;
             expires = true;
             expiryTime = expiretime;

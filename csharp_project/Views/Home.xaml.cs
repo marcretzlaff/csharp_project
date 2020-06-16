@@ -19,7 +19,7 @@ namespace csharp_project
     /// </summary>
     public partial class Home : UserControl
     {
-        UnityContainer _container;
+        private UnityContainer _container;
         public Home(UnityContainer container)
         {
             InitializeComponent();
