@@ -1,4 +1,5 @@
 ﻿using csharp_project.Views;
+using System;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Unity;
@@ -36,6 +37,9 @@ namespace csharp_project.Calendar
         /// <param name="e"></param>
         private void l_food_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var list = parent.list_f.FindAll(x => x.expiryTime.Value.Date == ((DateTime)Tag));
+            if (list.Count == 0)
+                return;
             CalendarItemsDialog dia = new CalendarItemsDialog("Food", this, _container);
             dia.ShowDialog();
         }
@@ -46,6 +50,9 @@ namespace csharp_project.Calendar
         /// <param name="e"></param>
         private void l_drinks_count_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            var list = parent.list_d.FindAll(x => x.expiryTime.Value.Date == ((DateTime)Tag));
+            if (list.Count == 0)
+                return;
             CalendarItemsDialog dia = new CalendarItemsDialog("Drinks", this, _container);
             dia.ShowDialog();
         }

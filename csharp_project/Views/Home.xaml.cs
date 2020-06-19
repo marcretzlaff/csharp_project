@@ -203,10 +203,16 @@ namespace csharp_project
 
             var dbhelper = _container.Resolve<IDatabase>();
             success = Int32.TryParse(tb_adding_size.Text, out int size);
-            if(success)
-                Int32.TryParse(tb_adding_mul.Text, out mul);
             if (success)
             {
+                if (size < 0)
+                    size = 0;
+                Int32.TryParse(tb_adding_mul.Text, out mul);
+            }
+            if (success)
+            {
+                if (mul <= 0)
+                    mul = 1;
                 if (dd_adding_itemtyp.Text == "Food")
                 {
                     Food data = null;
