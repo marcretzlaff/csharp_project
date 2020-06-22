@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:FruityManagerSetup"
+"ProjectName" = "8:ExpireManagerSetup"
 "LanguageId" = "3:1031"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1031"
@@ -4667,6 +4667,11 @@
             "AssemblyAsmDisplayName" = "8:MyLog, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_C6E0757753EA288ABFE3800A73332D56"
+                    {
+                    "Name" = "8:MyLog.dll"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:MyLog.dll"
             "TargetName" = "8:"
