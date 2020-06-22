@@ -207,7 +207,12 @@ namespace csharp_project
             {
                 if (size < 0)
                     size = 0;
-                Int32.TryParse(tb_adding_mul.Text, out mul);
+                success = Int32.TryParse(tb_adding_mul.Text, out mul);
+            }
+            else
+            {
+                size = 1;
+                success = Int32.TryParse(tb_adding_mul.Text, out mul);
             }
             if (success)
             {
