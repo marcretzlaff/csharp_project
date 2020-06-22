@@ -241,12 +241,6 @@
     <Resource Include="Assets\background.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MyLog\MyLog.csproj">
-      <Project>{2f9867f3-2011-4d5a-afc4-29131457d159}</Project>
-      <Name>MyLog</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.7.2 %28x86 und x64%29</ProductName>
@@ -273,6 +267,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="icons8-zeitspanne-64.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Log\MyLog.csproj">
+      <Project>{86e9deec-c7a0-4d55-a7f2-7e9d13f6e2ad}</Project>
+      <Name>MyLog</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
