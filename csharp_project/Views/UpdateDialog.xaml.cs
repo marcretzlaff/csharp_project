@@ -15,7 +15,14 @@ namespace csharp_project.Views
     /// </summary>
     public partial class UpdateDialog : Window
     {
-        private UnityContainer _container;
+        #region Private Fields
+
+        private readonly UnityContainer _container;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public UpdateDialog(UnityContainer container)
         {
             InitializeComponent();
@@ -30,17 +37,22 @@ namespace csharp_project.Views
         public UpdateDialog(int id, string type, UnityContainer container)
         {
             InitializeComponent();
+
             _container = container;
+
             d_update.Items.Clear();
 
             var dbhelper = _container.Resolve<IDatabase>();
+
             if (type == "Food")
             {
                 List<Food> list = new List<Food>();
+
                 var data = dbhelper.Get<Food>(id);
-                if (data.expires)
-                    data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
-                else data.lasting = null;
+
+                if (data.Expires)
+                    data.Lasting = (data.ExpiryTime - DateTime.Now).Value.Days;
+                else data.Lasting = null;
 
                 DataGridTextColumn textcol = new DataGridTextColumn();
                 Binding b = new Binding("weigth");
@@ -48,17 +60,23 @@ namespace csharp_project.Views
                 textcol.Binding = b;
                 textcol.Header = "Weigth in g";
                 textcol.Width = 80;
+
                 d_update.Columns.Add(textcol);
+
                 list.Add(data);
+
                 d_update.ItemsSource = list;
             }
             else if (type == "Drinks")
             {
                 List<Drinks> list = new List<Drinks>();
+
                 var data = dbhelper.Get<Drinks>(id);
-                if (data.expires)
-                    data.lasting = (data.expiryTime - DateTime.Now).Value.Days;
-                else data.lasting = null;
+
+                if (data.Expires)
+                    data.Lasting = (data.ExpiryTime - DateTime.Now).Value.Days;
+                else
+                    data.Lasting = null;
 
                 DataGridTextColumn textcol = new DataGridTextColumn();
                 Binding b = new Binding("volumen");
@@ -66,11 +84,18 @@ namespace csharp_project.Views
                 textcol.Binding = b;
                 textcol.Header = "Volumen";
                 textcol.Width = 80;
+
                 d_update.Columns.Add(textcol);
+
                 list.Add(data);
+
                 d_update.ItemsSource = list;
             }
         }
+
+        #endregion Public Constructors
+
+        #region Private Methods
 
         /// <summary>
         /// Button Click Event Handler
@@ -83,11 +108,15 @@ namespace csharp_project.Views
             var dbhelper = _container.Resolve<IDatabase>();
 
             if (d_update.SelectedItem.GetType().Name == "Food")
-             dbhelper.Update(d_update.SelectedItem as Food);
+                dbhelper.Update(d_update.SelectedItem as Food);
             else if (d_update.SelectedItem.GetType().Name == "Drinks")
-             dbhelper.Update(d_update.SelectedItem as Drinks);
-            _container.Resolve<Log>().WriteLog($"Updated Item: {d_update.SelectedItem.ToString()}");
+                dbhelper.Update(d_update.SelectedItem as Drinks);
+
+            _container.Resolve<Log>().WriteLog($"Updated Item: {d_update.SelectedItem}");
+
             Close();
         }
+
+        #endregion Private Methods
     }
 }

@@ -7,9 +7,13 @@ namespace csharp_project.Calendar
     /// </summary>
     public partial class WeekControl : UserControl
     {
+        #region Public Constructors
+
         public WeekControl()
         {
             InitializeComponent();
         }
+
+        #endregion Public Constructors
     }
 }

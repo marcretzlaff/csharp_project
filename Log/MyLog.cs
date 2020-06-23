@@ -7,12 +7,23 @@ namespace MyLog
 {
     public class Log
     {
-        private readonly string path = Application.CommonAppDataPath + "/Logs/log.txt";
+        #region Private Fields
+
         private readonly string directorypath = Application.CommonAppDataPath + "/Logs";
+        private readonly string path = Application.CommonAppDataPath + "/Logs/log.txt";
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public Log()
         {
             CreateLogFile();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         /// <summary>
         /// Creates directory and log file.
@@ -20,6 +31,7 @@ namespace MyLog
         public void CreateLogFile()
         {
             Directory.CreateDirectory(directorypath);
+
             if (!File.Exists(path))
             {
                 File.Create(path);
@@ -40,6 +52,14 @@ namespace MyLog
             {
                 MessageBox.Show(e.Message, "Exception happened!");
             }
+        }
+
+        /// <summary>
+        /// Opens log file in editor.
+        /// </summary>
+        public void OpenLog()
+        {
+            System.Diagnostics.Process.Start("notepad.exe", path);
         }
 
         /// <summary>
@@ -87,12 +107,6 @@ namespace MyLog
             }
         }
 
-        /// <summary>
-        /// Opens log file in editor.
-        /// </summary>
-        public void OpenLog()
-        {
-            System.Diagnostics.Process.Start("notepad.exe", path);
-        }
+        #endregion Public Methods
     }
 }

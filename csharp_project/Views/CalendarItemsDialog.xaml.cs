@@ -11,12 +11,20 @@ namespace csharp_project.Views
     /// </summary>
     public partial class CalendarItemsDialog : Window
     {
-        private UnityContainer _container;
-        private string _listtyp;
-        private Calendar.DayControl _parent;
+        #region Private Fields
+
+        private readonly UnityContainer _container;
+        private readonly string _listtyp;
+        private readonly Calendar.DayControl _parent;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public CalendarItemsDialog(UnityContainer container)
         {
             InitializeComponent();
+
             _container = container;
         }
 
@@ -28,11 +36,17 @@ namespace csharp_project.Views
         public CalendarItemsDialog(string typ, Calendar.DayControl parent, UnityContainer container)
         {
             InitializeComponent();
+
             _listtyp = typ;
             _parent = parent;
             _container = container;
+
             FillList();
         }
+
+        #endregion Public Constructors
+
+        #region Public Methods
 
         /// <summary>
         /// Fills lists with items on Day _parent
@@ -40,18 +54,21 @@ namespace csharp_project.Views
         public void FillList()
         {
             if(_listtyp == "Food")
-                d_items.ItemsSource = _parent.parent.list_f.FindAll(x => x.expiryTime.Value.Date == ((DateTime)_parent.Tag).Date);
+                d_items.ItemsSource = _parent.Owner.List_f.FindAll(x => x.ExpiryTime.Value.Date == ((DateTime)_parent.Tag).Date);
+
             if(_listtyp == "Drinks")
-                d_items.ItemsSource = _parent.parent.list_d.FindAll(x => x.expiryTime.Value.Date == ((DateTime)_parent.Tag).Date);
+                d_items.ItemsSource = _parent.Owner.List_d.FindAll(x => x.ExpiryTime.Value.Date == ((DateTime)_parent.Tag).Date);
         }
+
+        #endregion Public Methods
 
         #region MenuItem
         /// <summary>
-        /// MenuItem Info Event Handler
+        /// Menu Item Copy Event Handler
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuItem_Info(object sender, RoutedEventArgs e)
+        private void menuItem_Copy(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -59,15 +76,9 @@ namespace csharp_project.Views
             //Get the ContextMenu to which the menuItem belongs
             ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
 
-            var item = contextMenu.DataContext as Food;
-            if (item.expires)
-            {
-                MessageBox.Show(item.GetInformation() + $"It expires in {(item.expiryTime.Value.Date - item.insertTime.Date).TotalDays} days. It weigths {item.weigth} grams.", "Information of Item");
-            }
-            else
-            {
-                MessageBox.Show(item.GetInformation(), "Information of Item");
-            }
+            var item = contextMenu.DataContext.ToString();
+            MessageBox.Show(item, "Copied to Clipboard!");
+            Clipboard.SetText(item);
         }
 
         /// <summary>
@@ -88,17 +99,18 @@ namespace csharp_project.Views
 
             _container.Resolve<DataAccess.IDatabase>().Delete<Food>((item as Food).Id);
 
-            _parent.parent.InitLists();
-            _parent.parent.SetCalendar();
+            _parent.Owner.InitLists();
+            _parent.Owner.SetCalendar();
+
             FillList();
         }
 
         /// <summary>
-        /// Menu Item Copy Event Handler
+        /// MenuItem Info Event Handler
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void menuItem_Copy(object sender, RoutedEventArgs e)
+        private void menuItem_Info(object sender, RoutedEventArgs e)
         {
             // Get the clicked MenuItem
             MenuItem menuItem = (MenuItem)sender;
@@ -106,11 +118,17 @@ namespace csharp_project.Views
             //Get the ContextMenu to which the menuItem belongs
             ContextMenu contextMenu = (ContextMenu)menuItem.Parent;
 
-            var item = contextMenu.DataContext.ToString();
-            MessageBox.Show(item, "Copied to Clipboard!");
-            Clipboard.SetText(item);
-        }
+            var item = contextMenu.DataContext as Food;
 
+            if (item.Expires)
+            {
+                MessageBox.Show(item.GetInformation() + $"It expires in {(item.ExpiryTime.Value.Date - item.InsertTime.Date).TotalDays} days. It weigths {item.Weigth} grams.", "Information of Item");
+            }
+            else
+            {
+                MessageBox.Show(item.GetInformation(), "Information of Item");
+            }
+        }
         /// <summary>
         /// MenuItem Update Event Handler
         /// reloads calendar
@@ -128,13 +146,16 @@ namespace csharp_project.Views
             UpdateDialog dia = new UpdateDialog(_container);
             if (_listtyp == "Food")
                 dia = new UpdateDialog((contextMenu.DataContext as Food).Id, "Food", _container);
+
             if (_listtyp == "Drinks")
                 dia = new UpdateDialog((contextMenu.DataContext as Drinks).Id, "Drinks", _container);
+
             dia.ShowDialog();
 
             //remake Calendar
-            _parent.parent.InitLists();
-            _parent.parent.SetCalendar();
+            _parent.Owner.InitLists();
+            _parent.Owner.SetCalendar();
+
             FillList();
         }
 

@@ -14,12 +14,12 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
-                    <RowDefinition Height="45"></RowDefinition>
-                    <RowDefinition Height="25"></RowDefinition>
-                    <RowDefinition Height="25"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="1*"></RowDefinition>
-                    <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="25"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"></ColumnDefinition>
@@ -40,7 +40,7 @@
             <RadioButton x:Name="rb_id"   GroupName="enable" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="True"/>
             <RadioButton x:Name="rb_name" GroupName="enable" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Label Content="Search with:" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center"></Label>
-            
+
             <Label Content="ID of Item:" Grid.Row="1" Grid.Column="2"></Label>
             <TextBox x:Name="tb_search_id" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center" Height="22" TextWrapping="NoWrap" Text="" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Width="40" PreviewTextInput="tb_search_id_PreviewTextInput"/>
 
@@ -62,9 +62,9 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}" Width="50"/>
                     <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
-                    <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}" Width="90"/>
-                    <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}" Width="90"/>
-                    <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}" Width="80"/>
+                    <DataGridTextColumn Header="Inserted" Binding="{Binding Path=InsertTime, StringFormat=d}" Width="90"/>
+                    <DataGridTextColumn Header="Expires on" Binding="{Binding Path=ExpiryTime, StringFormat=d}" Width="90"/>
+                    <DataGridTextColumn Header="Lasting" Binding="{Binding Path=Lasting}" Width="80"/>
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -104,7 +104,7 @@
 
             <Label Content="Date added:" Grid.Row="1" Grid.Column="3"></Label>
             <DatePicker x:Name="dp_adding_date_added" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-           
+
             <Label Content="Date until:" Grid.Row="3" Grid.Column="2"></Label>
             <DatePicker x:Name="dp_adding_date_until" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 

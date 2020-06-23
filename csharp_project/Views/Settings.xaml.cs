@@ -14,77 +14,29 @@ namespace csharp_project
     /// </summary>
     public partial class Settings : UserControl
     {
-        private UnityContainer _container;
+        #region Private Fields
+
+        private readonly UnityContainer _container;
+
+        #endregion Private Fields
+
+        #region Public Constructors
+
         public Settings(UnityContainer container)
         {
             InitializeComponent();
+
             _container = container;
-            this.DataContext = _container.Resolve<SpeechSynthesis>();
-            if (Properties.Settings.Default.SpeechActivated) cb_speech_activ.IsChecked = true;
+
+            DataContext = _container.Resolve<SpeechSynthesis>();
+
+            if (Properties.Settings.Default.SpeechActivated)
+                cb_speech_activ.IsChecked = true;
         }
 
-        /// <summary>
-        /// Deletes current SQLite database and loads default new one
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void delete_DB_Click(object sender, RoutedEventArgs e)
-        {
-            _container.Resolve<Log>().WriteLog($"Database deleted.");
-            showLabelFaded(l_settings, "Database deletion successfully!");
-            var dbhelper = _container.Resolve<IDatabase>();
-            dbhelper.DeleteDatabase();
-            dbhelper.CheckAndLoadDefaults();
-        }
+        #endregion Public Constructors
 
-        /// <summary>
-        /// deletes log file and creates new one
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void delete_Log_Click(object sender, RoutedEventArgs e)
-        {
-            showLabelFaded(l_settings, "Log deleted successfully!");
-            _container.Resolve<Log>().Delete();
-            _container.Resolve<Log>().CreateLogFile();
-        }
-
-        /// <summary>
-        /// Helper function shows fading text on button clicks
-        /// </summary>
-        /// <param name="label"></param>
-        /// <param name="s"></param>
-        private void showLabelFaded(Label label, string s)
-        {
-            label.Content = s;
-            label.Visibility = System.Windows.Visibility.Visible;
-
-            var a = new DoubleAnimation
-            {
-                From = 1.0,
-                To = 0.0,
-                FillBehavior = FillBehavior.Stop,
-                BeginTime = TimeSpan.FromSeconds(2),
-                Duration = new Duration(TimeSpan.FromSeconds(0.5))
-            };
-            var storyboard = new Storyboard();
-
-            storyboard.Children.Add(a);
-            Storyboard.SetTarget(a, label);
-            Storyboard.SetTargetProperty(a, new PropertyPath(OpacityProperty));
-            storyboard.Completed += delegate { label.Visibility = System.Windows.Visibility.Hidden; };
-            storyboard.Begin();
-        }
-
-        /// <summary>
-        /// Opens Log file for reading
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void open_Log_Click(object sender, RoutedEventArgs e)
-        {
-            _container.Resolve<Log>().OpenLog();
-        }
+        #region Private Methods
 
         /// <summary>
         /// Adds Speech recognition choice to custom grammar
@@ -94,13 +46,17 @@ namespace csharp_project
         private void b_add_Click(object sender, RoutedEventArgs e)
         {
             var speech = _container.Resolve<SpeechSynthesis>();
+
             if (!speech.Choices.Contains(tb_command.Text))
             {
                 speech.UnloadCustomGrammar();
                 speech.Choices.Add(tb_command.Text);
+
                 speech.LoadCustomGrammar();
                 speech.StoreGrammar();
+
                 _container.Resolve<Log>().WriteLog($"Speech Command {tb_command.Text} added.");
+
                 tb_command.Text = "";
             }
             else
@@ -118,10 +74,13 @@ namespace csharp_project
         {
             var sel = LV_commands.SelectedItem?.ToString();
             var speech = _container.Resolve<SpeechSynthesis>();
+
             if (speech.Choices.Contains(sel) && sel != null)
             {
                 speech.Choices.Remove(sel);
+
                 _container.Resolve<Log>().WriteLog($"Speech Command \"{sel}\" deleted.");
+
                 speech.UnloadCustomGrammar();
                 speech.LoadCustomGrammar();
                 speech.StoreGrammar();
@@ -130,6 +89,74 @@ namespace csharp_project
             {
                 showLabelFaded(l_settings, "Select a item and try again.");
             }
+        }
+
+        /// <summary>
+        /// Deletes current SQLite database and loads default new one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void delete_DB_Click(object sender, RoutedEventArgs e)
+        {
+            _container.Resolve<Log>().WriteLog($"Database deleted.");
+
+            showLabelFaded(l_settings, "Database deletion successfully!");
+
+            var dbhelper = _container.Resolve<IDatabase>();
+            dbhelper.DeleteDatabase();
+            dbhelper.CheckAndLoadDefaults();
+        }
+
+        /// <summary>
+        /// deletes log file and creates new one
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void delete_Log_Click(object sender, RoutedEventArgs e)
+        {
+            showLabelFaded(l_settings, "Log deleted successfully!");
+
+            _container.Resolve<Log>().Delete();
+            _container.Resolve<Log>().CreateLogFile();
+        }
+
+        /// <summary>
+        /// Opens Log file for reading
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void open_Log_Click(object sender, RoutedEventArgs e)
+        {
+            _container.Resolve<Log>().OpenLog();
+        }
+
+        /// <summary>
+        /// Helper function shows fading text on button clicks
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="s"></param>
+        private void showLabelFaded(Label label, string s)
+        {
+            label.Content = s;
+            label.Visibility = Visibility.Visible;
+
+            var a = new DoubleAnimation
+            {
+                From = 1.0,
+                To = 0.0,
+                FillBehavior = FillBehavior.Stop,
+                BeginTime = TimeSpan.FromSeconds(2),
+                Duration = new Duration(TimeSpan.FromSeconds(0.5))
+            };
+
+            var storyboard = new Storyboard();
+            storyboard.Children.Add(a);
+
+            Storyboard.SetTarget(a, label);
+            Storyboard.SetTargetProperty(a, new PropertyPath(OpacityProperty));
+
+            storyboard.Completed += delegate { label.Visibility = Visibility.Hidden; };
+            storyboard.Begin();
         }
 
         /// <summary>
@@ -145,28 +172,9 @@ namespace csharp_project
                 b_add.IsEnabled = false;
         }
 
+        #endregion Private Methods
+
         #region CheckBoxHandler
-        /// <summary>
-        /// Loads regular dictionary to speech recognition
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cb_speech_dict_Checked(object sender, RoutedEventArgs e)
-        {
-            _container.Resolve<SpeechSynthesis>().LoadRegularDict();
-        }
-
-        /// <summary>
-        /// unloads regular dictionary to speech recognition
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cb_speech_dict_Unchecked(object sender, RoutedEventArgs e)
-        {
-            SpeechSynthesis speech = _container.Resolve<SpeechSynthesis>();
-            speech.UnloadRegularDict();
-        }
-
         /// <summary>
         /// activates speech recogniton
         /// </summary>
@@ -194,6 +202,28 @@ namespace csharp_project
             Properties.Settings.Default.SpeechActivated = false;
             Properties.Settings.Default.Save();
         }
+
+        /// <summary>
+        /// Loads regular dictionary to speech recognition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cb_speech_dict_Checked(object sender, RoutedEventArgs e)
+        {
+            _container.Resolve<SpeechSynthesis>().LoadRegularDict();
+        }
+
+        /// <summary>
+        /// unloads regular dictionary to speech recognition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cb_speech_dict_Unchecked(object sender, RoutedEventArgs e)
+        {
+            SpeechSynthesis speech = _container.Resolve<SpeechSynthesis>();
+            speech.UnloadRegularDict();
+        }
+
         #endregion CheckBoxHandler
 
     }

@@ -2,18 +2,7 @@
 using csharp_project.Speech;
 using MyLog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Unity;
 using Unity.Injection;
 
@@ -24,11 +13,18 @@ namespace csharp_project.Views
     /// </summary>
     public partial class Splash : Window
     {
+        #region Public Constructors
+
         public Splash()
         {
             InitializeComponent();
-            this.ContentRendered += onLoad;
+
+            ContentRendered += onLoad;
         }
+
+        #endregion Public Constructors
+
+        #region Private Methods
 
         /// <summary>
         /// Runs after Splash screen (Loading Screen) is shown
@@ -39,6 +35,7 @@ namespace csharp_project.Views
         private void onLoad(object sender, EventArgs e)
         {
             var container = new UnityContainer();
+
             container.RegisterSingleton<Log>();
             container.RegisterType<IDatabase, DataManager>(TypeLifetime.Singleton, new InjectionProperty("Container", container));
             container.RegisterSingleton<SpeechSynthesis>(new InjectionProperty("Container", container));
@@ -49,7 +46,10 @@ namespace csharp_project.Views
 
             var mainview = new MainWindow(container);
             mainview.Show();
-            this.Hide();
+
+            Hide();
         }
+
+        #endregion Private Methods
     }
 }

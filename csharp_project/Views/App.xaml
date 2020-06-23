@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:csharp_project"
              StartupUri="Views/Splash.xaml">
     <Application.Resources>
-         
+
     </Application.Resources>
 </Application>

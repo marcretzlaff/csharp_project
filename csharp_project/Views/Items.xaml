@@ -35,10 +35,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
-                <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}"/>
-                <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}"/>
-                <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
-                <DataGridTextColumn Header="Weigth" Binding="{Binding Path=weigth}"/>
+                <DataGridTextColumn Header="Inserted" Binding="{Binding Path=InsertTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Expires on" Binding="{Binding Path=ExpiryTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Lasting" Binding="{Binding Path=Lasting}"/>
+                <DataGridTextColumn Header="Weigth" Binding="{Binding Path=Weigth}"/>
             </DataGrid.Columns>
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowMenu" 
@@ -71,10 +71,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Path=Id}"/>
                 <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}" Width="*"/>
-                <DataGridTextColumn Header="Inserted" Binding="{Binding Path=insertTime, StringFormat=d}"/>
-                <DataGridTextColumn Header="Expires on" Binding="{Binding Path=expiryTime, StringFormat=d}"/>
-                <DataGridTextColumn Header="Lasting" Binding="{Binding Path=lasting}"/>
-                <DataGridTextColumn Header="Volume" Binding="{Binding Path=volumen}"/>
+                <DataGridTextColumn Header="Inserted" Binding="{Binding Path=InsertTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Expires on" Binding="{Binding Path=ExpiryTime, StringFormat=d}"/>
+                <DataGridTextColumn Header="Lasting" Binding="{Binding Path=Lasting}"/>
+                <DataGridTextColumn Header="Volume" Binding="{Binding Path=Volumen}"/>
             </DataGrid.Columns>
             <DataGrid.Resources>
                 <ContextMenu x:Key="RowMenu" 

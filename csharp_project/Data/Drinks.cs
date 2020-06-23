@@ -6,42 +6,53 @@ namespace csharp_project.Data
     [Table("Drinks")]
     public class Drinks : Supplies
     {
-        [Column("size")]
-        public int volumen { get; set; } = 0;
+        #region Public Constructors
 
-        public Drinks() 
+        public Drinks()
         {
             Name = "";
-            insertTime = DateTime.Now;
-            expires = false;
-            expiryTime = null;
-            lasting = null;
-            volumen = 0;
+            InsertTime = DateTime.Now;
+            Expires = false;
+            ExpiryTime = null;
+            Lasting = null;
+            Volumen = 0;
         }
-        public Drinks(string name)
-            :this()
+
+        public Drinks(string name) : this()
         {
             Name = name;
         }
-        public Drinks(string name, int size)
-            :this(name)
+
+        public Drinks(string name, int size) : this(name)
         {
-            volumen = size;
+            Volumen = size;
         }
 
-        public Drinks(string name, DateTime inserttime, DateTime expiretime, int size)
-            :this(name)
+        public Drinks(string name, DateTime inserttime, DateTime expiretime, int size) : this(name)
         {
-            insertTime = inserttime;
-            expires = true;
-            expiryTime = expiretime;
-            lasting = (expiretime - inserttime).Days;
-            volumen = size;
+            InsertTime = inserttime;
+            Expires = true;
+            ExpiryTime = expiretime;
+            Lasting = (expiretime - inserttime).Days;
+            Volumen = size;
         }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        [Column("size")]
+        public int Volumen { get; set; } = 0;
+
+        #endregion Public Properties
+
+        #region Public Methods
 
         public override string ToString()
         {
-            return $"{Name} was inserted at {insertTime} and lasts till {expiryTime}. Volumen: {volumen}mL Expires: {expires}";
+            return $"{Name} was inserted at {InsertTime} and lasts till {ExpiryTime}. Volumen: {Volumen}mL Expires: {Expires}";
         }
+
+        #endregion Public Methods
     }
 }

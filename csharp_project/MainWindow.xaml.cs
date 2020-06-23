@@ -1,12 +1,8 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using csharp_project.Speech;
-using csharp_project.Views;
-using csharp_project.Calendar;
-using MyLog;
 using Unity;
 
 namespace csharp_project
@@ -16,23 +12,29 @@ namespace csharp_project
     /// </summary>
     public partial class MainWindow : Window
     {
-        private UnityContainer _container;
+        #region Private Fields
+
+        private readonly UnityContainer _container;
+
+        #endregion Private Fields
 
         #region Visible Views
-        private Home home;
-        private Items items;
-        private Settings settings;
-        private Calendar.Calendar calendar;
+
+        private readonly Calendar.Calendar calendar;
+        private readonly Home home;
+        private readonly Items items;
+        private readonly Settings settings;
 
         #endregion Visible Views
+
+        #region Public Constructors
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        public MainWindow(UnityContainer container)
-            :this()
+        public MainWindow(UnityContainer container) : this()
         {
             _container = container;
 
@@ -44,26 +46,41 @@ namespace csharp_project
             onLoad();
         }
 
+        #endregion Public Constructors
+
+        #region Private Methods
+
         /// <summary>
-        /// Sets Views to corresponding grid not in xaml due the non default constructor
+        /// Background LeftButtonDown Event Handler
         /// </summary>
-        private void onLoad()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void bg_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            home.Visibility = Visibility.Collapsed;
-            Grid.SetColumn(home, 1);
-            BG.Children.Add(home);
+            Tg_Btn.IsChecked = false;
+        }
 
-            items.Visibility = Visibility.Collapsed;
-            Grid.SetColumn(items, 1);
-            BG.Children.Add(items);
+        /// <summary>
+        /// Close Button Click Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void closeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            _container.Resolve<SpeechSynthesis>().DeactivateSpeech();
+            Application.Current.Shutdown();
+        }
 
-            settings.Visibility = Visibility.Collapsed;
-            Grid.SetColumn(settings, 1);
-            BG.Children.Add(settings);
-
-            calendar.Visibility = Visibility.Collapsed;
-            Grid.SetColumn(calendar, 1);
-            BG.Children.Add(calendar);
+        /// <summary>
+        /// Thumb DragDelta Event Handler
+        /// HelperFuntction to move window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void headerThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            Left += e.HorizontalChange;
+            Top += e.VerticalChange;
         }
 
         /// <summary>
@@ -92,15 +109,26 @@ namespace csharp_project
         }
 
         /// <summary>
-        /// ToggleButton Unchecked Event
+        /// Sets Views to corresponding grid not in xaml due the non default constructor
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void tg_Btn_Unchecked(object sender, RoutedEventArgs e)
+        private void onLoad()
         {
-            img_bg.Opacity = 1;
-        }
+            home.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(home, 1);
+            BG.Children.Add(home);
 
+            items.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(items, 1);
+            BG.Children.Add(items);
+
+            settings.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(settings, 1);
+            BG.Children.Add(settings);
+
+            calendar.Visibility = Visibility.Collapsed;
+            Grid.SetColumn(calendar, 1);
+            BG.Children.Add(calendar);
+        }
         /// <summary>
         /// ToggleButton Checked Event
         /// </summary>
@@ -112,40 +140,29 @@ namespace csharp_project
         }
 
         /// <summary>
-        /// Background LeftButtonDown Event Handler
+        /// ToggleButton Unchecked Event
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void bg_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void tg_Btn_Unchecked(object sender, RoutedEventArgs e)
         {
-            Tg_Btn.IsChecked = false;
+            img_bg.Opacity = 1;
         }
 
-        /// <summary>
-        /// Close Button Click Event Handler
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void closeBtn_Click(object sender, RoutedEventArgs e)
-        {
-            _container.Resolve<SpeechSynthesis>().DeactivateSpeech();
-            Application.Current.Shutdown();
-        }
+        #endregion Private Methods
 
         #region set usercontrols
         /// <summary>
-        /// Sets parameter control to visbile
+        /// ListViewItem MouseLeftButtonDown Event Handler
+        /// View calendar
         /// </summary>
-        /// <param name="control"></param>
-        private void setActiveUserControl(UserControl control)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listViewItem_PreviewMouseLeftButtonDown_calendar(object sender, MouseButtonEventArgs e)
         {
-            tb_app_name.Visibility = Visibility.Collapsed;
-            home.Visibility = Visibility.Collapsed;
-            items.Visibility = Visibility.Collapsed;
-            settings.Visibility = Visibility.Collapsed;
-            calendar.Visibility = Visibility.Collapsed;
-
-            control.Visibility = Visibility.Visible;
+            setActiveUserControl(calendar);
+            calendar.InitLists();
+            calendar.SetCalendar();
         }
 
         /// <summary>
@@ -173,19 +190,6 @@ namespace csharp_project
 
         /// <summary>
         /// ListViewItem MouseLeftButtonDown Event Handler
-        /// View calendar
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void listViewItem_PreviewMouseLeftButtonDown_calendar(object sender, MouseButtonEventArgs e)
-        {
-            setActiveUserControl(calendar);
-            calendar.InitLists();
-            calendar.SetCalendar();
-        }
-
-        /// <summary>
-        /// ListViewItem MouseLeftButtonDown Event Handler
         /// View Settings
         /// </summary>
         /// <param name="sender"></param>
@@ -195,18 +199,20 @@ namespace csharp_project
             setActiveUserControl(settings);
         }
 
-        #endregion set usercontrols
-
         /// <summary>
-        /// Thumb DragDelta Event Handler
-        /// HelperFuntction to move window
+        /// Sets parameter control to visbile
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void headerThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        /// <param name="control"></param>
+        private void setActiveUserControl(UserControl control)
         {
-            Left = Left + e.HorizontalChange;
-            Top = Top + e.VerticalChange;
+            tb_app_name.Visibility = Visibility.Collapsed;
+            home.Visibility = Visibility.Collapsed;
+            items.Visibility = Visibility.Collapsed;
+            settings.Visibility = Visibility.Collapsed;
+            calendar.Visibility = Visibility.Collapsed;
+            control.Visibility = Visibility.Visible;
         }
+
+        #endregion set usercontrols
     }
 }
